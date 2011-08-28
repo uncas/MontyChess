@@ -67,19 +67,18 @@ class ChessGame:
         for file in File.All:
             self.Pieces.append(Piece(Color.White, Kind.Pawn, Square(file, 2)))
             self.Pieces.append(Piece(Color.Black, Kind.Pawn, Square(file, 7)))
+        self.AddOfficers(Color.White, 1)
+        self.AddOfficers(Color.Black, 8)
+
+    def AddOfficers(self, color, rank):
         for file in (File.A, File.H):
-            self.Pieces.append(Piece(Color.White, Kind.Rook, Square(file, 1)))
-            self.Pieces.append(Piece(Color.Black, Kind.Rook, Square(file, 8)))
+            self.Pieces.append(Piece(color, Kind.Rook, Square(file, rank)))
         for file in (File.B, File.G):
-            self.Pieces.append(Piece(Color.White, Kind.Knight, Square(file, 1)))
-            self.Pieces.append(Piece(Color.Black, Kind.Knight, Square(file, 8)))
+            self.Pieces.append(Piece(color, Kind.Knight, Square(file, rank)))
         for file in (File.C, File.F):
-            self.Pieces.append(Piece(Color.White, Kind.Bishop, Square(file, 1)))
-            self.Pieces.append(Piece(Color.Black, Kind.Bishop, Square(file, 8)))
-        self.Pieces.append(Piece(Color.White, Kind.Queen, Square(File.D, 1)))
-        self.Pieces.append(Piece(Color.Black, Kind.Queen, Square(File.D, 8)))
-        self.Pieces.append(Piece(Color.White, Kind.King, Square(File.E, 1)))
-        self.Pieces.append(Piece(Color.Black, Kind.King, Square(File.E, 8)))
+            self.Pieces.append(Piece(color, Kind.Bishop, Square(file, rank)))
+        self.Pieces.append(Piece(color, Kind.Queen, Square(File.D, rank)))
+        self.Pieces.append(Piece(color, Kind.King, Square(File.E, rank)))
 
     def PossibleMoves(self):
         result = []
