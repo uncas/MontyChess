@@ -6,7 +6,7 @@ class ChessTests(unittest.TestCase):
     def setUp(self):
         self.game = ChessGame()
 
-    def test_InitialGame_PossibleMoves_20(self):
+    def test_PossibleMoves_InitialGame_20(self):
         self.game = ChessGame()
         moves = self.game.PossibleMoves()
         self.assertEqual(20, len(moves))
@@ -32,6 +32,7 @@ class ChessGame:
 
     def PossibleMoves(self):
         result = []
+        # Duplicated code here:
         for file in File.All:
             result.append(Move(Square(file, 2), Square(file, 3))) 
             result.append(Move(Square(file, 2), Square(file, 4))) 
