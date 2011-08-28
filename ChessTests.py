@@ -12,8 +12,16 @@ class ChessTests(unittest.TestCase):
         self.assertEqual(20, len(moves))
         firstMove = moves[0]
         fromSquare = firstMove.From
-        self.assertEqual(2, fromSquare.Rank)
-        self.assertEqual(File.A, fromSquare.File)
+        self.assertTrue(self.ContainsMove(moves, Move(Square(File.A, 2), Square(File.A, 4))))
+
+    def ContainsMove(self, moves, move):
+        for m in moves:
+            if self.SameSquare(m.From, move.From) and self.SameSquare(m.To, move.To):
+                return 0 == 0
+        return 0 == 1
+
+    def SameSquare(self, square1, square2):
+        return square1.File == square2.File and square1.Rank == square2.Rank
 
 
 class ChessGame:
@@ -21,14 +29,16 @@ class ChessGame:
     def PossibleMoves(self):
         result = []
         for move in range(20):
-            result.append(Move())
+            result.append(Move(Square(File.A, 2), Square(File.A, 4)))
         return result
 
 
 class Move:
-
-    def __init__(self):
-        self.From = Square(File.A, 2)
+    
+    def __init__(self, fromSquare, toSquare):
+        self.From = fromSquare
+        self.To = toSquare
+                                                 
 
 
 class Square:
