@@ -23,6 +23,7 @@ class ChessTests(unittest.TestCase):
             self.assertTrue(self.ContainsPiece(pieces, Piece(Color.Black, Kind.Bishop, Square(file, 8))))
         self.assertTrue(self.ContainsPiece(pieces, Piece(Color.White, Kind.Queen, Square(File.D, 1))))
         self.assertTrue(self.ContainsPiece(pieces, Piece(Color.Black, Kind.Queen, Square(File.D, 8))))
+        self.assertTrue(self.ContainsPiece(pieces, Piece(Color.White, Kind.King, Square(File.E, 1))))
         
 
     def test_PossibleMoves_InitialGame_20(self):
@@ -78,7 +79,8 @@ class ChessGame:
             self.Pieces.append(Piece(Color.Black, Kind.Bishop, Square(file, 8)))
         self.Pieces.append(Piece(Color.White, Kind.Queen, Square(File.D, 1)))
         self.Pieces.append(Piece(Color.Black, Kind.Queen, Square(File.D, 8)))
-        for piece in range(2):
+        self.Pieces.append(Piece(Color.White, Kind.King, Square(File.E, 1)))
+        for piece in range(1):
             self.Pieces.append(Piece(Color.White, Kind.Pawn, Square(File.A, 2)))
 
     def PossibleMoves(self):
@@ -126,6 +128,7 @@ class Kind:
     Knight = 3
     Bishop = 4
     Queen = 5
+    King = 6
 
 class Color:
     White = 1
