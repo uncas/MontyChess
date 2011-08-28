@@ -10,6 +10,7 @@ class ChessTests(unittest.TestCase):
         self.game = ChessGame()
         moves = self.game.PossibleMoves()
         self.assertEqual(20, len(moves))
+        self.assertTrue(self.ContainsMove(moves, Move(Square(File.A, 2), Square(File.A, 3))))
         self.assertTrue(self.ContainsMove(moves, Move(Square(File.A, 2), Square(File.A, 4))))
 
     def ContainsMove(self, moves, move):
@@ -26,8 +27,13 @@ class ChessGame:
 
     def PossibleMoves(self):
         result = []
-        for move in range(20):
-            result.append(Move(Square(File.A, 2), Square(File.A, 4)))
+        for file in range(1, 8):
+            result.append(Move(Square(file, 2), Square(file, 3))) 
+            result.append(Move(Square(file, 2), Square(file, 4))) 
+        result.append(Move(Square(File.B, 1), Square(File.A, 3)))
+        result.append(Move(Square(File.B, 1), Square(File.C, 3)))
+        result.append(Move(Square(File.G, 1), Square(File.F, 3)))
+        result.append(Move(Square(File.G, 1), Square(File.H, 3)))
         return result
 
 
@@ -48,6 +54,11 @@ class Square:
 
 class File:
     A = 1
+    B = 1
+    C = 1
+    F = 1
+    G = 1
+    H = 1
     
 
 if __name__ == "__main__":
