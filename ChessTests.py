@@ -10,7 +10,8 @@ class ChessTests(unittest.TestCase):
         pieces = self.game.Pieces
         self.assertEquals(32, len(pieces))
         for file in File.All:
-            self.assertTrue(self.ContainsPiece(pieces, Piece(Kind.Pawn, Square(file, 2))))
+            self.assertTrue(self.ContainsPiece(pieces, Piece(Color.White, Kind.Pawn, Square(file, 2))))
+            self.assertTrue(self.ContainsPiece(pieces, Piece(Color.Black, Kind.Pawn, Square(file, 7))))
 
     def test_PossibleMoves_InitialGame_20(self):
         moves = self.game.PossibleMoves()
@@ -41,7 +42,8 @@ class ChessTests(unittest.TestCase):
 
 class Piece:
     
-    def __init__(self, kind, position):
+    def __init__(self, color, kind, position):
+        self.Color = color
         self.Kind = kind
         self.Position = position
 
@@ -51,10 +53,10 @@ class ChessGame:
     def __init__(self):
         self.Pieces = []
         for file in File.All:
-            self.Pieces.append(Piece(Kind.Pawn, Square(file, 2)))
-            self.Pieces.append(Piece(Kind.Pawn, Square(file, 7)))
+            self.Pieces.append(Piece(Color.White, Kind.Pawn, Square(file, 2)))
+            self.Pieces.append(Piece(Color.Black, Kind.Pawn, Square(file, 7)))
         for piece in range(16):
-            self.Pieces.append(Piece(Kind.Pawn, Square(File.A, 2)))
+            self.Pieces.append(Piece(Color.White, Kind.Pawn, Square(File.A, 2)))
 
     def PossibleMoves(self):
         result = []
@@ -97,6 +99,10 @@ class File:
     
 class Kind:
     Pawn = 1
+
+class Color:
+    White = 1
+    Black = 2
 
 if __name__ == "__main__":
     unittest.main()
