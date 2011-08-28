@@ -10,7 +10,7 @@ class ChessTests(unittest.TestCase):
         self.game = ChessGame()
         moves = self.game.PossibleMoves()
         self.assertEqual(20, len(moves))
-        for file in range(1, 9):
+        for file in File.All:
             self.assertTrue(self.ContainsMove(moves, Move(Square(file, 2), Square(file, 3))))
             self.assertTrue(self.ContainsMove(moves, Move(Square(file, 2), Square(file, 4))))
         self.assertTrue(self.ContainsMove(moves, Move(Square(File.B, 1), Square(File.A, 3))))
@@ -32,7 +32,7 @@ class ChessGame:
 
     def PossibleMoves(self):
         result = []
-        for file in range(1, 9):
+        for file in File.All:
             result.append(Move(Square(file, 2), Square(file, 3))) 
             result.append(Move(Square(file, 2), Square(file, 4))) 
         result.append(Move(Square(File.B, 1), Square(File.A, 3)))
@@ -61,9 +61,12 @@ class File:
     A = 1
     B = 2
     C = 3
+    D = 4
+    E = 5
     F = 6
     G = 7
     H = 8
+    All = A, B, C, D, E, F, G, H
     
 
 if __name__ == "__main__":
