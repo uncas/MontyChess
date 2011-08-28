@@ -35,16 +35,17 @@ class ChessTests(unittest.TestCase):
 
 class Piece:
     
-    def __init__(self):
-        self.Position = Square(File.A, 1)
-        self.Kind = Kind.Pawn
+    def __init__(self, position, kind):
+        self.Position = position
+        self.Kind = kind
+
 
 class ChessGame:
 
     def __init__(self):
         self.Pieces = []
         for piece in range(32):
-            self.Pieces.append(Piece())
+            self.Pieces.append(Piece(Square(File.A, 1), Kind.Pawn))
 
     def PossibleMoves(self):
         result = []
