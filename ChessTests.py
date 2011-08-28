@@ -13,6 +13,7 @@ class ChessTests(unittest.TestCase):
         firstMove = moves[0]
         fromSquare = firstMove.From
         self.assertEqual(2, fromSquare.Rank)
+        self.assertEqual(File.A, fromSquare.File)
 
 
 class ChessGame:
@@ -27,7 +28,7 @@ class ChessGame:
 class Move:
 
     def __init__(self):
-        self.From = Square(0, 2)
+        self.From = Square(File.A, 2)
 
 
 class Square:
@@ -36,6 +37,10 @@ class Square:
         self.File = file
         self.Rank = rank
 
+
+class File:
+    A = 1
+    
 
 if __name__ == "__main__":
     unittest.main()
