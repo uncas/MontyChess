@@ -17,8 +17,8 @@ class ChessTests(unittest.TestCase):
     def ContainsMove(self, moves, move):
         for m in moves:
             if self.SameSquare(m.From, move.From) and self.SameSquare(m.To, move.To):
-                return 0 == 0
-        return 0 == 1
+                return True
+        return False
 
     def SameSquare(self, square1, square2):
         return square1.File == square2.File and square1.Rank == square2.Rank
