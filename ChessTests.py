@@ -6,8 +6,10 @@ class ChessTests(unittest.TestCase):
     def setUp(self):
         self.game = ChessGame()
 
+    def test_Pieces_InitialGame_32(self):
+        pieces = self.game.Pieces
+
     def test_PossibleMoves_InitialGame_20(self):
-        self.game = ChessGame()
         moves = self.game.PossibleMoves()
         self.assertEqual(20, len(moves))
         for file in File.All:
@@ -29,6 +31,9 @@ class ChessTests(unittest.TestCase):
 
 
 class ChessGame:
+
+    def __init__(self):
+        self.Pieces = []
 
     def PossibleMoves(self):
         result = []
