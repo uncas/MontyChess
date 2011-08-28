@@ -27,7 +27,7 @@ class ChessGame:
 
     def PossibleMoves(self):
         result = []
-        for file in range(1, 8):
+        for file in range(1, 9):
             result.append(Move(Square(file, 2), Square(file, 3))) 
             result.append(Move(Square(file, 2), Square(file, 4))) 
         result.append(Move(Square(File.B, 1), Square(File.A, 3)))
