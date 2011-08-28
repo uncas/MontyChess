@@ -9,10 +9,13 @@ class ChessTests(unittest.TestCase):
     def test_Pieces_InitialGame_32(self):
         pieces = self.game.Pieces
         self.assertEquals(32, len(pieces))
-        piece1 = pieces[0]
-        self.assertEquals(Kind.Pawn, piece1.Kind)
-        self.assertEquals(File.A, piece1.Position.File)
-        self.assertEquals(2, piece1.Position.Rank)
+        self.assertTrue(self.ContainsPiece(pieces, Piece(Kind.Pawn, Square(File.A, 2))))
+
+    def ContainsPiece(self, pieces, piece):
+        for p in pieces:
+            if p.Kind == piece.Kind and self.SameSquare(p.Position, piece.Position):
+                return True
+        return False
 
     def test_PossibleMoves_InitialGame_20(self):
         moves = self.game.PossibleMoves()
@@ -37,9 +40,9 @@ class ChessTests(unittest.TestCase):
 
 class Piece:
     
-    def __init__(self, position, kind):
-        self.Position = position
+    def __init__(self, kind, position):
         self.Kind = kind
+        self.Position = position
 
 
 class ChessGame:
@@ -47,7 +50,7 @@ class ChessGame:
     def __init__(self):
         self.Pieces = []
         for piece in range(32):
-            self.Pieces.append(Piece(Square(File.A, 2), Kind.Pawn))
+            self.Pieces.append(Piece(Kind.Pawn, Square(File.A, 2)))
 
     def PossibleMoves(self):
         result = []
