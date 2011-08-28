@@ -24,8 +24,8 @@ class ChessTests(unittest.TestCase):
         self.assertTrue(self.ContainsPiece(pieces, Piece(Color.White, Kind.Queen, Square(File.D, 1))))
         self.assertTrue(self.ContainsPiece(pieces, Piece(Color.Black, Kind.Queen, Square(File.D, 8))))
         self.assertTrue(self.ContainsPiece(pieces, Piece(Color.White, Kind.King, Square(File.E, 1))))
+        self.assertTrue(self.ContainsPiece(pieces, Piece(Color.Black, Kind.King, Square(File.E, 8))))
         
-
     def test_PossibleMoves_InitialGame_20(self):
         moves = self.game.PossibleMoves()
         self.assertEqual(20, len(moves))
@@ -80,8 +80,7 @@ class ChessGame:
         self.Pieces.append(Piece(Color.White, Kind.Queen, Square(File.D, 1)))
         self.Pieces.append(Piece(Color.Black, Kind.Queen, Square(File.D, 8)))
         self.Pieces.append(Piece(Color.White, Kind.King, Square(File.E, 1)))
-        for piece in range(1):
-            self.Pieces.append(Piece(Color.White, Kind.Pawn, Square(File.A, 2)))
+        self.Pieces.append(Piece(Color.Black, Kind.King, Square(File.E, 8)))
 
     def PossibleMoves(self):
         result = []
