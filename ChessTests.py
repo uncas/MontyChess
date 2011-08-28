@@ -12,6 +12,7 @@ class ChessTests(unittest.TestCase):
         self.assertEqual(20, len(moves))
         firstMove = moves[0]
         fromSquare = firstMove.From
+        self.assertEqual(2, fromSquare.Rank)
 
 
 class ChessGame:
@@ -26,7 +27,14 @@ class ChessGame:
 class Move:
 
     def __init__(self):
-        self.From = 0
+        self.From = Square(0, 2)
+
+
+class Square:
+
+    def __init__(self, file, rank):
+        self.File = file
+        self.Rank = rank
 
 
 if __name__ == "__main__":
