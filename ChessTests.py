@@ -15,16 +15,6 @@ class ChessTests(unittest.TestCase):
         self.AssertInitialOfficers(pieces, Color.White, 1)
         self.AssertInitialOfficers(pieces, Color.Black, 8)
 
-    def AssertInitialOfficers(self, pieces, color, rank):
-        for file in (File.A, File.H):
-            self.assertTrue(self.ContainsPiece(pieces, Piece(color, Kind.Rook, Square(file, rank))))
-        for file in (File.B, File.G):
-            self.assertTrue(self.ContainsPiece(pieces, Piece(color, Kind.Knight, Square(file, rank))))
-        for file in (File.C, File.F):
-            self.assertTrue(self.ContainsPiece(pieces, Piece(color, Kind.Bishop, Square(file, rank))))
-        self.assertTrue(self.ContainsPiece(pieces, Piece(color, Kind.Queen, Square(File.D, rank))))
-        self.assertTrue(self.ContainsPiece(pieces, Piece(color, Kind.King, Square(File.E, rank))))
-
     def test_PossibleMoves_InitialGame_20(self):
         moves = self.game.PossibleMoves()
         self.assertEqual(20, len(moves))
@@ -35,6 +25,16 @@ class ChessTests(unittest.TestCase):
         self.assertTrue(self.ContainsMove(moves, Move(Square(File.B, 1), Square(File.C, 3))))
         self.assertTrue(self.ContainsMove(moves, Move(Square(File.G, 1), Square(File.F, 3))))
         self.assertTrue(self.ContainsMove(moves, Move(Square(File.G, 1), Square(File.H, 3))))
+
+    def AssertInitialOfficers(self, pieces, color, rank):
+        for file in (File.A, File.H):
+            self.assertTrue(self.ContainsPiece(pieces, Piece(color, Kind.Rook, Square(file, rank))))
+        for file in (File.B, File.G):
+            self.assertTrue(self.ContainsPiece(pieces, Piece(color, Kind.Knight, Square(file, rank))))
+        for file in (File.C, File.F):
+            self.assertTrue(self.ContainsPiece(pieces, Piece(color, Kind.Bishop, Square(file, rank))))
+        self.assertTrue(self.ContainsPiece(pieces, Piece(color, Kind.Queen, Square(File.D, rank))))
+        self.assertTrue(self.ContainsPiece(pieces, Piece(color, Kind.King, Square(File.E, rank))))
 
     def ContainsMove(self, moves, move):
         for m in moves:
