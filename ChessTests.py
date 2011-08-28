@@ -10,8 +10,6 @@ class ChessTests(unittest.TestCase):
         self.game = ChessGame()
         moves = self.game.PossibleMoves()
         self.assertEqual(20, len(moves))
-        firstMove = moves[0]
-        fromSquare = firstMove.From
         self.assertTrue(self.ContainsMove(moves, Move(Square(File.A, 2), Square(File.A, 4))))
 
     def ContainsMove(self, moves, move):
