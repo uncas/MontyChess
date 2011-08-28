@@ -12,20 +12,19 @@ class ChessTests(unittest.TestCase):
         for file in File.All:
             self.assertTrue(self.ContainsPiece(pieces, Piece(Color.White, Kind.Pawn, Square(file, 2))))
             self.assertTrue(self.ContainsPiece(pieces, Piece(Color.Black, Kind.Pawn, Square(file, 7))))
+        self.AssertInitialOfficers(pieces, Color.White, 1)
+        self.AssertInitialOfficers(pieces, Color.Black, 8)
+
+    def AssertInitialOfficers(self, pieces, color, rank):
         for file in (File.A, File.H):
-            self.assertTrue(self.ContainsPiece(pieces, Piece(Color.White, Kind.Rook, Square(file, 1))))
-            self.assertTrue(self.ContainsPiece(pieces, Piece(Color.Black, Kind.Rook, Square(file, 8))))
+            self.assertTrue(self.ContainsPiece(pieces, Piece(color, Kind.Rook, Square(file, rank))))
         for file in (File.B, File.G):
-            self.assertTrue(self.ContainsPiece(pieces, Piece(Color.White, Kind.Knight, Square(file, 1))))
-            self.assertTrue(self.ContainsPiece(pieces, Piece(Color.Black, Kind.Knight, Square(file, 8))))
+            self.assertTrue(self.ContainsPiece(pieces, Piece(color, Kind.Knight, Square(file, rank))))
         for file in (File.C, File.F):
-            self.assertTrue(self.ContainsPiece(pieces, Piece(Color.White, Kind.Bishop, Square(file, 1))))
-            self.assertTrue(self.ContainsPiece(pieces, Piece(Color.Black, Kind.Bishop, Square(file, 8))))
-        self.assertTrue(self.ContainsPiece(pieces, Piece(Color.White, Kind.Queen, Square(File.D, 1))))
-        self.assertTrue(self.ContainsPiece(pieces, Piece(Color.Black, Kind.Queen, Square(File.D, 8))))
-        self.assertTrue(self.ContainsPiece(pieces, Piece(Color.White, Kind.King, Square(File.E, 1))))
-        self.assertTrue(self.ContainsPiece(pieces, Piece(Color.Black, Kind.King, Square(File.E, 8))))
-        
+            self.assertTrue(self.ContainsPiece(pieces, Piece(color, Kind.Bishop, Square(file, rank))))
+        self.assertTrue(self.ContainsPiece(pieces, Piece(color, Kind.Queen, Square(File.D, rank))))
+        self.assertTrue(self.ContainsPiece(pieces, Piece(color, Kind.King, Square(File.E, rank))))
+
     def test_PossibleMoves_InitialGame_20(self):
         moves = self.game.PossibleMoves()
         self.assertEqual(20, len(moves))
