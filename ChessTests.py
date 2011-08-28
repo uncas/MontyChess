@@ -10,10 +10,14 @@ class ChessTests(unittest.TestCase):
         pieces = self.game.Pieces
         self.assertEquals(32, len(pieces))
         for file in File.All:
-            self.assertTrue(self.ContainsPiece(pieces, Piece(Color.White, Kind.Pawn, Square(file, 2))))
-            self.assertTrue(self.ContainsPiece(pieces, Piece(Color.Black, Kind.Pawn, Square(file, 7))))
-        self.AssertInitialOfficers(pieces, Color.White, 1)
-        self.AssertInitialOfficers(pieces, Color.Black, 8)
+            for colorAndRank in (Color.White, 2), (Color.Black, 7):
+                color = colorAndRank[0]
+                rank = colorAndRank[1]
+                self.assertTrue(self.ContainsPiece(pieces, Piece(color, Kind.Pawn, Square(file, rank))))
+        for colorAndRank in (Color.White, 1), (Color.Black, 8):
+            color = colorAndRank[0]
+            rank = colorAndRank[1]
+            self.AssertInitialOfficers(pieces, color, rank)
 
     def test_PossibleMoves_InitialGame_20(self):
         moves = self.game.PossibleMoves()
