@@ -12,6 +12,8 @@ class ChessTests(unittest.TestCase):
         for file in File.All:
             self.assertTrue(self.ContainsPiece(pieces, Piece(Color.White, Kind.Pawn, Square(file, 2))))
             self.assertTrue(self.ContainsPiece(pieces, Piece(Color.Black, Kind.Pawn, Square(file, 7))))
+        self.assertTrue(self.ContainsPiece(pieces, Piece(Color.White, Kind.Rook, Square(File.A, 1))))
+        
 
     def test_PossibleMoves_InitialGame_20(self):
         moves = self.game.PossibleMoves()
@@ -55,7 +57,8 @@ class ChessGame:
         for file in File.All:
             self.Pieces.append(Piece(Color.White, Kind.Pawn, Square(file, 2)))
             self.Pieces.append(Piece(Color.Black, Kind.Pawn, Square(file, 7)))
-        for piece in range(16):
+        self.Pieces.append(Piece(Color.White, Kind.Rook, Square(File.A, 1)))
+        for piece in range(15):
             self.Pieces.append(Piece(Color.White, Kind.Pawn, Square(File.A, 2)))
 
     def PossibleMoves(self):
@@ -99,6 +102,7 @@ class File:
     
 class Kind:
     Pawn = 1
+    Rook = 2
 
 class Color:
     White = 1
