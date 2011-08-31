@@ -1,5 +1,10 @@
 import unittest
 
+from Board import *
+from ChessGame import *
+from Move import *
+from Piece import *
+
 
 class ChessTests(unittest.TestCase):
 
@@ -56,84 +61,6 @@ class ChessTests(unittest.TestCase):
         return square1.File == square2.File and square1.Rank == square2.Rank
 
 
-class Piece:
-    
-    def __init__(self, color, kind, position):
-        self.Color = color
-        self.Kind = kind
-        self.Position = position
-
-
-class ChessGame:
-
-    def __init__(self):
-        self.Pieces = []
-        for file in File.All:
-            self.Pieces.append(Piece(Color.White, Kind.Pawn, Square(file, 2)))
-            self.Pieces.append(Piece(Color.Black, Kind.Pawn, Square(file, 7)))
-        self.AddOfficers(Color.White, 1)
-        self.AddOfficers(Color.Black, 8)
-
-    def AddOfficers(self, color, rank):
-        for file in (File.A, File.H):
-            self.Pieces.append(Piece(color, Kind.Rook, Square(file, rank)))
-        for file in (File.B, File.G):
-            self.Pieces.append(Piece(color, Kind.Knight, Square(file, rank)))
-        for file in (File.C, File.F):
-            self.Pieces.append(Piece(color, Kind.Bishop, Square(file, rank)))
-        self.Pieces.append(Piece(color, Kind.Queen, Square(File.D, rank)))
-        self.Pieces.append(Piece(color, Kind.King, Square(File.E, rank)))
-
-    def PossibleMoves(self):
-        result = []
-        # Duplicated code here:
-        for file in File.All:
-            result.append(Move(Square(file, 2), Square(file, 3))) 
-            result.append(Move(Square(file, 2), Square(file, 4))) 
-        result.append(Move(Square(File.B, 1), Square(File.A, 3)))
-        result.append(Move(Square(File.B, 1), Square(File.C, 3)))
-        result.append(Move(Square(File.G, 1), Square(File.F, 3)))
-        result.append(Move(Square(File.G, 1), Square(File.H, 3)))
-        return result
-
-
-class Move:
-    
-    def __init__(self, fromSquare, toSquare):
-        self.From = fromSquare
-        self.To = toSquare
-                                                 
-
-
-class Square:
-
-    def __init__(self, file, rank):
-        self.File = file
-        self.Rank = rank
-
-
-class File:
-    A = 1
-    B = 2
-    C = 3
-    D = 4
-    E = 5
-    F = 6
-    G = 7
-    H = 8
-    All = A, B, C, D, E, F, G, H
-    
-class Kind:
-    Pawn = 1
-    Rook = 2
-    Knight = 3
-    Bishop = 4
-    Queen = 5
-    King = 6
-
-class Color:
-    White = 1
-    Black = 2
 
 if __name__ == "__main__":
     unittest.main()
