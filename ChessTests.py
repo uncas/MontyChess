@@ -61,6 +61,5 @@ class ChessTests(unittest.TestCase):
         return square1.File == square2.File and square1.Rank == square2.Rank
 
 
-
 if __name__ == "__main__":
     unittest.main()

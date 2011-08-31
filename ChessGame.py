@@ -25,6 +25,7 @@ class ChessGame:
     def PossibleMoves(self):
         result = []
         # Duplicated code here:
+        # TODO: Remove duplication by putting the move logic into each piece.
         for file in File.All:
             result.append(Move(Square(file, 2), Square(file, 3))) 
             result.append(Move(Square(file, 2), Square(file, 4))) 
