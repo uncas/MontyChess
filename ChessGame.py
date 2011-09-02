@@ -34,3 +34,14 @@ class ChessGame:
         result.append(Move(Square(File.G, 1), Square(File.F, 3)))
         result.append(Move(Square(File.G, 1), Square(File.H, 3)))
         return result
+
+    def GetPiece(self, rank, file):
+        for piece in self.Pieces:
+            if piece.Position.Rank == rank and piece.Position.File == file:
+                return piece
+
+    def GetPieceMoves(self, piece):
+        result = []
+        result.append(Move(Square(piece.Position.File, 2), Square(piece.Position.File, 3)))
+        result.append(Move(Square(piece.Position.File, 2), Square(piece.Position.File, 4)))
+        return result
