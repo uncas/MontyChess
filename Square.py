@@ -5,13 +5,13 @@ class Square:
         self.Rank = rank
 
     def __repr__(self):
-        return self.GetFileLetter(self.File) + str(self.Rank)
-
-    def GetFileLetter(self, file):
-        return chr(ord('A') + file - 1)
+        return self._getFileLetter() + str(self.Rank)
 
     def __eq__(self, other):
         return self.File == other.File and self.Rank == other.Rank
+
+    def _getFileLetter(self):
+        return chr(ord('A') + self.File - 1)
 
 
 class File:
