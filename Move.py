@@ -1,5 +1,5 @@
 class Move:
     
-    def __init__(self, fromSquare, toSquare):
-        self.From = fromSquare
-        self.To = toSquare
+    def __init__(self, origin, destination):
+        self.From = origin
+        self.To = destination
