@@ -27,12 +27,18 @@ class ChessGame:
         for move in piece.GetMoves():
             if not self.SquareIsOccupiedByOwnPiece(piece, move.Destination) \
                     and not self.MoveIsObstructedByPiece(piece, move.Destination):
-                result.append(move)
+                isCapture = self.SquareIsOccupiedByOpponent(piece, move.Destination)
+                if not isCapture or move in piece.GetCaptureMoves():
+                    result.append(move)
         return result
 
     def SquareIsOccupiedByOwnPiece(self, piece, square):
         pieceAtSquare = self.GetPiece(square.File, square.Rank)
         return pieceAtSquare != None and pieceAtSquare.Color == piece.Color
+
+    def SquareIsOccupiedByOpponent(self, piece, square):
+        pieceAtSquare = self.GetPiece(square.File, square.Rank)
+        return pieceAtSquare != None and pieceAtSquare.Color != piece.Color
 
     def MoveIsObstructedByPiece(self, piece, destination):
         if piece.CanJump:

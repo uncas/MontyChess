@@ -9,6 +9,19 @@ class Piece:
         self.Position = position
         self.CanJump = kind == Kind.Knight
 
+    def GetCaptureMoves(self):
+        if self.Kind != Kind.Pawn:
+            return self.GetMoves()
+        result = []
+        direction = 3 - 2 * self.Color
+        originFile = self.Position.File
+        originRank = self.Position.Rank
+        if originFile > File.A:
+            result.append(self.GetMove(originFile - 1, originRank + direction))
+        if originFile < File.H:
+            result.append(self.GetMove(originFile + 1, originRank + direction))
+        return result
+
     def GetMoves(self):
         result = []
         originFile = self.Position.File
