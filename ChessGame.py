@@ -1,6 +1,7 @@
 from Board import *
 from Move import *
 from Piece import *
+from Square import *
 
 class ChessGame:
 
@@ -24,7 +25,8 @@ class ChessGame:
         if piece.Color != self.SideToPlay:
             return result;
         for move in piece.GetMoves():
-            if not self.SquareIsOccupiedByOwnPiece(piece, move.Destination) and not self.MoveIsObstructedByOwnPiece(piece, move.Destination):
+            if not self.SquareIsOccupiedByOwnPiece(piece, move.Destination) \
+                    and not self.MoveIsObstructedByPiece(piece, move.Destination):
                 result.append(move)
         return result
 
@@ -32,7 +34,24 @@ class ChessGame:
         pieceAtSquare = self.GetPiece(square.File, square.Rank)
         return pieceAtSquare != None and pieceAtSquare.Color == piece.Color
 
-    def MoveIsObstructedByOwnPiece(self, piece, destination):
+    def MoveIsObstructedByPiece(self, piece, destination):
+        if piece.CanJump:
+            return False
+        fileDelta = destination.File - piece.Position.File
+        rankDelta = destination.Rank - piece.Position.Rank
+        fileDirection = 0
+        rankDirection = 0
+        if fileDelta != 0:
+            fileDirection = fileDelta / abs(fileDelta)
+        if rankDelta != 0:
+            rankDirection = rankDelta / abs(rankDelta)
+        steps = max(abs(fileDelta), abs(rankDelta))
+        if steps < 1 or steps > 7:
+            raise Exception("Invalid step when moving " + str(piece) + " from " + str(piece.Position) + " to " + str(destination))
+        for step in range(1, steps):
+            pieceAtSquare = self.GetPiece(piece.Position.File + step * fileDirection, piece.Position.Rank + step * rankDirection)
+            if pieceAtSquare != None:
+                return True
         return False
 
     def Move(self, origin, destination):

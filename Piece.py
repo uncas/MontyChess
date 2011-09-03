@@ -30,13 +30,26 @@ class Piece:
                 if file != originFile:
                     result.append(self.GetMove(file, originRank))
             # Moving down the file:
-            for rank in range(9):
+            for rank in Rank.All:
                 if rank != originRank:
                     result.append(self.GetMove(originFile, rank))
         return result
 
     def GetMove(self, destinationFile, destinationRank):
         return Move(self.Position, Square(destinationFile, destinationRank))
+
+    def __repr__(self):
+        return self.ColorString() + " " + self.KindString()
+
+    def ColorString(self):
+        if self.Color == 1:
+            return "White"
+        else:
+            return "Black"
+
+    def KindString(self):
+        kindStrings = "Pawn", "Rook", "Knight", "Bishop", "Queen", "King"
+        return kindStrings[self.Kind-1]
     
 
 class Color:

@@ -21,3 +21,6 @@ class File:
     G = 7
     H = 8
     All = A, B, C, D, E, F, G, H
+
+class Rank:
+    All = 1, 2, 3, 4, 5, 6, 7, 8
