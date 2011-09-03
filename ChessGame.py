@@ -24,15 +24,9 @@ class ChessGame:
 
     def PossibleMoves(self):
         result = []
-        # Duplicated code here:
-        # TODO: Remove duplication by putting the move logic into each piece.
         for piece in self.Pieces:
             for move in self.GetPieceMoves(piece):
                 result.append(move)
-        result.append(Move(Square(File.B, 1), Square(File.A, 3)))
-        result.append(Move(Square(File.B, 1), Square(File.C, 3)))
-        result.append(Move(Square(File.G, 1), Square(File.F, 3)))
-        result.append(Move(Square(File.G, 1), Square(File.H, 3)))
         return result
 
     def GetPiece(self, file, rank):
@@ -42,8 +36,12 @@ class ChessGame:
 
     def GetPieceMoves(self, piece):
         result = []
-        if piece.Kind != Kind.Pawn or piece.Color != Color.White:
-            return result
-        result.append(Move(Square(piece.Position.File, 2), Square(piece.Position.File, 3)))
-        result.append(Move(Square(piece.Position.File, 2), Square(piece.Position.File, 4)))
+        if piece.Color == Color.Black:
+            return result;
+        if piece.Kind == Kind.Pawn:
+            result.append(Move(Square(piece.Position.File, 2), Square(piece.Position.File, 3)))
+            result.append(Move(Square(piece.Position.File, 2), Square(piece.Position.File, 4)))
+        if piece.Kind == Kind.Knight:
+            result.append(Move(Square(piece.Position.File, 1), Square(piece.Position.File - 1, 3)))
+            result.append(Move(Square(piece.Position.File, 1), Square(piece.Position.File + 1, 3)))
         return result

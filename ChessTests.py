@@ -70,6 +70,11 @@ class ChessTests(unittest.TestCase):
         rookA1Moves = self.game.GetPieceMoves(rookA1)
         self.assertEqual(0, len(rookA1Moves))
 
+    def test_KnightMove_InitialGame_2(self):
+        knightB1 = self.game.GetPiece(File.B, 1)
+        knightB1Moves = self.game.GetPieceMoves(knightB1)
+        self.assertEqual(2, len(knightB1Moves))
+
     def AssertInitialOfficers(self, pieces, color, rank):
         for file in (File.A, File.H):
             self.assertTrue(self.ContainsPiece(pieces, Piece(color, Kind.Rook, Square(file, rank))))
