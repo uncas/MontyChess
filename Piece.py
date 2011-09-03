@@ -8,18 +8,18 @@ class Piece:
         self.Kind = kind
         self.Position = position
         self.CanJump = kind == Kind.Knight
+        self.direction = 3 - 2 * self.Color
 
     def GetCaptureMoves(self):
         if self.Kind != Kind.Pawn:
             return self.GetMoves()
         result = []
-        direction = 3 - 2 * self.Color
         originFile = self.Position.File
         originRank = self.Position.Rank
         if originFile > File.A:
-            result.append(self.GetMove(originFile - 1, originRank + direction))
+            result.append(self.GetMove(originFile - 1, originRank + self.direction))
         if originFile < File.H:
-            result.append(self.GetMove(originFile + 1, originRank + direction))
+            result.append(self.GetMove(originFile + 1, originRank + self.direction))
         return result
 
     def GetMoves(self):
@@ -49,10 +49,9 @@ class Piece:
                 result.append(self.GetMove(destinationFile, destinationRank))
 
     def AppendPawnMoves(self, result, originFile, originRank):
-        direction = 3 - 2 * self.Color
-        result.append(self.GetMove(originFile, originRank + direction))
+        result.append(self.GetMove(originFile, originRank + self.direction))
         if (self.Color == Color.White and originRank == 2) or (self.Color == Color.Black and originRank == 7):
-            result.append(self.GetMove(originFile, originRank + 2 * direction))
+            result.append(self.GetMove(originFile, originRank + 2 * self.direction))
 
     def AppendKingMoves(self, result, originFile, originRank):
         for fileDelta in -1,0,1:
