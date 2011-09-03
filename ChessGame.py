@@ -11,6 +11,7 @@ class ChessGame:
             self.Pieces.append(Piece(Color.Black, Kind.Pawn, Square(file, 7)))
         self.AddOfficers(Color.White, 1)
         self.AddOfficers(Color.Black, 8)
+        self.SideToPlay = Color.White
 
     def AddOfficers(self, color, rank):
         for file in (File.A, File.H):
