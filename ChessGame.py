@@ -2,7 +2,7 @@ from Board import *
 from Move import *
 from Piece import *
 
-class ChessGame:
+class Board:
 
     def __init__(self):
         self.Pieces = []
@@ -11,7 +11,6 @@ class ChessGame:
             self.Pieces.append(Piece(Color.Black, Kind.Pawn, Square(file, 7)))
         self.AddOfficers(Color.White, 1)
         self.AddOfficers(Color.Black, 8)
-        self.SideToPlay = Color.White
 
     def AddOfficers(self, color, rank):
         for file in (File.A, File.H):
@@ -23,6 +22,19 @@ class ChessGame:
         self.Pieces.append(Piece(color, Kind.Queen, Square(File.D, rank)))
         self.Pieces.append(Piece(color, Kind.King, Square(File.E, rank)))
 
+    def GetPiece(self, file, rank):
+        for piece in self.Pieces:
+            if piece.Position.Rank == rank and piece.Position.File == file:
+                return piece
+
+
+class ChessGame:
+
+    def __init__(self):
+        self.board = Board()
+        self.SideToPlay = Color.White
+        self.Pieces = self.board.Pieces
+
     def PossibleMoves(self):
         result = []
         for piece in self.Pieces:
@@ -31,9 +43,7 @@ class ChessGame:
         return result
 
     def GetPiece(self, file, rank):
-        for piece in self.Pieces:
-            if piece.Position.Rank == rank and piece.Position.File == file:
-                return piece
+        return self.board.GetPiece(file, rank)
 
     def GetPieceMoves(self, piece):
         result = []
