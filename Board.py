@@ -25,20 +25,20 @@ class Board:
 
     def addPieces(self):
         for file in File.All:
-            self.addPiece(Color.White, Kind.Pawn, Square(file, Board.WhitePawnRank))
-            self.addPiece(Color.Black, Kind.Pawn, Square(file, Board.BlackPawnRank))
+            self.addPiece(Color.White, Kind.Pawn, file, Board.WhitePawnRank)
+            self.addPiece(Color.Black, Kind.Pawn, file, Board.BlackPawnRank)
         self.addOfficers(Color.White, Board.WhiteOfficerRank)
         self.addOfficers(Color.Black, Board.BlackOfficerRank)
 
     def addOfficers(self, color, rank):
         for file in Board.RookFiles:
-            self.addPiece(color, Kind.Rook, Square(file, rank))
+            self.addPiece(color, Kind.Rook, file, rank)
         for file in Board.KnightFiles:
-            self.addPiece(color, Kind.Knight, Square(file, rank))
+            self.addPiece(color, Kind.Knight, file, rank)
         for file in Board.BishopFiles:
-            self.addPiece(color, Kind.Bishop, Square(file, rank))
-        self.addPiece(color, Kind.Queen, Square(Board.QueenFile, rank))
-        self.addPiece(color, Kind.King, Square(Board.KingFile, rank))
+            self.addPiece(color, Kind.Bishop, file, rank)
+        self.addPiece(color, Kind.Queen, Board.QueenFile, rank)
+        self.addPiece(color, Kind.King, Board.KingFile, rank)
 
-    def addPiece(self, color, kind, position):
-        self.Pieces.append(Piece(color, kind, position))
+    def addPiece(self, color, kind, file, rank):
+        self.Pieces.append(Piece(color, kind, Square(file, rank)))
