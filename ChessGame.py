@@ -6,9 +6,9 @@ from Square import *
 class ChessGame:
 
     def __init__(self):
-        self.board = Board()
+        self._board = Board()
         self.SideToPlay = Color.White
-        self.Pieces = self.board.Pieces
+        self.Pieces = self._board.Pieces
 
     def PossibleMoves(self):
         result = []
@@ -17,33 +17,43 @@ class ChessGame:
         return result
 
     def GetPiece(self, file, rank):
-        return self.board.GetPiece(Square(file, rank))
+        return self._board.GetPiece(Square(file, rank))
 
     def GetPieceMoves(self, piece):
         result = []
         if piece.Color != self.SideToPlay:
             return result;
         for move in piece.GetMoves():
-            if not self.SquareIsOccupiedByOwnPiece(piece, move.Destination) \
-                    and not self.MoveIsObstructedByPiece(piece, move.Destination) \
-                    and not self.SquareIsOccupiedByOpponent(piece, move.Destination):
+            if not self._squareIsOccupiedByOwnPiece(piece, move.Destination) \
+                    and not self._moveIsObstructedByPiece(piece, move.Destination) \
+                    and not self._squareIsOccupiedByOpponent(piece, move.Destination):
                 result.append(move)
         for move in piece.GetCaptureMoves():
-            if not self.SquareIsOccupiedByOwnPiece(piece, move.Destination) \
-                    and not self.MoveIsObstructedByPiece(piece, move.Destination) \
-                    and self.SquareIsOccupiedByOpponent(piece, move.Destination):
+            if not self._squareIsOccupiedByOwnPiece(piece, move.Destination) \
+                    and not self._moveIsObstructedByPiece(piece, move.Destination) \
+                    and self._squareIsOccupiedByOpponent(piece, move.Destination):
                 result.append(move)
         return result
 
-    def SquareIsOccupiedByOwnPiece(self, piece, square):
+    def Move(self, origin, destination):
+        piece = self.GetPiece(origin.File, origin.Rank)
+        if piece == None:
+            raise Exception("No piece to move at that position.")
+        pieceAtDestination = self.GetPiece(destination.File, destination.Rank)
+        if pieceAtDestination != None:
+            self.Pieces.remove(pieceAtDestination)
+        piece.Position = destination
+        self.SideToPlay = 3 - self.SideToPlay
+
+    def _squareIsOccupiedByOwnPiece(self, piece, square):
         pieceAtSquare = self.GetPiece(square.File, square.Rank)
         return pieceAtSquare != None and pieceAtSquare.Color == piece.Color
 
-    def SquareIsOccupiedByOpponent(self, piece, square):
+    def _squareIsOccupiedByOpponent(self, piece, square):
         pieceAtSquare = self.GetPiece(square.File, square.Rank)
         return pieceAtSquare != None and pieceAtSquare.Color != piece.Color
 
-    def MoveIsObstructedByPiece(self, piece, destination):
+    def _moveIsObstructedByPiece(self, piece, destination):
         if piece.CanJump:
             return False
         fileDelta = destination.File - piece.Position.File
@@ -62,13 +72,3 @@ class ChessGame:
             if pieceAtSquare != None:
                 return True
         return False
-
-    def Move(self, origin, destination):
-        piece = self.GetPiece(origin.File, origin.Rank)
-        if piece == None:
-            raise Exception("No piece to move at that position.")
-        pieceAtDestination = self.GetPiece(destination.File, destination.Rank)
-        if pieceAtDestination != None:
-            self.Pieces.remove(pieceAtDestination)
-        piece.Position = destination
-        self.SideToPlay = 3 - self.SideToPlay
