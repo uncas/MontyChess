@@ -11,6 +11,18 @@ class ChessTests(unittest.TestCase):
     def setUp(self):
         self.game = ChessGame()
 
+    def test_Square_A1(self):
+        square = Square(File.A, 1)
+        self.assertEqual(File.A, square.File)
+        self.assertEqual(1, square.Rank)
+
+    def test_Piece_WhiteRookA1(self):
+        piece = Piece(Color.White, Kind.Rook, Square(File.A, 1))
+        self.assertEqual(Color.White, piece.Color)
+        self.assertEqual(Kind.Rook, piece.Kind)
+        self.assertEqual(File.A, piece.Position.File)
+        self.assertEqual(1, piece.Position.Rank)
+
     def test_Pieces_InitialGame_32(self):
         pieces = self.game.Pieces
         self.assertEquals(32, len(pieces))
@@ -34,6 +46,10 @@ class ChessTests(unittest.TestCase):
         self.assertTrue(self.ContainsMove(moves, Move(Square(File.B, 1), Square(File.C, 3))))
         self.assertTrue(self.ContainsMove(moves, Move(Square(File.G, 1), Square(File.F, 3))))
         self.assertTrue(self.ContainsMove(moves, Move(Square(File.G, 1), Square(File.H, 3))))
+
+#    def test_GetPiece_A2_IsPawn(self):
+#        pawnA2 = self.game.GetPiece(File.A, 2)
+#        self.assertEqual(Kind.Pawn, pawnA2.Kind)
 
     def test_PawnMove_InitialGame_2(self):
         pawnA2 = self.game.GetPiece(File.A, 2)
