@@ -27,5 +27,7 @@ class ChessGame:
 
     def Move(self, origin, destination):
         piece = self.GetPiece(origin.File, origin.Rank)
+        if piece == None:
+            raise Exception("No piece to move at that position.")
         piece.Position = destination
         self.SideToPlay = Color.Black
