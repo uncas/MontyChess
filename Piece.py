@@ -7,6 +7,7 @@ class Piece:
         self.Color = color
         self.Kind = kind
         self.Position = position
+        self.CanJump = kind == Kind.Knight
 
     def GetMoves(self):
         result = []
@@ -23,7 +24,7 @@ class Piece:
                 destinationRank = originRank + knightStep[1]
                 if File.A <= destinationFile and destinationFile <= File.H and 1 <= destinationRank and destinationRank <= 8:
                     result.append(self.GetMove(destinationFile, destinationRank))
-        if self.Kind == Kind.Rook + 100:
+        if self.Kind == Kind.Rook:
             # Moving across the rank:
             for file in File.All:
                 if file != originFile:
@@ -36,7 +37,7 @@ class Piece:
 
     def GetMove(self, destinationFile, destinationRank):
         return Move(self.Position, Square(destinationFile, destinationRank))
-        
+    
 
 class Color:
     White = 1

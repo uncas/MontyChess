@@ -24,10 +24,16 @@ class ChessGame:
         if piece.Color != self.SideToPlay:
             return result;
         for move in piece.GetMoves():
-            pieceAtDestination = self.GetPiece(move.Destination.File, move.Destination.Rank)
-            if pieceAtDestination == None or pieceAtDestination.Color != piece.Color:
+            if not self.SquareIsOccupiedByOwnPiece(piece, move.Destination) and not self.MoveIsObstructedByOwnPiece(piece, move.Destination):
                 result.append(move)
         return result
+
+    def SquareIsOccupiedByOwnPiece(self, piece, square):
+        pieceAtSquare = self.GetPiece(square.File, square.Rank)
+        return pieceAtSquare != None and pieceAtSquare.Color == piece.Color
+
+    def MoveIsObstructedByOwnPiece(self, piece, destination):
+        return False
 
     def Move(self, origin, destination):
         piece = self.GetPiece(origin.File, origin.Rank)
