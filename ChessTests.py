@@ -42,7 +42,7 @@ class ChessTests(unittest.TestCase):
             rank = colorAndRank[1]
             self.AssertInitialOfficers(pieces, color, rank)
 
-    def test_PossibleMoves_InitialGame_20(self):
+    def test_PossibleMoves_Ply1_20(self):
         moves = self.game.PossibleMoves()
         self.assertEqual(20, len(moves))
         for file in File.All:
@@ -53,8 +53,8 @@ class ChessTests(unittest.TestCase):
         self.assertTrue(self.ContainsMove(moves, Move(Square(File.G, 1), Square(File.F, 3))))
         self.assertTrue(self.ContainsMove(moves, Move(Square(File.G, 1), Square(File.H, 3))))
 
-    def test_PossibleMoves_BlacksFirstMove_20(self):
-        self.game.Move(Square(File.E, 2), Square(File.E, 4))
+    def test_PossibleMoves_Ply2_20(self):
+        self.Ply1()
         moves = self.game.PossibleMoves()
         self.assertEqual(20, len(moves))
 
