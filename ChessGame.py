@@ -39,9 +39,12 @@ class ChessGame:
         if piece.Color == Color.Black:
             return result;
         if piece.Kind == Kind.Pawn:
-            result.append(Move(Square(piece.Position.File, 2), Square(piece.Position.File, 3)))
-            result.append(Move(Square(piece.Position.File, 2), Square(piece.Position.File, 4)))
+            result.append(self.GetPieceMove(piece, Square(piece.Position.File, 3)))
+            result.append(self.GetPieceMove(piece, Square(piece.Position.File, 4)))
         if piece.Kind == Kind.Knight:
-            result.append(Move(Square(piece.Position.File, 1), Square(piece.Position.File - 1, 3)))
-            result.append(Move(Square(piece.Position.File, 1), Square(piece.Position.File + 1, 3)))
+            result.append(self.GetPieceMove(piece, Square(piece.Position.File - 1, 3)))
+            result.append(self.GetPieceMove(piece, Square(piece.Position.File + 1, 3)))
         return result
+
+    def GetPieceMove(self, piece, destination):
+        return Move(piece.Position, destination)
