@@ -129,6 +129,13 @@ class ChessTests(unittest.TestCase):
         moves = self.game.PossibleMoves()
         self.assertEqual(29, len(moves))
 
+    def test_PossibleMoves_Ply4_30(self):
+        self.Ply1()
+        self.Ply2()
+        self.Ply3()
+        moves = self.game.PossibleMoves()
+        self.assertEqual(30, len(moves))
+
     def test_GetPiece_A2_IsPawn(self):
         pawnA2 = self.game.GetPiece(File.A, 2)
         self.assertEqual(Color.White, pawnA2.Color)

@@ -26,10 +26,14 @@ class ChessGame:
             return result;
         for move in piece.GetMoves():
             if not self.SquareIsOccupiedByOwnPiece(piece, move.Destination) \
-                    and not self.MoveIsObstructedByPiece(piece, move.Destination):
-                isCapture = self.SquareIsOccupiedByOpponent(piece, move.Destination)
-                if not isCapture or move in piece.GetCaptureMoves():
-                    result.append(move)
+                    and not self.MoveIsObstructedByPiece(piece, move.Destination) \
+                    and not self.SquareIsOccupiedByOpponent(piece, move.Destination):
+                result.append(move)
+        for move in piece.GetCaptureMoves():
+            if not self.SquareIsOccupiedByOwnPiece(piece, move.Destination) \
+                    and not self.MoveIsObstructedByPiece(piece, move.Destination) \
+                    and self.SquareIsOccupiedByOpponent(piece, move.Destination):
+                result.append(move)
         return result
 
     def SquareIsOccupiedByOwnPiece(self, piece, square):
