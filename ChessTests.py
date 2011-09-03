@@ -123,6 +123,12 @@ class ChessTests(unittest.TestCase):
         moves = self.game.PossibleMoves()
         self.assertEqual(20, len(moves))
 
+    def test_PossibleMoves_Ply3_29(self):
+        self.Ply1()
+        self.Ply2()
+        moves = self.game.PossibleMoves()
+        self.assertEqual(29, len(moves))
+
     def test_GetPiece_A2_IsPawn(self):
         pawnA2 = self.game.GetPiece(File.A, 2)
         self.assertEqual(Color.White, pawnA2.Color)
@@ -260,6 +266,9 @@ class ChessTests(unittest.TestCase):
 
     def Ply2(self):
         self.game.Move(Square(File.E, 7), Square(File.E, 5))
+
+    def Ply3(self):
+        self.game.Move(Square(File.D, 2), Square(File.D, 4))
 
     def SameSquare(self, square1, square2):
         return square1.File == square2.File and square1.Rank == square2.Rank
