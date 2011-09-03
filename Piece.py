@@ -56,9 +56,6 @@ class Piece:
         if self._isStartRank():
             result.append(self._getMove(originFile, originRank + 2 * self._direction))
 
-    def _isStartRank(self):
-        return (self.Color == Color.White and self.Position.Rank == 2) or (self.Color == Color.Black and self.Position.Rank == 7)
-
     def _appendKingMoves(self, result, originFile, originRank):
         for fileDelta in -1,0,1:
             for rankDelta in -1,0,1:
@@ -90,6 +87,9 @@ class Piece:
 
     def _getMove(self, destinationFile, destinationRank):
         return Move(self.Position, Square(destinationFile, destinationRank))
+
+    def _isStartRank(self):
+        return (self.Color == Color.White and self.Position.Rank == 2) or (self.Color == Color.Black and self.Position.Rank == 7)
 
     def _isWithinBoard(self, file, rank):
         return File.A <= file and file <= File.H and 1 <= rank and rank <= 8
