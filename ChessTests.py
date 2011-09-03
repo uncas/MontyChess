@@ -6,15 +6,15 @@ from Move import *
 from Piece import *
 
 
-class ChessTests(unittest.TestCase):
-
-    def setUp(self):
-        self.game = ChessGame()
+class BoardTests(unittest.TestCase):
 
     def test_Square_A1(self):
         square = Square(File.A, 1)
         self.assertEqual(File.A, square.File)
         self.assertEqual(1, square.Rank)
+
+
+class PieceTests(unittest.TestCase):
 
     def test_Piece_WhiteRookA1(self):
         piece = Piece(Color.White, Kind.Rook, Square(File.A, 1))
@@ -22,6 +22,12 @@ class ChessTests(unittest.TestCase):
         self.assertEqual(Kind.Rook, piece.Kind)
         self.assertEqual(File.A, piece.Position.File)
         self.assertEqual(1, piece.Position.Rank)
+
+
+class ChessTests(unittest.TestCase):
+
+    def setUp(self):
+        self.game = ChessGame()
 
     def test_Pieces_InitialGame_32(self):
         pieces = self.game.Pieces
