@@ -31,16 +31,6 @@ class ChessGame:
                 result.append(capture)
         return result
 
-    def _isValidMove(self, piece, move):
-        return not self._squareIsOccupiedByOwnPiece(piece, move.Destination) \
-            and not self._moveIsObstructedByPiece(piece, move.Destination) \
-            and not self._squareIsOccupiedByOpponent(piece, move.Destination)
-
-    def _isValidCapture(self, piece, capture):
-        return not self._squareIsOccupiedByOwnPiece(piece, capture.Destination) \
-            and not self._moveIsObstructedByPiece(piece, capture.Destination) \
-            and self._squareIsOccupiedByOpponent(piece, capture.Destination)
-
     def Move(self, origin, destination):
         piece = self.GetPiece(origin.File, origin.Rank)
         if piece == None:
@@ -50,6 +40,16 @@ class ChessGame:
             self.Pieces.remove(pieceAtDestination)
         piece.Position = destination
         self.SideToPlay = 3 - self.SideToPlay
+
+    def _isValidMove(self, piece, move):
+        return not self._squareIsOccupiedByOwnPiece(piece, move.Destination) \
+            and not self._moveIsObstructedByPiece(piece, move.Destination) \
+            and not self._squareIsOccupiedByOpponent(piece, move.Destination)
+
+    def _isValidCapture(self, piece, capture):
+        return not self._squareIsOccupiedByOwnPiece(piece, capture.Destination) \
+            and not self._moveIsObstructedByPiece(piece, capture.Destination) \
+            and self._squareIsOccupiedByOpponent(piece, capture.Destination)
 
     def _squareIsOccupiedByOwnPiece(self, piece, square):
         pieceAtSquare = self.GetPiece(square.File, square.Rank)
