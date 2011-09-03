@@ -15,7 +15,8 @@ class Piece:
         originRank = self.Position.Rank
         if self.Kind == Kind.Pawn:
             result.append(self.GetMove(originFile, originRank + direction))
-            result.append(self.GetMove(originFile, originRank + 2 * direction))
+            if (self.Color == Color.White and originRank == 2) or (self.Color == Color.Black and originRank == 7):
+                result.append(self.GetMove(originFile, originRank + 2 * direction))
         if self.Kind == Kind.Knight:
             result.append(self.GetMove(originFile - 1, originRank + 2 * direction))
             result.append(self.GetMove(originFile + 1, originRank + 2 * direction))

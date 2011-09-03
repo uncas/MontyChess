@@ -30,4 +30,4 @@ class ChessGame:
         if piece == None:
             raise Exception("No piece to move at that position.")
         piece.Position = destination
-        self.SideToPlay = Color.Black
+        self.SideToPlay = 3 - self.SideToPlay

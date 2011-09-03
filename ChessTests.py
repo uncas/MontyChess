@@ -23,6 +23,16 @@ class PieceTests(unittest.TestCase):
         self.assertEqual(File.A, piece.Position.File)
         self.assertEqual(1, piece.Position.Rank)
 
+    def test_GetMoves_WhitePawnE2_2(self):
+        piece = Piece(Color.White, Kind.Pawn, Square(File.E, 2))
+        moves = piece.GetMoves()
+        self.assertEqual(2, len(moves))
+
+    def test_GetMoves_WhitePawnE3_1(self):
+        piece = Piece(Color.White, Kind.Pawn, Square(File.E, 3))
+        moves = piece.GetMoves()
+        self.assertEqual(1, len(moves))
+
 
 class ChessTests(unittest.TestCase):
 
@@ -104,12 +114,16 @@ class ChessTests(unittest.TestCase):
         pawnA2Moves = self.game.GetPieceMoves(pawnA2)
         self.assertEqual(0, len(pawnA2Moves))
 
-    def test_GetPieceMoves_Ply3E4E5WhitePawnE4_0(self):
+    def x_test_GetPieceMoves_Ply3E4E5WhitePawnE4_0(self):
         self.game.Move(Square(File.E, 2), Square(File.E, 4))
         self.game.Move(Square(File.E, 7), Square(File.E, 5))
         pawnE4 = self.game.GetPiece(File.E, 4)
         pawnE4Moves = self.game.GetPieceMoves(pawnE4)
         self.assertEqual(0, len(pawnE4Moves))
+
+#    def test_GetPieceMoves_Ply3E4E5WhiteKnighG1_3(self):
+#    def test_GetPieceMoves_Ply3E4E5WhiteBishopF1_6(self):
+#    def test_GetPieceMoves_Ply3E4E5WhiteQueenD1_5(self):
 
     def test_SideToPlay_Ply1_White(self):
         self.assertEqual(Color.White, self.game.SideToPlay)
@@ -117,6 +131,11 @@ class ChessTests(unittest.TestCase):
     def test_SideToPlay_Ply2_Black(self):
         self.Ply1()
         self.assertEqual(Color.Black, self.game.SideToPlay)
+
+    def test_SideToPlay_Ply3_White(self):
+        self.Ply1()
+        self.Ply2()
+        self.assertEqual(Color.White, self.game.SideToPlay)
 
     def test_Move_E4_PawnIsMovedToE4(self):
         self.assertTrue(self.ContainsPiece(self.game.Pieces, Piece(Color.White, Kind.Pawn, Square(File.E, 2))))
@@ -151,6 +170,9 @@ class ChessTests(unittest.TestCase):
 
     def Ply1(self):
         self.game.Move(Square(File.E, 2), Square(File.E, 4))
+
+    def Ply2(self):
+        self.game.Move(Square(File.E, 7), Square(File.E, 5))
 
     def SameSquare(self, square1, square2):
         return square1.File == square2.File and square1.Rank == square2.Rank
