@@ -78,6 +78,11 @@ class ChessTests(unittest.TestCase):
     def test_SideToPlay_InitialGame_White(self):
         self.assertEqual(Color.White, self.game.SideToPlay)
 
+    def test_Move_E4_PawnIsMovedToE4AndItIsBlackToMove(self):
+        self.game.Move(Square(File.E, 2), Square(File.E, 4))
+        self.assertTrue(self.ContainsPiece(self.game.Pieces, Piece(Color.White, Kind.Pawn, Square(File.E, 4))))
+        self.assertEqual(Color.Black, self.game.SideToPlay)
+
     def AssertInitialOfficers(self, pieces, color, rank):
         for file in (File.A, File.H):
             self.assertTrue(self.ContainsPiece(pieces, Piece(color, Kind.Rook, Square(file, rank))))
