@@ -110,7 +110,7 @@ class ChessTests(unittest.TestCase):
     def test_GetPieceMoves_Ply2E4E5WhitePawnE4_0(self):
         self.game.Move(Square(File.E, 2), Square(File.E, 4))
         self.game.Move(Square(File.E, 7), Square(File.E, 5))
-        pawnE4 = self.game.GetPiece(File.E, 5)
+        pawnE4 = self.game.GetPiece(File.E, 4)
         pawnE4Moves = self.game.GetPieceMoves(pawnE4)
         self.assertEqual(0, len(pawnE4Moves))
 
