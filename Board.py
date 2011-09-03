@@ -4,6 +4,12 @@ class Square:
         self.File = file
         self.Rank = rank
 
+    def __repr__(self):
+        return self.GetFileLetter(self.File) + str(self.Rank)
+
+    def GetFileLetter(self, file):
+        return chr(ord('A') + file - 1)
+
 
 class File:
     A = 1
