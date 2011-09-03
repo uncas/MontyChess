@@ -13,8 +13,7 @@ class ChessGame:
     def PossibleMoves(self):
         result = []
         for piece in self.Pieces:
-            for move in self.GetPieceMoves(piece):
-                result.append(move)
+            result.extend(self.GetPieceMoves(piece))
         return result
 
     def GetPiece(self, file, rank):
