@@ -35,7 +35,7 @@ class ChessGame:
         result.append(Move(Square(File.G, 1), Square(File.H, 3)))
         return result
 
-    def GetPiece(self, rank, file):
+    def GetPiece(self, file, rank):
         for piece in self.Pieces:
             if piece.Position.Rank == rank and piece.Position.File == file:
                 return piece
