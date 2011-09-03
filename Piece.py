@@ -1,5 +1,5 @@
-from Board import *
 from Move import *
+from Square import *
 
 class Piece:
     
