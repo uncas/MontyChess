@@ -65,23 +65,29 @@ class ChessTests(unittest.TestCase):
         self.assertEqual(File.A, pawnA2.Position.File)
         self.assertEqual(2, pawnA2.Position.Rank)
 
-    def test_WhitePawnMove_InitialGame_2(self):
+    def test_GetPieceMoves_WhitePawnInitialGame_2(self):
         pawnA2 = self.game.GetPiece(File.A, 2)
         pawnA2Moves = self.game.GetPieceMoves(pawnA2)
         self.assertEqual(2, len(pawnA2Moves))
 
-    def test_WhitePawnMove_BlacksFirstMove_0(self):
+    def test_GetPieceMoves_WhitePawnBlacksFirstMove_0(self):
         self.game.Move(Square(File.E, 2), Square(File.E, 4))
         pawnA2 = self.game.GetPiece(File.A, 2)
         pawnA2Moves = self.game.GetPieceMoves(pawnA2)
         self.assertEqual(0, len(pawnA2Moves))
 
-    def test_RookMove_InitialGame_0(self):
+    def test_GetPieceMoves_BlackPawnBlacksFirstMove_2(self):
+        self.game.Move(Square(File.E, 2), Square(File.E, 4))
+        pawnA7 = self.game.GetPiece(File.A, 7)
+        pawnA7Moves = self.game.GetPieceMoves(pawnA7)
+        self.assertEqual(2, len(pawnA7Moves))
+
+    def test_GetPieceMoves_WhiteRookInitialGame_0(self):
         rookA1 = self.game.GetPiece(File.A, 1)
         rookA1Moves = self.game.GetPieceMoves(rookA1)
         self.assertEqual(0, len(rookA1Moves))
 
-    def test_KnightMove_InitialGame_2(self):
+    def test_GetPieceMoves_KnightInitialGame_2(self):
         knightB1 = self.game.GetPiece(File.B, 1)
         knightB1Moves = self.game.GetPieceMoves(knightB1)
         self.assertEqual(2, len(knightB1Moves))
@@ -89,10 +95,13 @@ class ChessTests(unittest.TestCase):
     def test_SideToPlay_InitialGame_White(self):
         self.assertEqual(Color.White, self.game.SideToPlay)
 
-    def test_Move_E4_PawnIsMovedToE4AndItIsBlackToMove(self):
+    def test_SideToPlay_BlacksFirstMove_Black(self):
+        self.game.Move(Square(File.E, 2), Square(File.E, 4))
+        self.assertEqual(Color.Black, self.game.SideToPlay)
+
+    def test_Move_E4_PawnIsMovedToE4(self):
         self.game.Move(Square(File.E, 2), Square(File.E, 4))
         self.assertTrue(self.ContainsPiece(self.game.Pieces, Piece(Color.White, Kind.Pawn, Square(File.E, 4))))
-        self.assertEqual(Color.Black, self.game.SideToPlay)
 
     def AssertInitialOfficers(self, pieces, color, rank):
         for file in (File.A, File.H):
