@@ -33,6 +33,14 @@ class Piece:
             for rank in Rank.All:
                 if rank != originRank:
                     result.append(self.GetMove(originFile, rank))
+        if self.Kind == Kind.Bishop:
+            for step in range(1, 7):
+                for fileDelta in -1,1:
+                    for rankDelta in -1,1:
+                        destinationFile = originFile + step * fileDelta
+                        destinationRank = originRank + step * rankDelta
+                        if File.A <= destinationFile and destinationFile <= File.H and 1 <= destinationRank and destinationRank <= 8:
+                            result.append(self.GetMove(destinationFile, destinationRank))
         return result
 
     def GetMove(self, destinationFile, destinationRank):
