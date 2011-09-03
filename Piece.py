@@ -86,15 +86,15 @@ class Piece:
         return Move(self.Position, Square(destinationFile, destinationRank))
 
     def __repr__(self):
-        return self.ColorString() + " " + self.KindString()
+        return self._colorString() + " " + self._kindString()
 
-    def ColorString(self):
+    def _colorString(self):
         if self.Color == 1:
             return "White"
         else:
             return "Black"
 
-    def KindString(self):
+    def _kindString(self):
         kindStrings = "Pawn", "Rook", "Knight", "Bishop", "Queen", "King"
         return kindStrings[self.Kind-1]
     
