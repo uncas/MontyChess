@@ -24,16 +24,22 @@ class ChessGame:
         if piece.Color != self.SideToPlay:
             return result;
         for move in piece.GetMoves():
-            if not self._squareIsOccupiedByOwnPiece(piece, move.Destination) \
-                    and not self._moveIsObstructedByPiece(piece, move.Destination) \
-                    and not self._squareIsOccupiedByOpponent(piece, move.Destination):
+            if self._isValidMove(piece, move):
                 result.append(move)
-        for move in piece.GetCaptureMoves():
-            if not self._squareIsOccupiedByOwnPiece(piece, move.Destination) \
-                    and not self._moveIsObstructedByPiece(piece, move.Destination) \
-                    and self._squareIsOccupiedByOpponent(piece, move.Destination):
-                result.append(move)
+        for capture in piece.GetCaptureMoves():
+            if self._isValidCapture(piece, capture):
+                result.append(capture)
         return result
+
+    def _isValidMove(self, piece, move):
+        return not self._squareIsOccupiedByOwnPiece(piece, move.Destination) \
+            and not self._moveIsObstructedByPiece(piece, move.Destination) \
+            and not self._squareIsOccupiedByOpponent(piece, move.Destination)
+
+    def _isValidCapture(self, piece, capture):
+        return not self._squareIsOccupiedByOwnPiece(piece, capture.Destination) \
+            and not self._moveIsObstructedByPiece(piece, capture.Destination) \
+            and self._squareIsOccupiedByOpponent(piece, capture.Destination)
 
     def Move(self, origin, destination):
         piece = self.GetPiece(origin.File, origin.Rank)
