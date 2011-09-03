@@ -10,6 +10,9 @@ class Piece:
         self.CanJump = kind == Kind.Knight
         self._direction = 3 - 2 * self.Color
 
+    def __repr__(self):
+        return self._colorString() + " " + self._kindString()
+
     def GetCaptureMoves(self):
         if self.Kind != Kind.Pawn:
             return self.GetMoves()
@@ -45,13 +48,16 @@ class Piece:
         for knightStep in (-2,-1), (-2,1), (-1,-2), (-1,2), (1,-2), (1,2), (2,-1), (2,1):
             destinationFile = originFile + knightStep[0]
             destinationRank = originRank + knightStep[1]
-            if File.A <= destinationFile and destinationFile <= File.H and 1 <= destinationRank and destinationRank <= 8:
+            if self._isWithinBoard(destinationFile, destinationRank):
                 result.append(self._getMove(destinationFile, destinationRank))
 
     def _appendPawnMoves(self, result, originFile, originRank):
         result.append(self._getMove(originFile, originRank + self._direction))
-        if (self.Color == Color.White and originRank == 2) or (self.Color == Color.Black and originRank == 7):
+        if self._isStartRank():
             result.append(self._getMove(originFile, originRank + 2 * self._direction))
+
+    def _isStartRank(self):
+        return (self.Color == Color.White and self.Position.Rank == 2) or (self.Color == Color.Black and self.Position.Rank == 7)
 
     def _appendKingMoves(self, result, originFile, originRank):
         for fileDelta in -1,0,1:
@@ -60,7 +66,7 @@ class Piece:
                     continue
                 destinationFile = originFile + fileDelta
                 destinationRank = originRank + rankDelta
-                if File.A <= destinationFile and destinationFile <= File.H and 1 <= destinationRank and destinationRank <= 8:
+                if self._isWithinBoard(destinationFile, destinationRank):
                     result.append(self._getMove(destinationFile, destinationRank))
 
     def _appendRookMoves(self, result, originFile, originRank):
@@ -79,14 +85,14 @@ class Piece:
                 for rankDelta in -1,1:
                     destinationFile = originFile + step * fileDelta
                     destinationRank = originRank + step * rankDelta
-                    if File.A <= destinationFile and destinationFile <= File.H and 1 <= destinationRank and destinationRank <= 8:
+                    if self._isWithinBoard(destinationFile, destinationRank):
                         result.append(self._getMove(destinationFile, destinationRank))
 
     def _getMove(self, destinationFile, destinationRank):
         return Move(self.Position, Square(destinationFile, destinationRank))
 
-    def __repr__(self):
-        return self._colorString() + " " + self._kindString()
+    def _isWithinBoard(self, file, rank):
+        return File.A <= file and file <= File.H and 1 <= rank and rank <= 8
 
     def _colorString(self):
         if self.Color == 1:
