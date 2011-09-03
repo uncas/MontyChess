@@ -133,6 +133,7 @@ class ChessTests(unittest.TestCase):
         self.Ply1()
         self.Ply2()
         self.Ply3()
+        self.assertEqual(32, len(self.game.Pieces))
         moves = self.game.PossibleMoves()
         self.assertEqual(30, len(moves))
 
@@ -141,6 +142,7 @@ class ChessTests(unittest.TestCase):
         self.Ply2()
         self.Ply3()
         self.Ply4()
+        self.assertEqual(31, len(self.game.Pieces))
         moves = self.game.PossibleMoves()
         self.assertEqual(38, len(moves))
 
