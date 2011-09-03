@@ -68,5 +68,8 @@ class ChessGame:
         piece = self.GetPiece(origin.File, origin.Rank)
         if piece == None:
             raise Exception("No piece to move at that position.")
+        #pieceAtDestination = self.GetPiece(destination.File, destination.Rank)
+        #if pieceAtDestination != None:
+        #    self.Pieces.remove(pieceAtDestination)
         piece.Position = destination
         self.SideToPlay = 3 - self.SideToPlay
