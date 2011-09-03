@@ -10,16 +10,28 @@ class Piece:
 
     def GetMoves(self):
         result = []
-        direction = 3 - 2 * self.Color
         originFile = self.Position.File
         originRank = self.Position.Rank
         if self.Kind == Kind.Pawn:
+            direction = 3 - 2 * self.Color
             result.append(self.GetMove(originFile, originRank + direction))
             if (self.Color == Color.White and originRank == 2) or (self.Color == Color.Black and originRank == 7):
                 result.append(self.GetMove(originFile, originRank + 2 * direction))
         if self.Kind == Kind.Knight:
-            result.append(self.GetMove(originFile - 1, originRank + 2 * direction))
-            result.append(self.GetMove(originFile + 1, originRank + 2 * direction))
+            for knightStep in (-2,-1), (-2,1), (-1,-2), (-1,2), (1,-2), (1,2), (2,-1), (2,1):
+                destinationFile = originFile + knightStep[0]
+                destinationRank = originRank + knightStep[1]
+                if File.A <= destinationFile and destinationFile <= File.H and 1 <= destinationRank and destinationRank <= 8:
+                    result.append(self.GetMove(destinationFile, destinationRank))
+        if self.Kind == Kind.Rook + 100:
+            # Moving across the rank:
+            for file in File.All:
+                if file != originFile:
+                    result.append(self.GetMove(file, originRank))
+            # Moving down the file:
+            for rank in range(9):
+                if rank != originRank:
+                    result.append(self.GetMove(originFile, rank))
         return result
 
     def GetMove(self, destinationFile, destinationRank):

@@ -23,7 +23,11 @@ class ChessGame:
         result = []
         if piece.Color != self.SideToPlay:
             return result;
-        return piece.GetMoves()
+        for move in piece.GetMoves():
+            pieceAtDestination = self.GetPiece(move.Destination.File, move.Destination.Rank)
+            if pieceAtDestination == None or pieceAtDestination.Color != piece.Color:
+                result.append(move)
+        return result
 
     def Move(self, origin, destination):
         piece = self.GetPiece(origin.File, origin.Rank)
