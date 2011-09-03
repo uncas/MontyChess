@@ -18,7 +18,7 @@ class ChessGame:
         return result
 
     def GetPiece(self, file, rank):
-        return self.board.GetPiece(file, rank)
+        return self.board.GetPiece(Square(file, rank))
 
     def GetPieceMoves(self, piece):
         result = []

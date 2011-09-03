@@ -10,6 +10,9 @@ class Square:
     def GetFileLetter(self, file):
         return chr(ord('A') + file - 1)
 
+    def __eq__(self, other):
+        return self.File == other.File and self.Rank == other.Rank
+
 
 class File:
     A = 1
