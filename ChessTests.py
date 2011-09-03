@@ -178,36 +178,36 @@ class ChessTests(unittest.TestCase):
         self.assertEqual(0, len(pawnA2Moves))
 
     def test_GetPieceMoves_Ply3E4E5WhitePawnE4_0(self):
-        self.game.Move(Square(File.E, 2), Square(File.E, 4))
-        self.game.Move(Square(File.E, 7), Square(File.E, 5))
+        self.Ply1()
+        self.Ply2()
         pawnE4 = self.game.GetPiece(File.E, 4)
         pawnE4Moves = self.game.GetPieceMoves(pawnE4)
         self.assertEqual(0, len(pawnE4Moves))
 
     def test_GetPieceMoves_Ply3E4E5WhiteKnightG1_3(self):
-        self.game.Move(Square(File.E, 2), Square(File.E, 4))
-        self.game.Move(Square(File.E, 7), Square(File.E, 5))
+        self.Ply1()
+        self.Ply2()
         knight = self.game.GetPiece(File.G, 1)
         knightMoves = self.game.GetPieceMoves(knight)
         self.assertEqual(3, len(knightMoves))
 
     def test_GetPieceMoves_Ply3E4E5WhiteBishopF1_5(self):
-        self.game.Move(Square(File.E, 2), Square(File.E, 4))
-        self.game.Move(Square(File.E, 7), Square(File.E, 5))
+        self.Ply1()
+        self.Ply2()
         bishop = self.game.GetPiece(File.F, 1)
         bishopMoves = self.game.GetPieceMoves(bishop)
         self.assertEqual(5, len(bishopMoves))
 
     def test_GetPieceMoves_Ply3E4E5WhiteKingE1_1(self):
-        self.game.Move(Square(File.E, 2), Square(File.E, 4))
-        self.game.Move(Square(File.E, 7), Square(File.E, 5))
+        self.Ply1()
+        self.Ply2()
         king = self.game.GetPiece(File.E, 1)
         kingMoves = self.game.GetPieceMoves(king)
         self.assertEqual(1, len(kingMoves))
 
     def test_GetPieceMoves_Ply3E4E5WhiteQueenD1_4(self):
-        self.game.Move(Square(File.E, 2), Square(File.E, 4))
-        self.game.Move(Square(File.E, 7), Square(File.E, 5))
+        self.Ply1()
+        self.Ply2()
         queen = self.game.GetPiece(File.D, 1)
         queenMoves = self.game.GetPieceMoves(queen)
         self.assertEqual(4, len(queenMoves))
@@ -226,7 +226,7 @@ class ChessTests(unittest.TestCase):
 
     def test_Move_E4_PawnIsMovedToE4(self):
         self.assertTrue(self.ContainsPiece(self.game.Pieces, Piece(Color.White, Kind.Pawn, Square(File.E, 2))))
-        self.game.Move(Square(File.E, 2), Square(File.E, 4))
+        self.Ply1()
         self.assertFalse(self.ContainsPiece(self.game.Pieces, Piece(Color.White, Kind.Pawn, Square(File.E, 2))))
         self.assertTrue(self.ContainsPiece(self.game.Pieces, Piece(Color.White, Kind.Pawn, Square(File.E, 4))))
 
