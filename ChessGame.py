@@ -37,7 +37,7 @@ class ChessGame:
 
     def GetPieceMoves(self, piece):
         result = []
-        if piece.Color == Color.Black:
+        if piece.Color != self.SideToPlay:
             return result;
         if piece.Kind == Kind.Pawn:
             result.append(self.GetPieceMove(piece, Square(piece.Position.File, 3)))

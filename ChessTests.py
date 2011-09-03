@@ -53,6 +53,11 @@ class ChessTests(unittest.TestCase):
         self.assertTrue(self.ContainsMove(moves, Move(Square(File.G, 1), Square(File.F, 3))))
         self.assertTrue(self.ContainsMove(moves, Move(Square(File.G, 1), Square(File.H, 3))))
 
+    def test_PossibleMoves_BlacksFirstMove_20(self):
+        self.game.Move(Square(File.E, 2), Square(File.E, 4))
+        moves = self.game.PossibleMoves()
+        self.assertEqual(20, len(moves))
+
     def test_GetPiece_A2_IsPawn(self):
         pawnA2 = self.game.GetPiece(File.A, 2)
         self.assertEqual(Color.White, pawnA2.Color)
@@ -60,10 +65,16 @@ class ChessTests(unittest.TestCase):
         self.assertEqual(File.A, pawnA2.Position.File)
         self.assertEqual(2, pawnA2.Position.Rank)
 
-    def test_PawnMove_InitialGame_2(self):
+    def test_WhitePawnMove_InitialGame_2(self):
         pawnA2 = self.game.GetPiece(File.A, 2)
         pawnA2Moves = self.game.GetPieceMoves(pawnA2)
         self.assertEqual(2, len(pawnA2Moves))
+
+    def test_WhitePawnMove_BlacksFirstMove_0(self):
+        self.game.Move(Square(File.E, 2), Square(File.E, 4))
+        pawnA2 = self.game.GetPiece(File.A, 2)
+        pawnA2Moves = self.game.GetPieceMoves(pawnA2)
+        self.assertEqual(0, len(pawnA2Moves))
 
     def test_RookMove_InitialGame_0(self):
         rookA1 = self.game.GetPiece(File.A, 1)
