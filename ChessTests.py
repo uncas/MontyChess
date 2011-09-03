@@ -104,9 +104,6 @@ class ChessTests(unittest.TestCase):
         pawnA2Moves = self.game.GetPieceMoves(pawnA2)
         self.assertEqual(0, len(pawnA2Moves))
 
-    def test_Move_NoPieceAtRequestedSquare_Exception(self):
-        self.assertRaises(Exception, self.game.Move, Square(File.E, 4), Square(File.E, 5))
-
     def test_GetPieceMoves_Ply2E4E5WhitePawnE4_0(self):
         self.game.Move(Square(File.E, 2), Square(File.E, 4))
         self.game.Move(Square(File.E, 7), Square(File.E, 5))
@@ -122,8 +119,13 @@ class ChessTests(unittest.TestCase):
         self.assertEqual(Color.Black, self.game.SideToPlay)
 
     def test_Move_E4_PawnIsMovedToE4(self):
+        self.assertTrue(self.ContainsPiece(self.game.Pieces, Piece(Color.White, Kind.Pawn, Square(File.E, 2))))
         self.game.Move(Square(File.E, 2), Square(File.E, 4))
+        self.assertFalse(self.ContainsPiece(self.game.Pieces, Piece(Color.White, Kind.Pawn, Square(File.E, 2))))
         self.assertTrue(self.ContainsPiece(self.game.Pieces, Piece(Color.White, Kind.Pawn, Square(File.E, 4))))
+
+    def test_Move_NoPieceAtRequestedSquare_Exception(self):
+        self.assertRaises(Exception, self.game.Move, Square(File.E, 4), Square(File.E, 5))
 
     def AssertInitialOfficers(self, pieces, color, rank):
         for file in (File.A, File.H):
