@@ -65,36 +65,44 @@ class ChessTests(unittest.TestCase):
         self.assertEqual(File.A, pawnA2.Position.File)
         self.assertEqual(2, pawnA2.Position.Rank)
 
-    def test_GetPieceMoves_WhitePawnInitialGame_2(self):
+    def test_GetPieceMoves_Ply1WhiteKnight_2(self):
+        knightB1 = self.game.GetPiece(File.B, 1)
+        knightB1Moves = self.game.GetPieceMoves(knightB1)
+        self.assertEqual(2, len(knightB1Moves))
+
+    def test_GetPieceMoves_Ply1WhitePawn_2(self):
         pawnA2 = self.game.GetPiece(File.A, 2)
         pawnA2Moves = self.game.GetPieceMoves(pawnA2)
         self.assertEqual(2, len(pawnA2Moves))
         self.assertTrue(self.ContainsMove(pawnA2Moves, Move(Square(File.A, 2), Square(File.A, 3))))
         self.assertTrue(self.ContainsMove(pawnA2Moves, Move(Square(File.A, 2), Square(File.A, 4))))
 
-    def test_GetPieceMoves_WhitePawnBlacksFirstMove_0(self):
-        self.game.Move(Square(File.E, 2), Square(File.E, 4))
-        pawnA2 = self.game.GetPiece(File.A, 2)
-        pawnA2Moves = self.game.GetPieceMoves(pawnA2)
-        self.assertEqual(0, len(pawnA2Moves))
+    def test_GetPieceMoves_Ply1WhiteRook_0(self):
+        rookA1 = self.game.GetPiece(File.A, 1)
+        rookA1Moves = self.game.GetPieceMoves(rookA1)
+        self.assertEqual(0, len(rookA1Moves))
 
-    def test_GetPieceMoves_BlackPawnBlacksFirstMove_2(self):
-        self.game.Move(Square(File.E, 2), Square(File.E, 4))
+    def test_GetPieceMoves_Ply2BlackKnight_2(self):
+        self.Ply1()
+        knightB8 = self.game.GetPiece(File.B, 8)
+        knightB8Moves = self.game.GetPieceMoves(knightB8)
+        self.assertEqual(2, len(knightB8Moves))
+        self.assertTrue(self.ContainsMove(knightB8Moves, Move(Square(File.B, 8), Square(File.A, 6))))
+        self.assertTrue(self.ContainsMove(knightB8Moves, Move(Square(File.B, 8), Square(File.C, 6))))
+
+    def test_GetPieceMoves_Ply2BlackPawn_2(self):
+        self.Ply1()
         pawnA7 = self.game.GetPiece(File.A, 7)
         pawnA7Moves = self.game.GetPieceMoves(pawnA7)
         self.assertEqual(2, len(pawnA7Moves))
         self.assertTrue(self.ContainsMove(pawnA7Moves, Move(Square(File.A, 7), Square(File.A, 6))))
         self.assertTrue(self.ContainsMove(pawnA7Moves, Move(Square(File.A, 7), Square(File.A, 5))))
 
-    def test_GetPieceMoves_WhiteRookInitialGame_0(self):
-        rookA1 = self.game.GetPiece(File.A, 1)
-        rookA1Moves = self.game.GetPieceMoves(rookA1)
-        self.assertEqual(0, len(rookA1Moves))
-
-    def test_GetPieceMoves_KnightInitialGame_2(self):
-        knightB1 = self.game.GetPiece(File.B, 1)
-        knightB1Moves = self.game.GetPieceMoves(knightB1)
-        self.assertEqual(2, len(knightB1Moves))
+    def test_GetPieceMoves_Ply2WhitePawn_0(self):
+        self.Ply1()
+        pawnA2 = self.game.GetPiece(File.A, 2)
+        pawnA2Moves = self.game.GetPieceMoves(pawnA2)
+        self.assertEqual(0, len(pawnA2Moves))
 
     def test_SideToPlay_InitialGame_White(self):
         self.assertEqual(Color.White, self.game.SideToPlay)
@@ -128,6 +136,9 @@ class ChessTests(unittest.TestCase):
             if p.Kind == piece.Kind and self.SameSquare(p.Position, piece.Position):
                 return True
         return False
+
+    def Ply1(self):
+        self.game.Move(Square(File.E, 2), Square(File.E, 4))
 
     def SameSquare(self, square1, square2):
         return square1.File == square2.File and square1.Rank == square2.Rank

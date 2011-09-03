@@ -39,15 +39,15 @@ class ChessGame:
         result = []
         if piece.Color != self.SideToPlay:
             return result;
+        direction = 3 - 2 * piece.Color
+        originRank = piece.Position.Rank
+        originFile = piece.Position.File
         if piece.Kind == Kind.Pawn:
-            direction = 3 - 2 * piece.Color
-            originRank = piece.Position.Rank
-            originFile = piece.Position.File
             result.append(self.GetPieceMove(piece, Square(originFile, originRank + direction)))
             result.append(self.GetPieceMove(piece, Square(originFile, originRank + 2 * direction)))
         if piece.Kind == Kind.Knight:
-            result.append(self.GetPieceMove(piece, Square(piece.Position.File - 1, 3)))
-            result.append(self.GetPieceMove(piece, Square(piece.Position.File + 1, 3)))
+            result.append(self.GetPieceMove(piece, Square(originFile - 1, originRank + 2 * direction)))
+            result.append(self.GetPieceMove(piece, Square(originFile + 1, originRank + 2 * direction)))
         return result
 
     def GetPieceMove(self, piece, destination):
