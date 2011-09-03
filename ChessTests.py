@@ -69,6 +69,8 @@ class ChessTests(unittest.TestCase):
         pawnA2 = self.game.GetPiece(File.A, 2)
         pawnA2Moves = self.game.GetPieceMoves(pawnA2)
         self.assertEqual(2, len(pawnA2Moves))
+        self.assertTrue(self.ContainsMove(pawnA2Moves, Move(Square(File.A, 2), Square(File.A, 3))))
+        self.assertTrue(self.ContainsMove(pawnA2Moves, Move(Square(File.A, 2), Square(File.A, 4))))
 
     def test_GetPieceMoves_WhitePawnBlacksFirstMove_0(self):
         self.game.Move(Square(File.E, 2), Square(File.E, 4))
@@ -81,8 +83,8 @@ class ChessTests(unittest.TestCase):
         pawnA7 = self.game.GetPiece(File.A, 7)
         pawnA7Moves = self.game.GetPieceMoves(pawnA7)
         self.assertEqual(2, len(pawnA7Moves))
-        self.ContainsMove(pawnA7Moves, Move(Square(File.A, 7), Square(File.A, 6)))
-        self.ContainsMove(pawnA7Moves, Move(Square(File.A, 7), Square(File.A, 5)))
+        self.assertTrue(self.ContainsMove(pawnA7Moves, Move(Square(File.A, 7), Square(File.A, 6))))
+        self.assertTrue(self.ContainsMove(pawnA7Moves, Move(Square(File.A, 7), Square(File.A, 5))))
 
     def test_GetPieceMoves_WhiteRookInitialGame_0(self):
         rookA1 = self.game.GetPiece(File.A, 1)
@@ -116,9 +118,7 @@ class ChessTests(unittest.TestCase):
         self.assertTrue(self.ContainsPiece(pieces, Piece(color, Kind.King, Square(File.E, rank))))
 
     def ContainsMove(self, moves, move):
-        print(move)
         for m in moves:
-            print(m)
             if self.SameSquare(m.Origin, move.Origin) and self.SameSquare(m.Destination, move.Destination):
                 return True
         return False

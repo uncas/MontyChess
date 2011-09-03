@@ -40,8 +40,11 @@ class ChessGame:
         if piece.Color != self.SideToPlay:
             return result;
         if piece.Kind == Kind.Pawn:
-            result.append(self.GetPieceMove(piece, Square(piece.Position.File, 3)))
-            result.append(self.GetPieceMove(piece, Square(piece.Position.File, 4)))
+            direction = 3 - 2 * piece.Color
+            originRank = piece.Position.Rank
+            originFile = piece.Position.File
+            result.append(self.GetPieceMove(piece, Square(originFile, originRank + direction)))
+            result.append(self.GetPieceMove(piece, Square(originFile, originRank + 2 * direction)))
         if piece.Kind == Kind.Knight:
             result.append(self.GetPieceMove(piece, Square(piece.Position.File - 1, 3)))
             result.append(self.GetPieceMove(piece, Square(piece.Position.File + 1, 3)))
