@@ -58,6 +58,11 @@ class PieceTests(unittest.TestCase):
         moves = piece.GetMoves()
         self.assertEqual(14, len(moves))
 
+    def test_GetMoves_WhiteKnightB1_3(self):
+        piece = Piece(Color.White, Kind.Knight, Square(File.B, 1))
+        moves = piece.GetMoves()
+        self.assertEqual(3, len(moves))
+
     def test_GetMoves_WhiteBishopC1_7(self):
         piece = Piece(Color.White, Kind.Bishop, Square(File.C, 1))
         moves = piece.GetMoves()
@@ -67,6 +72,11 @@ class PieceTests(unittest.TestCase):
         piece = Piece(Color.White, Kind.Queen, Square(File.D, 1))
         moves = piece.GetMoves()
         self.assertEqual(21, len(moves))
+
+    def test_GetMoves_WhiteKingE1_5(self):
+        piece = Piece(Color.White, Kind.King, Square(File.E, 1))
+        moves = piece.GetMoves()
+        self.assertEqual(5, len(moves))
 
 
 class ChessTests(unittest.TestCase):

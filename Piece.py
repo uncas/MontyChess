@@ -31,6 +31,15 @@ class Piece:
         if self.Kind == Kind.Queen:
             self.AppendRookMoves(result, originFile, originRank)
             self.AppendBishopMoves(result, originFile, originRank)
+        if self.Kind == Kind.King:
+            for fileDelta in -1,0,1:
+                for rankDelta in -1,0,1:
+                    if fileDelta == 0 and rankDelta == 0:
+                        continue
+                    destinationFile = originFile + fileDelta
+                    destinationRank = originRank + rankDelta
+                    if File.A <= destinationFile and destinationFile <= File.H and 1 <= destinationRank and destinationRank <= 8:
+                        result.append(self.GetMove(destinationFile, destinationRank))
         return result
 
     def AppendRookMoves(self, result, originFile, originRank):
