@@ -104,18 +104,18 @@ class ChessTests(unittest.TestCase):
         pawnA2Moves = self.game.GetPieceMoves(pawnA2)
         self.assertEqual(0, len(pawnA2Moves))
 
-    def test_GetPieceMoves_Ply2E4E5WhitePawnE4_0(self):
+    def test_GetPieceMoves_Ply3E4E5WhitePawnE4_0(self):
         self.game.Move(Square(File.E, 2), Square(File.E, 4))
         self.game.Move(Square(File.E, 7), Square(File.E, 5))
         pawnE4 = self.game.GetPiece(File.E, 4)
         pawnE4Moves = self.game.GetPieceMoves(pawnE4)
         self.assertEqual(0, len(pawnE4Moves))
 
-    def test_SideToPlay_InitialGame_White(self):
+    def test_SideToPlay_Ply1_White(self):
         self.assertEqual(Color.White, self.game.SideToPlay)
 
-    def test_SideToPlay_BlacksFirstMove_Black(self):
-        self.game.Move(Square(File.E, 2), Square(File.E, 4))
+    def test_SideToPlay_Ply2_Black(self):
+        self.Ply1()
         self.assertEqual(Color.Black, self.game.SideToPlay)
 
     def test_Move_E4_PawnIsMovedToE4(self):
