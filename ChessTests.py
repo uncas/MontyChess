@@ -2,6 +2,7 @@
 # en passant
 # castling
 # not allowed to castle when already moved
+# castling when checked
 # check and disallowing moves
 # mate
 # stale mate
@@ -302,7 +303,7 @@ class ChessTests(unittest.TestCase):
         self.game.Move(Square(File.E, 5), Square(File.D, 4))
 
     def SameSquare(self, square1, square2):
-        return square1.File == square2.File and square1.Rank == square2.Rank
+        return square1 == square2
 
 
 if __name__ == "__main__":
