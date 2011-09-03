@@ -87,7 +87,7 @@ class ChessTests(unittest.TestCase):
 
     def ContainsMove(self, moves, move):
         for m in moves:
-            if self.SameSquare(m.Origin, move.Origin) and self.SameSquare(m.To, move.To):
+            if self.SameSquare(m.Origin, move.Origin) and self.SameSquare(m.Destination, move.Destination):
                 return True
         return False
 
