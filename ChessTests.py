@@ -1,3 +1,14 @@
+# TODO:
+# en passant
+# castling
+# not allowed to castle when already moved
+# check and disallowing moves
+# mate
+# stale mate
+# pawn promotion
+# draw by repetition
+# 50 move rule
+
 import unittest
 
 from Board import *
