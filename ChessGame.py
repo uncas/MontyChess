@@ -3,6 +3,7 @@ from Move import *
 from Piece import *
 from Square import *
 
+
 class ChessGame:
 
     def __init__(self):
@@ -149,6 +150,7 @@ class ChessGame:
             if pieceAtSquare != None:
                 return True
         return False
+
 
 class CastlingPossibility:
 
