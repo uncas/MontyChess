@@ -1,6 +1,6 @@
 TODO:
 X simple piece moves and captures
-- en passant
+X en passant
 - castling
 - not allowed to castle when already moved
 - castling when checked
