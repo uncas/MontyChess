@@ -7,14 +7,20 @@ class Piece:
         self.Color = color
         self.Kind = kind
         self.Position = position
-        self.CanJump = kind == Kind.Knight
         self._direction = 3 - 2 * self.Color
+        self.IsPawn = kind == Kind.Pawn
+        self.IsKnight = kind == Kind.Knight
+        self.IsBishop = kind == Kind.Bishop
+        self.IsRook = kind == Kind.Rook
+        self.IsQueen = kind == Kind.Queen
+        self.IsKing = kind == Kind.King
+        self.CanJump = self.IsKnight
 
     def __repr__(self):
         return self._colorString() + " " + self._kindString()
 
     def GetCaptureMoves(self):
-        if self.Kind != Kind.Pawn:
+        if not self.IsPawn:
             return self.GetMoves()
         result = []
         originFile = self.Position.File
@@ -29,18 +35,18 @@ class Piece:
         result = []
         originFile = self.Position.File
         originRank = self.Position.Rank
-        if self.Kind == Kind.Pawn:
+        if self.IsPawn:
             self._appendPawnMoves(result, originFile, originRank)
-        if self.Kind == Kind.Knight:
+        if self.IsKnight:
             self._appendKnightMoves(result, originFile, originRank)
-        if self.Kind == Kind.Rook:
+        if self.IsRook:
             self._appendRookMoves(result, originFile, originRank)
-        if self.Kind == Kind.Bishop:
+        if self.IsBishop:
             self._appendBishopMoves(result, originFile, originRank)
-        if self.Kind == Kind.Queen:
+        if self.IsQueen:
             self._appendRookMoves(result, originFile, originRank)
             self._appendBishopMoves(result, originFile, originRank)
-        if self.Kind == Kind.King:
+        if self.IsKing:
             self._appendKingMoves(result, originFile, originRank)
         return result
 

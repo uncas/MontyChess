@@ -45,7 +45,7 @@ class ChessGame:
         self._lastMove = Move(origin, destination)
 
     def _castlingIsPossible(self, piece):
-        if piece.Kind != Kind.King or piece.Position.File != File.E:
+        if not piece.IsKing or piece.Position.File != File.E:
             return False
         pieceAtF = self.GetPiece(File.F, piece.Position.Rank)
         pieceAtG = self.GetPiece(File.G, piece.Position.Rank)
@@ -74,7 +74,7 @@ class ChessGame:
             or self._enPassantIsPossibleAtSquare(piece, square)
 
     def _enPassantIsPossibleAtSquare(self, piece, square):
-        if piece.Kind != Kind.Pawn:
+        if not piece.IsPawn:
             return False
         if piece.Color == Color.White and piece.Position.Rank != 5:
             return False
@@ -83,7 +83,7 @@ class ChessGame:
         pieceNextToPawn = self.GetPiece(square.File, piece.Position.Rank)
         if pieceNextToPawn == None \
             or pieceNextToPawn.Color == piece.Color \
-            or pieceNextToPawn.Kind != Kind.Pawn:
+            or not pieceNextToPawn.IsPawn:
             return False
         if piece.Color == Color.White:
             originRank = 7
