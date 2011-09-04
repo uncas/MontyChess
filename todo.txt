@@ -5,8 +5,8 @@ X castling king-side
 - castling: moving king and rook correcly
 - castling queen-side
 - not allowed to castle when already moved
-- castling when checked
 - check and disallowing moves
+- castling when checked
 - mate
 - stale mate
 - pawn promotion
