@@ -264,6 +264,16 @@ class ChessTests(unittest.TestCase):
         pawnMoves = self._getPieceMoves(File.E, 5)
         self.assertEqual(1, len(pawnMoves))
 
+    def test_GetPieceMoves_InLastPlyAnOpponentPawnTookASignleStepToTheSquareNextToThePawn_EnPassantIsNotPossible(self):
+        self._move(Square(File.E, 2), Square(File.E, 4))
+        self._move(Square(File.E, 7), Square(File.E, 6))
+        self._move(Square(File.E, 4), Square(File.E, 5))
+        self._move(Square(File.D, 7), Square(File.D, 6))
+        self._move(Square(File.D, 2), Square(File.D, 4))
+        self._move(Square(File.D, 6), Square(File.D, 5))
+        pawnMoves = self._getPieceMoves(File.E, 5)
+        self.assertEqual(0, len(pawnMoves))
+
     def AssertInitialOfficers(self, pieces, color, rank):
         for file in (File.A, File.H):
             self.assertTrue(self.ContainsPiece(pieces, Piece(color, Kind.Rook, Square(file, rank))))

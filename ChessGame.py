@@ -40,6 +40,7 @@ class ChessGame:
             self.Pieces.remove(pieceAtDestination)
         piece.Position = destination
         self.SideToPlay = 3 - self.SideToPlay
+        self._lastMove = Move(origin, destination)
 
     def _isValidMove(self, piece, move):
         return not self._squareIsOccupiedByOwnPiece(piece, move.Destination) \
@@ -75,7 +76,12 @@ class ChessGame:
             or pieceNextToPawn.Color == piece.Color \
             or pieceNextToPawn.Kind != Kind.Pawn:
             return False
-        return True
+        if piece.Color == Color.White:
+            originRank = 7
+        else:
+            originRank = 2
+        return self._lastMove.Destination == Square(square.File, piece.Position.Rank) \
+            and self._lastMove.Origin.Rank == originRank
 
     def _moveIsObstructedByPiece(self, piece, destination):
         if piece.CanJump:
