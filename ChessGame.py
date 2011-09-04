@@ -33,13 +33,6 @@ class ChessGame:
             result.append(Move(piece.Position, Square(File.G, piece.Position.Rank)))
         return result
 
-    def _castlingIsPossible(self, piece):
-        if piece.Kind != Kind.King or piece.Position.File != File.E:
-            return False
-        pieceAtF = self.GetPiece(File.F, piece.Position.Rank)
-        pieceAtG = self.GetPiece(File.G, piece.Position.Rank)
-        return pieceAtF == None and pieceAtG == None
-
     def Move(self, origin, destination):
         piece = self.GetPiece(origin.File, origin.Rank)
         if piece == None:
@@ -50,6 +43,13 @@ class ChessGame:
         piece.Position = destination
         self.SideToPlay = 3 - self.SideToPlay
         self._lastMove = Move(origin, destination)
+
+    def _castlingIsPossible(self, piece):
+        if piece.Kind != Kind.King or piece.Position.File != File.E:
+            return False
+        pieceAtF = self.GetPiece(File.F, piece.Position.Rank)
+        pieceAtG = self.GetPiece(File.G, piece.Position.Rank)
+        return pieceAtF == None and pieceAtG == None
 
     def _isValidMove(self, piece, move):
         return not self._squareIsOccupiedByOwnPiece(piece, move.Destination) \
