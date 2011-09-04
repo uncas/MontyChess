@@ -30,7 +30,7 @@ class ChessGame:
             if self._isValidCapture(piece, capture):
                 result.append(capture)
         if self._castlingIsPossible(piece):
-            result.append(Move(piece.Position, Square(File.G, piece.Position.Rank)))
+            result.append(Move.Castling(piece.Position, Square(File.G, piece.Position.Rank)))
         return result
 
     def Move(self, origin, destination):

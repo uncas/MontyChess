@@ -292,6 +292,19 @@ class ChessTests(unittest.TestCase):
         kingMoves = self._getPieceMoves(File.E, 1)
         self.assertEqual(3, len(kingMoves))
 
+    def xtest_GetPiece_Castling_KingAndRookHaveMoved(self):
+        self._move(Square(File.E, 2), Square(File.E, 4))
+        self._move(Square(File.E, 7), Square(File.E, 5))
+        self._move(Square(File.G, 1), Square(File.F, 3))
+        self._move(Square(File.B, 8), Square(File.C, 6))
+        self._move(Square(File.F, 1), Square(File.B, 5))
+        self._move(Square(File.G, 8), Square(File.F, 6))
+        self._move(Square(File.E, 1), Square(File.G, 1))
+        king = self._getPiece(File.G, 1)
+        self.assertIsNotNone(king)
+        rook = self._getPiece(File.F, 1)
+        self.assertIsNotNone(rook)
+
     def AssertInitialOfficers(self, pieces, color, rank):
         for file in (File.A, File.H):
             self.assertTrue(self.ContainsPiece(pieces, Piece(color, Kind.Rook, Square(file, rank))))
@@ -314,8 +327,11 @@ class ChessTests(unittest.TestCase):
                 return True
         return False
 
+    def _getPiece(self, file, rank):
+        return self.game.GetPiece(file, rank)
+
     def _getPieceMoves(self, file, rank):
-        piece = self.game.GetPiece(file, rank)
+        piece = self._getPiece(file, rank)
         return self.game.GetPieceMoves(piece)
 
     def _move(self, origin, destination):
