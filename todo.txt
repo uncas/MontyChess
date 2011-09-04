@@ -2,8 +2,8 @@ TODO:
 X simple piece moves and captures
 X en passant
 X castling king-side
-- castling: moving king and rook correcly
-- castling queen-side
+X castling: moving king and rook correcly
+X castling queen-side
 - not allowed to castle when already moved
 - check and disallowing moves
 - castling when checked

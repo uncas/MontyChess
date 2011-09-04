@@ -42,8 +42,14 @@ class ChessGame:
             self.Pieces.remove(pieceAtDestination)
         if self._isCastling(piece, destination):
             move = Move.Castling(origin, destination)
-            rook = self.GetPiece(File.H, destination.Rank)
-            rook.Position.File = File.F
+            if destination.File == File.G:
+                rookOriginFile = File.H
+                rookDestinationFile = File.F
+            else:
+                rookOriginFile = File.A
+                rookDestinationFile = File.D
+            rook = self.GetPiece(rookOriginFile, destination.Rank)
+            rook.Position.File = rookDestinationFile
         else:
             move = Move(origin, destination)
         piece.Position = destination
@@ -56,9 +62,11 @@ class ChessGame:
     def _castlingIsPossible(self, piece):
         if not piece.IsKing or piece.Position.File != File.E:
             return False
-        pieceAtF = self.GetPiece(File.F, piece.Position.Rank)
-        pieceAtG = self.GetPiece(File.G, piece.Position.Rank)
-        return pieceAtF == None and pieceAtG == None
+        pieces = []
+        for file in File.B, File.C, File.D, File.F, File.G:
+            pieces.append(self.GetPiece(file, piece.Position.Rank))
+        return (pieces[0] == None and pieces[1] == None and pieces[2] == None) \
+            or (pieces[3] == None and pieces[4] == None)
 
     def _isValidMove(self, piece, move):
         return not self._squareIsOccupiedByOwnPiece(piece, move.Destination) \
