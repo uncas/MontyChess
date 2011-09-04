@@ -1,0 +1,12 @@
+TODO:
+X simple piece moves and captures
+- en passant
+- castling
+- not allowed to castle when already moved
+- castling when checked
+- check and disallowing moves
+- mate
+- stale mate
+- pawn promotion
+- draw by repetition
+- 50 move rule
