@@ -4,7 +4,7 @@ X en passant
 X castling king-side
 X castling: moving king and rook correcly
 X castling queen-side
-- not allowed to castle when already moved
+X not allowed to castle when already moved
 - check and disallowing moves
 - castling when checked
 - mate

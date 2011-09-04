@@ -292,6 +292,20 @@ class ChessTests(unittest.TestCase):
         kingMoves = self._getPieceMoves(File.E, 1)
         self.assertEqual(3, len(kingMoves))
 
+    def test_GetPieceMoves_RookAlreadyMoved_CastlingIsNotPossible(self):
+        self._move(Square(File.E, 2), Square(File.E, 4))
+        self._move(Square(File.E, 7), Square(File.E, 5))
+        self._move(Square(File.G, 1), Square(File.F, 3))
+        self._move(Square(File.B, 8), Square(File.C, 6))
+        self._move(Square(File.F, 1), Square(File.B, 5))
+        self._move(Square(File.G, 8), Square(File.F, 6))
+        self._move(Square(File.H, 1), Square(File.G, 1))
+        self._move(Square(File.D, 7), Square(File.D, 6))
+        self._move(Square(File.G, 1), Square(File.H, 1))
+        self._move(Square(File.D, 6), Square(File.D, 5))
+        kingMoves = self._getPieceMoves(File.E, 1)
+        self.assertEqual(2, len(kingMoves))
+
     def test_GetPiece_Castling_KingAndRookHaveMoved(self):
         self._move(Square(File.E, 2), Square(File.E, 4))
         self._move(Square(File.E, 7), Square(File.E, 5))

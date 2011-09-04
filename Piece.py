@@ -15,6 +15,7 @@ class Piece:
         self.IsQueen = kind == Kind.Queen
         self.IsKing = kind == Kind.King
         self.CanJump = self.IsKnight
+        self.HasMoved = False
 
     def __repr__(self):
         return self._colorString() + " " + self._kindString()

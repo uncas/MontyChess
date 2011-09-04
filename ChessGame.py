@@ -29,8 +29,11 @@ class ChessGame:
         for capture in piece.GetCaptureMoves():
             if self._isValidCapture(piece, capture):
                 result.append(capture)
-        if self._castlingIsPossible(piece):
+        castlingPossibility = self._castlingIsPossible(piece)
+        if castlingPossibility.KingSide:
             result.append(Move.Castling(piece.Position, Square(File.G, piece.Position.Rank)))
+        if castlingPossibility.QueenSide:
+            result.append(Move.Castling(piece.Position, Square(File.C, piece.Position.Rank)))
         return result
 
     def Move(self, origin, destination):
@@ -50,9 +53,11 @@ class ChessGame:
                 rookDestinationFile = File.D
             rook = self.GetPiece(rookOriginFile, destination.Rank)
             rook.Position.File = rookDestinationFile
+            rook.HasMoved = True
         else:
             move = Move(origin, destination)
         piece.Position = destination
+        piece.HasMoved = True
         self.SideToPlay = 3 - self.SideToPlay
         self._lastMove = move
 
@@ -60,13 +65,16 @@ class ChessGame:
         return piece.IsKing and abs(piece.Position.File - destination.File) == 2
 
     def _castlingIsPossible(self, piece):
-        if not piece.IsKing or piece.Position.File != File.E:
-            return False
+        if piece.HasMoved or not piece.IsKing or piece.Position.File != File.E:
+            return CastlingPossibility(False, False)
         pieces = []
         for file in File.B, File.C, File.D, File.F, File.G:
             pieces.append(self.GetPiece(file, piece.Position.Rank))
-        return (pieces[0] == None and pieces[1] == None and pieces[2] == None) \
-            or (pieces[3] == None and pieces[4] == None)
+        rookA = self.GetPiece(File.A, piece.Position.Rank)
+        rookH = self.GetPiece(File.H, piece.Position.Rank)
+        queenSide = pieces[0] == None and pieces[1] == None and pieces[2] == None and rookA != None and not rookA.HasMoved
+        kingSide = pieces[3] == None and pieces[4] == None and rookH != None and not rookH.HasMoved
+        return CastlingPossibility(queenSide, kingSide)
 
     def _isValidMove(self, piece, move):
         return not self._squareIsOccupiedByOwnPiece(piece, move.Destination) \
@@ -128,3 +136,9 @@ class ChessGame:
             if pieceAtSquare != None:
                 return True
         return False
+
+class CastlingPossibility:
+
+    def __init__(self, queenSide, kingSide):
+        self.QueenSide = queenSide
+        self.KingSide = kingSide
