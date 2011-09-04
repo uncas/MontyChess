@@ -29,7 +29,7 @@ class ChessGame:
         for capture in piece.GetCaptureMoves():
             if self._isValidCapture(piece, capture):
                 result.append(capture)
-        castlingPossibility = self._castlingIsPossible(piece)
+        castlingPossibility = self._getCastlingPossibility(piece)
         if castlingPossibility.KingSide:
             result.append(Move.Castling(piece.Position, Square(File.G, piece.Position.Rank)))
         if castlingPossibility.QueenSide:
@@ -64,7 +64,7 @@ class ChessGame:
     def _isCastling(self, piece, destination):
         return piece.IsKing and abs(piece.Position.File - destination.File) == 2
 
-    def _castlingIsPossible(self, piece):
+    def _getCastlingPossibility(self, piece):
         if piece.HasMoved or not piece.IsKing or piece.Position.File != File.E:
             return CastlingPossibility(False, False)
         pieces = []
