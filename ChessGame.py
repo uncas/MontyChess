@@ -49,7 +49,7 @@ class ChessGame:
     def _isValidCapture(self, piece, capture):
         return not self._squareIsOccupiedByOwnPiece(piece, capture.Destination) \
             and not self._moveIsObstructedByPiece(piece, capture.Destination) \
-            and self._squareIsOccupiedByOpponent(piece, capture.Destination)
+            and self._opponentIsCapturedAtSquare(piece, capture.Destination)
 
     def _squareIsOccupiedByOwnPiece(self, piece, square):
         pieceAtSquare = self.GetPiece(square.File, square.Rank)
@@ -58,6 +58,24 @@ class ChessGame:
     def _squareIsOccupiedByOpponent(self, piece, square):
         pieceAtSquare = self.GetPiece(square.File, square.Rank)
         return pieceAtSquare != None and pieceAtSquare.Color != piece.Color
+
+    def _opponentIsCapturedAtSquare(self, piece, square):
+        return self._squareIsOccupiedByOpponent(piece, square) \
+            or self._enPassantIsPossibleAtSquare(piece, square)
+
+    def _enPassantIsPossibleAtSquare(self, piece, square):
+        if piece.Kind != Kind.Pawn:
+            return False
+        if piece.Color == Color.White and piece.Position.Rank != 5:
+            return False
+        if piece.Color == Color.Black and piece.Position.Rank != 4:
+            return False
+        pieceNextToPawn = self.GetPiece(square.File, piece.Position.Rank)
+        if pieceNextToPawn == None \
+            or pieceNextToPawn.Color == piece.Color \
+            or pieceNextToPawn.Kind != Kind.Pawn:
+            return False
+        return True
 
     def _moveIsObstructedByPiece(self, piece, destination):
         if piece.CanJump:

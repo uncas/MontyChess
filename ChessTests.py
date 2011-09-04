@@ -256,7 +256,7 @@ class ChessTests(unittest.TestCase):
     def test_Move_NoPieceAtRequestedSquare_Exception(self):
         self.assertRaises(Exception, self.game.Move, Square(File.E, 4), Square(File.E, 5))
 
-    def xtest_GetPieceMoves_InLastPlyAnOpponentPawnTookADoubleStepToTheSquareNextToThePawn_EnPassantIsPossible(self):
+    def test_GetPieceMoves_InLastPlyAnOpponentPawnTookADoubleStepToTheSquareNextToThePawn_EnPassantIsPossible(self):
         self._move(Square(File.E, 2), Square(File.E, 4))
         self._move(Square(File.E, 7), Square(File.E, 6))
         self._move(Square(File.E, 4), Square(File.E, 5))
