@@ -45,21 +45,24 @@ class ChessGame:
             self.Pieces.remove(pieceAtDestination)
         if self._isCastling(piece, destination):
             move = Move.Castling(origin, destination)
-            if destination.File == File.G:
-                rookOriginFile = File.H
-                rookDestinationFile = File.F
-            else:
-                rookOriginFile = File.A
-                rookDestinationFile = File.D
-            rook = self.GetPiece(rookOriginFile, destination.Rank)
-            rook.Position.File = rookDestinationFile
-            rook.HasMoved = True
+            self._rookCastlingMove(destination)
         else:
             move = Move(origin, destination)
         piece.Position = destination
         piece.HasMoved = True
         self.SideToPlay = 3 - self.SideToPlay
         self._lastMove = move
+
+    def _rookCastlingMove(self, kingDestination):
+        if kingDestination.File == File.G:
+            rookOriginFile = File.H
+            rookDestinationFile = File.F
+        else:
+            rookOriginFile = File.A
+            rookDestinationFile = File.D
+        rook = self.GetPiece(rookOriginFile, kingDestination.Rank)
+        rook.Position.File = rookDestinationFile
+        rook.HasMoved = True
 
     def _isCastling(self, piece, destination):
         return piece.IsKing and abs(piece.Position.File - destination.File) == 2
