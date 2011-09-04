@@ -65,16 +65,26 @@ class ChessGame:
         return piece.IsKing and abs(piece.Position.File - destination.File) == 2
 
     def _getCastlingPossibility(self, piece):
-        if piece.HasMoved or not piece.IsKing or piece.Position.File != File.E:
+        if not piece.IsKing or piece.HasMoved:
             return CastlingPossibility(False, False)
-        pieces = []
-        for file in File.B, File.C, File.D, File.F, File.G:
-            pieces.append(self.GetPiece(file, piece.Position.Rank))
-        rookA = self.GetPiece(File.A, piece.Position.Rank)
-        rookH = self.GetPiece(File.H, piece.Position.Rank)
-        queenSide = pieces[0] == None and pieces[1] == None and pieces[2] == None and rookA != None and not rookA.HasMoved
-        kingSide = pieces[3] == None and pieces[4] == None and rookH != None and not rookH.HasMoved
-        return CastlingPossibility(queenSide, kingSide)
+        rank = piece.Position.Rank
+        return CastlingPossibility(self._isCastlingSidePossible(File.A, rank), self._isCastlingSidePossible(File.H, rank))
+
+    def _isCastlingSidePossible(self, rookFile, rank):
+        rook = self.GetPiece(rookFile, rank)
+        if rook == None or rook.HasMoved:
+            return False
+        if rookFile == File.H:
+            file1 = File.F
+            file2 = File.H
+        else:
+            file1 = File.B
+            file2 = File.E
+        for file in range(file1, file2):
+            piece = self.GetPiece(file, rank)
+            if piece != None:
+                return False
+        return True
 
     def _isValidMove(self, piece, move):
         return not self._squareIsOccupiedByOwnPiece(piece, move.Destination) \
