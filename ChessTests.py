@@ -346,6 +346,23 @@ class ChessTests(unittest.TestCase):
         rook = self._getPiece(File.D, 1)
         self.assertIsNotNone(rook)
 
+    def test_CheckStatus_E4F5QH5Check_BlackIsChecked(self):
+        self._move(Square(File.E, 2), Square(File.E, 4))
+        self._move(Square(File.F, 7), Square(File.F, 5))
+        self._move(Square(File.D, 1), Square(File.H, 5))
+        checkStatus = self._checkStatus()
+        self.assertEqual(True, checkStatus.BlackIsChecked)
+
+    def test_PossibleMoves_E4F5QH5Check_1(self):
+        self._move(Square(File.E, 2), Square(File.E, 4))
+        self._move(Square(File.F, 7), Square(File.F, 5))
+        self._move(Square(File.D, 1), Square(File.H, 5))
+        moves = self.game.PossibleMoves()
+        self.assertEqual(1, len(moves))
+
+    def _checkStatus(self):
+        return self.game.CheckStatus()
+
     def AssertInitialOfficers(self, pieces, color, rank):
         for file in (File.A, File.H):
             self.assertTrue(self.ContainsPiece(pieces, Piece(color, Kind.Rook, Square(file, rank))))

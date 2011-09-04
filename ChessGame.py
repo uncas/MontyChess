@@ -54,6 +54,9 @@ class ChessGame:
         self.SideToPlay = 3 - self.SideToPlay
         self._lastMove = move
 
+    def CheckStatus(self):
+        return CheckStatus(False, False)
+
     def _rookCastlingMove(self, kingDestination):
         if kingDestination.File == File.G:
             rookOriginFile = File.H
@@ -157,3 +160,10 @@ class CastlingPossibility:
     def __init__(self, queenSide, kingSide):
         self.QueenSide = queenSide
         self.KingSide = kingSide
+
+
+class CheckStatus:
+
+    def __init__(self, whiteIsChecked, blackIsChecked):
+        self.WhiteIsChecked = whiteIsChecked
+        self.BlackIsChecked = blackIsChecked

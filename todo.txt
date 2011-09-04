@@ -5,7 +5,8 @@ X castling king-side
 X castling: moving king and rook correcly
 X castling queen-side
 X not allowed to castle when already moved
-- check and disallowing moves
+- check
+- disallowing moves when checked
 - castling when checked
 - mate
 - stale mate
