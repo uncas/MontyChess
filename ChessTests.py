@@ -105,7 +105,7 @@ class ChessTests(unittest.TestCase):
         for colorAndRank in (Color.White, 1), (Color.Black, 8):
             color = colorAndRank[0]
             rank = colorAndRank[1]
-            self.AssertInitialOfficers(pieces, color, rank)
+            self._assertInitialOfficers(pieces, color, rank)
 
     def test_PossibleMoves_Ply1_20(self):
         moves = self._possibleMoves()
@@ -363,7 +363,7 @@ class ChessTests(unittest.TestCase):
     def _checkStatus(self):
         return self.game.CheckStatus()
 
-    def AssertInitialOfficers(self, pieces, color, rank):
+    def _assertInitialOfficers(self, pieces, color, rank):
         for file in (File.A, File.H):
             self.assertTrue(Piece(color, Kind.Rook, Square(file, rank)) in pieces)
         for file in (File.B, File.G):
