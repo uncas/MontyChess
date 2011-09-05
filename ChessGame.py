@@ -39,7 +39,7 @@ class ChessGame:
 
     def Move(self, origin, destination):
         piece = self.GetPiece(origin.File, origin.Rank)
-        if piece == None:
+        if piece is None:
             raise Exception("No piece to move at that position.")
         pieceAtDestination = self.GetPiece(destination.File, destination.Rank)
         if pieceAtDestination != None:
@@ -79,7 +79,7 @@ class ChessGame:
 
     def _isCastlingSidePossible(self, rookFile, rank):
         rook = self.GetPiece(rookFile, rank)
-        if rook == None or rook.HasMoved:
+        if rook is None or rook.HasMoved:
             return False
         if rookFile == File.H:
             file1 = File.F
@@ -123,7 +123,7 @@ class ChessGame:
         if piece.Color == Color.Black and piece.Position.Rank != 4:
             return False
         pieceNextToPawn = self.GetPiece(square.File, piece.Position.Rank)
-        if pieceNextToPawn == None \
+        if pieceNextToPawn is None \
             or pieceNextToPawn.Color == piece.Color \
             or not pieceNextToPawn.IsPawn:
             return False

@@ -20,6 +20,11 @@ class Piece:
     def __repr__(self):
         return self._colorString() + " " + self._kindString()
 
+    def __eq__(self, other):
+        if self is None or other is None:
+            return False
+        return self.Kind == other.Kind and self.Color == other.Color and self.Position == other.Position
+
     def GetCaptureMoves(self):
         if not self.IsPawn:
             return self.GetMoves()
@@ -53,7 +58,7 @@ class Piece:
 
     def IsInList(self, pieces):
         for piece in pieces:
-            if piece.Kind == self.Kind and piece.Position == self.Position:
+            if piece == self:
                 return True
         return False
 
