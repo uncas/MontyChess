@@ -380,7 +380,7 @@ class ChessTests(unittest.TestCase):
         return False
 
     def ContainsPiece(self, pieces, piece):
-        return piece.IsInList(pieces)
+        return piece in pieces
 
     def _getPiece(self, file, rank):
         return self.game.GetPiece(file, rank)

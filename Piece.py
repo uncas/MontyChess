@@ -56,12 +56,6 @@ class Piece:
             self._appendKingMoves(result, originFile, originRank)
         return result
 
-    def IsInList(self, pieces):
-        for piece in pieces:
-            if piece == self:
-                return True
-        return False
-
     def _appendKnightMoves(self, result, originFile, originRank):
         for knightStep in (-2,-1), (-2,1), (-1,-2), (-1,2), (1,-2), (1,2), (2,-1), (2,1):
             destinationFile = originFile + knightStep[0]
