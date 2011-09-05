@@ -101,7 +101,7 @@ class ChessTests(unittest.TestCase):
             for colorAndRank in (Color.White, 2), (Color.Black, 7):
                 color = colorAndRank[0]
                 rank = colorAndRank[1]
-                self.assertTrue(self.ContainsPiece(pieces, Piece(color, Kind.Pawn, Square(file, rank))))
+                self.assertTrue(Piece(color, Kind.Pawn, Square(file, rank)) in pieces)
         for colorAndRank in (Color.White, 1), (Color.Black, 8):
             color = colorAndRank[0]
             rank = colorAndRank[1]
@@ -111,12 +111,12 @@ class ChessTests(unittest.TestCase):
         moves = self._possibleMoves()
         self.assertEqual(20, len(moves))
         for file in File.All:
-            self.assertTrue(self.ContainsMove(moves, Move(Square(file, 2), Square(file, 3))))
-            self.assertTrue(self.ContainsMove(moves, Move(Square(file, 2), Square(file, 4))))
-        self.assertTrue(self.ContainsMove(moves, Move(Square(File.B, 1), Square(File.A, 3))))
-        self.assertTrue(self.ContainsMove(moves, Move(Square(File.B, 1), Square(File.C, 3))))
-        self.assertTrue(self.ContainsMove(moves, Move(Square(File.G, 1), Square(File.F, 3))))
-        self.assertTrue(self.ContainsMove(moves, Move(Square(File.G, 1), Square(File.H, 3))))
+            self.assertTrue(Move(Square(file, 2), Square(file, 3)) in moves)
+            self.assertTrue(Move(Square(file, 2), Square(file, 4)) in moves)
+        self.assertTrue(Move(Square(File.B, 1), Square(File.A, 3)) in moves)
+        self.assertTrue(Move(Square(File.B, 1), Square(File.C, 3)) in moves)
+        self.assertTrue(Move(Square(File.G, 1), Square(File.F, 3)) in moves)
+        self.assertTrue(Move(Square(File.G, 1), Square(File.H, 3)) in moves)
 
     def test_PossibleMoves_Ply2_20(self):
         self._ply1()
@@ -157,15 +157,15 @@ class ChessTests(unittest.TestCase):
         knightB1 = self.game.GetPiece(File.B, 1)
         knightB1Moves = self.game.GetPieceMoves(knightB1)
         self.assertEqual(2, len(knightB1Moves))
-        self.assertTrue(self.ContainsMove(knightB1Moves, Move(Square(File.B, 1), Square(File.A, 3))))
-        self.assertTrue(self.ContainsMove(knightB1Moves, Move(Square(File.B, 1), Square(File.C, 3))))
+        self.assertTrue(Move(Square(File.B, 1), Square(File.A, 3)) in knightB1Moves)
+        self.assertTrue(Move(Square(File.B, 1), Square(File.C, 3)) in knightB1Moves)
 
     def test_GetPieceMoves_Ply1WhitePawn_2(self):
         pawnA2 = self.game.GetPiece(File.A, 2)
         pawnA2Moves = self.game.GetPieceMoves(pawnA2)
         self.assertEqual(2, len(pawnA2Moves))
-        self.assertTrue(self.ContainsMove(pawnA2Moves, Move(Square(File.A, 2), Square(File.A, 3))))
-        self.assertTrue(self.ContainsMove(pawnA2Moves, Move(Square(File.A, 2), Square(File.A, 4))))
+        self.assertTrue(Move(Square(File.A, 2), Square(File.A, 3)) in pawnA2Moves)
+        self.assertTrue(Move(Square(File.A, 2), Square(File.A, 4)) in pawnA2Moves)
 
     def test_GetPieceMoves_Ply1WhiteRook_0(self):
         rookA1 = self.game.GetPiece(File.A, 1)
@@ -177,16 +177,16 @@ class ChessTests(unittest.TestCase):
         knightB8 = self.game.GetPiece(File.B, 8)
         knightB8Moves = self.game.GetPieceMoves(knightB8)
         self.assertEqual(2, len(knightB8Moves))
-        self.assertTrue(self.ContainsMove(knightB8Moves, Move(Square(File.B, 8), Square(File.A, 6))))
-        self.assertTrue(self.ContainsMove(knightB8Moves, Move(Square(File.B, 8), Square(File.C, 6))))
+        self.assertTrue(Move(Square(File.B, 8), Square(File.A, 6)) in knightB8Moves)
+        self.assertTrue(Move(Square(File.B, 8), Square(File.C, 6)) in knightB8Moves)
 
     def test_GetPieceMoves_Ply2BlackPawn_2(self):
         self._ply1()
         pawnA7 = self.game.GetPiece(File.A, 7)
         pawnA7Moves = self.game.GetPieceMoves(pawnA7)
         self.assertEqual(2, len(pawnA7Moves))
-        self.assertTrue(self.ContainsMove(pawnA7Moves, Move(Square(File.A, 7), Square(File.A, 6))))
-        self.assertTrue(self.ContainsMove(pawnA7Moves, Move(Square(File.A, 7), Square(File.A, 5))))
+        self.assertTrue(Move(Square(File.A, 7), Square(File.A, 6)) in pawnA7Moves)
+        self.assertTrue(Move(Square(File.A, 7), Square(File.A, 5)) in pawnA7Moves)
 
     def test_GetPieceMoves_Ply2BlackRook_0(self):
         self._ply1()
@@ -248,10 +248,10 @@ class ChessTests(unittest.TestCase):
         self.assertEqual(Color.White, self.game.SideToPlay)
 
     def test_Move_E4_PawnIsMovedToE4(self):
-        self.assertTrue(self.ContainsPiece(self.game.Pieces, Piece(Color.White, Kind.Pawn, Square(File.E, 2))))
+        self.assertTrue(Piece(Color.White, Kind.Pawn, Square(File.E, 2)) in self.game.Pieces)
         self._ply1()
-        self.assertFalse(self.ContainsPiece(self.game.Pieces, Piece(Color.White, Kind.Pawn, Square(File.E, 2))))
-        self.assertTrue(self.ContainsPiece(self.game.Pieces, Piece(Color.White, Kind.Pawn, Square(File.E, 4))))
+        self.assertFalse(Piece(Color.White, Kind.Pawn, Square(File.E, 2)) in self.game.Pieces)
+        self.assertTrue(Piece(Color.White, Kind.Pawn, Square(File.E, 4)) in self.game.Pieces)
 
     def test_Move_NoPieceAtRequestedSquare_Exception(self):
         self.assertRaises(Exception, self._move, Square(File.E, 4), Square(File.E, 5))
@@ -365,22 +365,13 @@ class ChessTests(unittest.TestCase):
 
     def AssertInitialOfficers(self, pieces, color, rank):
         for file in (File.A, File.H):
-            self.assertTrue(self.ContainsPiece(pieces, Piece(color, Kind.Rook, Square(file, rank))))
+            self.assertTrue(Piece(color, Kind.Rook, Square(file, rank)) in pieces)
         for file in (File.B, File.G):
-            self.assertTrue(self.ContainsPiece(pieces, Piece(color, Kind.Knight, Square(file, rank))))
+            self.assertTrue(Piece(color, Kind.Knight, Square(file, rank)) in pieces)
         for file in (File.C, File.F):
-            self.assertTrue(self.ContainsPiece(pieces, Piece(color, Kind.Bishop, Square(file, rank))))
-        self.assertTrue(self.ContainsPiece(pieces, Piece(color, Kind.Queen, Square(File.D, rank))))
-        self.assertTrue(self.ContainsPiece(pieces, Piece(color, Kind.King, Square(File.E, rank))))
-
-    def ContainsMove(self, moves, move):
-        for m in moves:
-            if m.Origin == move.Origin and m.Destination == move.Destination:
-                return True
-        return False
-
-    def ContainsPiece(self, pieces, piece):
-        return piece in pieces
+            self.assertTrue(Piece(color, Kind.Bishop, Square(file, rank)) in pieces)
+        self.assertTrue(Piece(color, Kind.Queen, Square(File.D, rank)) in pieces)
+        self.assertTrue(Piece(color, Kind.King, Square(File.E, rank)) in pieces)
 
     def _getPiece(self, file, rank):
         return self.game.GetPiece(file, rank)
