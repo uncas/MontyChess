@@ -154,85 +154,73 @@ class ChessTests(unittest.TestCase):
         self.assertEqual(2, pawnA2.Position.Rank)
 
     def test_GetPieceMoves_Ply1WhiteKnight_2(self):
-        knightB1 = self.game.GetPiece(File.B, 1)
-        knightB1Moves = self.game.GetPieceMoves(knightB1)
+        knightB1Moves = self._getPieceMoves(File.B, 1)
         self.assertEqual(2, len(knightB1Moves))
         self.assertTrue(Move(Square(File.B, 1), Square(File.A, 3)) in knightB1Moves)
         self.assertTrue(Move(Square(File.B, 1), Square(File.C, 3)) in knightB1Moves)
 
     def test_GetPieceMoves_Ply1WhitePawn_2(self):
-        pawnA2 = self.game.GetPiece(File.A, 2)
-        pawnA2Moves = self.game.GetPieceMoves(pawnA2)
+        pawnA2Moves = self._getPieceMoves(File.A, 2)
         self.assertEqual(2, len(pawnA2Moves))
         self.assertTrue(Move(Square(File.A, 2), Square(File.A, 3)) in pawnA2Moves)
         self.assertTrue(Move(Square(File.A, 2), Square(File.A, 4)) in pawnA2Moves)
 
     def test_GetPieceMoves_Ply1WhiteRook_0(self):
-        rookA1 = self.game.GetPiece(File.A, 1)
-        rookA1Moves = self.game.GetPieceMoves(rookA1)
+        rookA1Moves = self._getPieceMoves(File.A, 1)
         self.assertEqual(0, len(rookA1Moves))
 
     def test_GetPieceMoves_Ply2BlackKnight_2(self):
         self._ply1()
-        knightB8 = self.game.GetPiece(File.B, 8)
-        knightB8Moves = self.game.GetPieceMoves(knightB8)
+        knightB8Moves = self._getPieceMoves(File.B, 8)
         self.assertEqual(2, len(knightB8Moves))
         self.assertTrue(Move(Square(File.B, 8), Square(File.A, 6)) in knightB8Moves)
         self.assertTrue(Move(Square(File.B, 8), Square(File.C, 6)) in knightB8Moves)
 
     def test_GetPieceMoves_Ply2BlackPawn_2(self):
         self._ply1()
-        pawnA7 = self.game.GetPiece(File.A, 7)
-        pawnA7Moves = self.game.GetPieceMoves(pawnA7)
+        pawnA7Moves = self._getPieceMoves(File.A, 7)
         self.assertEqual(2, len(pawnA7Moves))
         self.assertTrue(Move(Square(File.A, 7), Square(File.A, 6)) in pawnA7Moves)
         self.assertTrue(Move(Square(File.A, 7), Square(File.A, 5)) in pawnA7Moves)
 
     def test_GetPieceMoves_Ply2BlackRook_0(self):
         self._ply1()
-        rook = self.game.GetPiece(File.A, 8)
-        rookMoves = self.game.GetPieceMoves(rook)
+        rookMoves = self._getPieceMoves(File.A, 8)
         self.assertEqual(0, len(rookMoves))
 
     def test_GetPieceMoves_Ply2WhitePawn_0(self):
         self._ply1()
-        pawnA2 = self.game.GetPiece(File.A, 2)
-        pawnA2Moves = self.game.GetPieceMoves(pawnA2)
+        pawnA2Moves = self._getPieceMoves(File.A, 2)
         self.assertEqual(0, len(pawnA2Moves))
 
     def test_GetPieceMoves_Ply3E4E5WhitePawnE4_0(self):
         self._ply1()
         self._ply2()
-        pawnE4 = self.game.GetPiece(File.E, 4)
-        pawnE4Moves = self.game.GetPieceMoves(pawnE4)
+        pawnE4Moves = self._getPieceMoves(File.E, 4)
         self.assertEqual(0, len(pawnE4Moves))
 
     def test_GetPieceMoves_Ply3E4E5WhiteKnightG1_3(self):
         self._ply1()
         self._ply2()
-        knight = self.game.GetPiece(File.G, 1)
-        knightMoves = self.game.GetPieceMoves(knight)
+        knightMoves = self._getPieceMoves(File.G, 1)
         self.assertEqual(3, len(knightMoves))
 
     def test_GetPieceMoves_Ply3E4E5WhiteBishopF1_5(self):
         self._ply1()
         self._ply2()
-        bishop = self.game.GetPiece(File.F, 1)
-        bishopMoves = self.game.GetPieceMoves(bishop)
+        bishopMoves = self._getPieceMoves(File.F, 1)
         self.assertEqual(5, len(bishopMoves))
 
     def test_GetPieceMoves_Ply3E4E5WhiteKingE1_1(self):
         self._ply1()
         self._ply2()
-        king = self.game.GetPiece(File.E, 1)
-        kingMoves = self.game.GetPieceMoves(king)
+        kingMoves = self._getPieceMoves(File.E, 1)
         self.assertEqual(1, len(kingMoves))
 
     def test_GetPieceMoves_Ply3E4E5WhiteQueenD1_4(self):
         self._ply1()
         self._ply2()
-        queen = self.game.GetPiece(File.D, 1)
-        queenMoves = self.game.GetPieceMoves(queen)
+        queenMoves = self._getPieceMoves(File.D, 1)
         self.assertEqual(4, len(queenMoves))
 
     def test_SideToPlay_Ply1_White(self):
@@ -378,7 +366,7 @@ class ChessTests(unittest.TestCase):
 
     def _getPieceMoves(self, file, rank):
         piece = self._getPiece(file, rank)
-        return self.game.GetPieceMoves(piece)
+        return self.game.GetPieceMoves(piece, True)
 
     def _move(self, origin, destination):
         self.game.Move(origin, destination)

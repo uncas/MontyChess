@@ -13,17 +13,17 @@ class ChessGame:
 
     def PossibleMoves(self):
         result = []
-        for piece in self.Pieces:
-            result.extend(self.GetPieceMoves(piece))
+        for piece in self._board.GetPieces(self.SideToPlay):
+            result.extend(self.GetPieceMoves(piece, True))
         return result
 
     def GetPiece(self, file, rank):
         return self._board.GetPiece(Square(file, rank))
 
-    def GetPieceMoves(self, piece):
+    def GetPieceMoves(self, piece, onlyIfSideToPlay):
         result = []
-        if piece.Color != self.SideToPlay:
-            return result;
+        if onlyIfSideToPlay and piece.Color != self.SideToPlay:
+            return result
         for move in piece.GetMoves():
             if self._isValidMove(piece, move):
                 result.append(move)

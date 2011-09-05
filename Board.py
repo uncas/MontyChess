@@ -18,6 +18,9 @@ class Board:
         self.Pieces = []
         self._addPieces()
 
+    def GetPieces(self, color):
+        return [elem for elem in self.Pieces if elem.Color == color] 
+
     def GetPiece(self, position):
         for piece in self.Pieces:
             if piece.Position == position:
