@@ -375,15 +375,12 @@ class ChessTests(unittest.TestCase):
 
     def ContainsMove(self, moves, move):
         for m in moves:
-            if self.SameSquare(m.Origin, move.Origin) and self.SameSquare(m.Destination, move.Destination):
+            if m.Origin == move.Origin and m.Destination == move.Destination:
                 return True
         return False
 
     def ContainsPiece(self, pieces, piece):
-        for p in pieces:
-            if p.Kind == piece.Kind and self.SameSquare(p.Position, piece.Position):
-                return True
-        return False
+        return piece.IsInList(pieces)
 
     def _getPiece(self, file, rank):
         return self.game.GetPiece(file, rank)
@@ -409,9 +406,6 @@ class ChessTests(unittest.TestCase):
 
     def _possibleMoves(self):
         return self.game.PossibleMoves()
-
-    def SameSquare(self, square1, square2):
-        return square1 == square2
 
 
 if __name__ == "__main__":
