@@ -12,8 +12,8 @@ class Move:
         return self.Origin == other.Origin and self.Destination == other.Destination
 
     @staticmethod
-    def Castling(origin, destination):
-        castlingMove = Move(origin, destination)
+    def Castle(piece, destination):
+        castlingMove = Move.Normal(piece, destination)
         castlingMove.IsCastling = True
         return castlingMove
 
