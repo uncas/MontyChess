@@ -37,9 +37,13 @@ class ChessGame:
                 result.append(capture)
         castlingPossibility = self._getCastlingPossibility(piece)
         if castlingPossibility.KingSide:
-            result.append(Move.Castle(piece, Square(File.G, piece.Position.Rank)))
+            kingDestination = Square(File.G, piece.Position.Rank)
+            rook = self._getRookToCastleWith(kingDestination)
+            result.append(Move.Castle(piece, kingDestination, rook))
         if castlingPossibility.QueenSide:
-            result.append(Move.Castle(piece, Square(File.C, piece.Position.Rank)))
+            kingDestination = Square(File.C, piece.Position.Rank)
+            rook = self._getRookToCastleWith(kingDestination)
+            result.append(Move.Castle(piece, kingDestination, rook))
         return [move for move in result if not self._isColorCheckedAfterMove(piece.Color, move)]
 
     def Move(self, origin, destination):
@@ -50,7 +54,8 @@ class ChessGame:
         if pieceAtDestination != None:
             self.Pieces.remove(pieceAtDestination)
         if self._isCastling(piece, destination):
-            move = Move.Castle(piece, destination)
+            rook = self._getRookToCastleWith(destination)
+            move = Move.Castle(piece, destination, rook)
             self._rookCastlingMove(destination)
         else:
             move = Move.Normal(piece, destination)

@@ -24,9 +24,10 @@ class Move:
         self.Piece.HasMoved = self._oldHasMoved
 
     @staticmethod
-    def Castle(piece, destination):
+    def Castle(piece, destination, rook):
         castlingMove = Move.Normal(piece, destination)
         castlingMove.IsCastling = True
+        castlingMove.Rook = rook
         return castlingMove
 
     @staticmethod
