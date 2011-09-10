@@ -6,6 +6,35 @@ from Move import *
 from Piece import *
 
 
+class MoveTests(unittest.TestCase):
+
+    def test_Apply(self):
+        # Arrange:
+        board = Board()
+        pawnA2 = board.GetPiece(Square(File.A, 2))
+        move = Move.Normal(pawnA2, Square(File.A, 3))
+        # Act:
+        move.Apply()
+        # Assert:
+        self.assertEqual(File.A, pawnA2.Position.File)
+        self.assertEqual(3, pawnA2.Position.Rank)
+        self.assertEqual(2, move.Origin.Rank)
+
+    def test_Revert(self):
+        # Arrange:
+        board = Board()
+        pawnA2 = board.GetPiece(Square(File.A, 2))
+        move = Move.Normal(pawnA2, Square(File.A, 3))
+        move.Apply()
+        # Act:
+        move.Revert()
+        # Assert:
+        self.assertEqual(File.A, pawnA2.Position.File)
+        self.assertEqual(2, pawnA2.Position.Rank)
+        self.assertEqual(2, move.Origin.Rank)
+        self.assertEqual(3, move.Destination.Rank)
+
+
 class BoardTests(unittest.TestCase):
 
     def test_Square_A1(self):

@@ -12,6 +12,12 @@ class Move:
     def __eq__(self, other):
         return self.Origin == other.Origin and self.Destination == other.Destination
 
+    def Apply(self):
+        self.Piece.Position = self.Destination
+
+    def Revert(self):
+        self.Piece.Position = self.Origin
+
     @staticmethod
     def Castle(piece, destination):
         castlingMove = Move.Normal(piece, destination)
