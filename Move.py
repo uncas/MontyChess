@@ -24,6 +24,8 @@ class Move:
     def Revert(self):
         self.Piece.Position = self.Origin
         self.Piece.HasMoved = self._oldHasMoved
+        if self.IsCastling:
+            self._revertRookCastlingMove()
 
     @staticmethod
     def Castle(piece, destination, rook):
@@ -38,10 +40,16 @@ class Move:
 
     def _applyRookCastlingMove(self):
         if self.Destination.File == File.G:
-            rookOriginFile = File.H
             rookDestinationFile = File.F
         else:
-            rookOriginFile = File.A
             rookDestinationFile = File.D
         self._rook.Position.File = rookDestinationFile
         self._rook.HasMoved = True
+
+    def _revertRookCastlingMove(self):
+        if self.Destination.File == File.G:
+            rookOriginFile = File.H
+        else:
+            rookOriginFile = File.A
+        self._rook.Position.File = rookOriginFile
+        self._rook.HasMoved = False
