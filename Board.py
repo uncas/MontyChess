@@ -3,6 +3,8 @@ from Square import *
 
 class Board:
 
+    # The board class is responsible for containing info about the chess board and the position of pieces.
+
     RookFiles = File.A, File.H
     KnightFiles = File.B, File.G
     BishopFiles = File.C, File.F
@@ -22,12 +24,17 @@ class Board:
         return [piece for piece in self.Pieces if piece.Color == color] 
 
     def GetPiece(self, position):
-        for piece in self.Pieces:
-            if piece.Position == position:
-                return piece
+        pieces = [piece for piece in self.Pieces \
+                      if piece.Position == position]
+        if len(pieces) == 1:
+            return pieces[0]
+        if len(pieces) > 1:
+            raise Exception("Two pieces found on same position.")
 
     def GetKingPosition(self, color):
-        return [piece.Position for piece in self.Pieces if piece.Color == color and piece.Kind == Kind.King][0]
+        positions = [piece.Position for piece in self.Pieces \
+                      if piece.Color == color and piece.Kind == Kind.King]
+        return positions[0]
 
     def _addPieces(self):
         for file in File.All:
