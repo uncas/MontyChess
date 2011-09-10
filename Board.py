@@ -19,12 +19,15 @@ class Board:
         self._addPieces()
 
     def GetPieces(self, color):
-        return [elem for elem in self.Pieces if elem.Color == color] 
+        return [piece for piece in self.Pieces if piece.Color == color] 
 
     def GetPiece(self, position):
         for piece in self.Pieces:
             if piece.Position == position:
                 return piece
+
+    def GetKingPosition(self, color):
+        return [piece.Position for piece in self.Pieces if piece.Color == color and piece.Kind == Kind.King]
 
     def _addPieces(self):
         for file in File.All:

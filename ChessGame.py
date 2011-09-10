@@ -55,7 +55,12 @@ class ChessGame:
         self._lastMove = move
 
     def CheckStatus(self):
-        return CheckStatus(False, False)
+        whiteIsChecked = self._isSquareThreatenedByColor(self._board.GetKingPosition(Color.White), Color.Black)
+        blackIsChecked = self._isSquareThreatenedByColor(self._board.GetKingPosition(Color.Black), Color.White)
+        return CheckStatus(whiteIsChecked, blackIsChecked)
+
+    def _isSquareThreatenedByColor(self, position, color):
+        return True
 
     def _rookCastlingMove(self, kingDestination):
         if kingDestination.File == File.G:
