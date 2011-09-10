@@ -344,6 +344,7 @@ class ChessTests(unittest.TestCase):
         self._move(Square(File.F, 7), Square(File.F, 5))
         self._move(Square(File.D, 1), Square(File.H, 5))
         checkStatus = self._checkStatus()
+        self.assertEqual(False, checkStatus.WhiteIsChecked)
         self.assertEqual(True, checkStatus.BlackIsChecked)
 
     def xtest_PossibleMoves_E4F5QH5Check_1(self):
