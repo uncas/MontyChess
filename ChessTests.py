@@ -334,6 +334,11 @@ class ChessTests(unittest.TestCase):
         rook = self._getPiece(File.D, 1)
         self.assertIsNotNone(rook)
 
+    def test_CheckStatus_InitialGame_NoChecks(self):
+        checkStatus = self._checkStatus()
+        self.assertEqual(False, checkStatus.WhiteIsChecked)
+        self.assertEqual(False, checkStatus.BlackIsChecked)
+
     def test_CheckStatus_E4F5QH5Check_BlackIsChecked(self):
         self._move(Square(File.E, 2), Square(File.E, 4))
         self._move(Square(File.F, 7), Square(File.F, 5))

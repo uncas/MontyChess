@@ -60,7 +60,13 @@ class ChessGame:
         return CheckStatus(whiteIsChecked, blackIsChecked)
 
     def _isSquareThreatenedByColor(self, position, color):
-        return True
+        moves = []
+        for piece in self._board.GetPieces(color):
+            moves.extend(self.GetPieceMoves(piece, False))
+        for move in moves:
+            if move.Destination == position:
+                return True
+        return False
 
     def _rookCastlingMove(self, kingDestination):
         if kingDestination.File == File.G:

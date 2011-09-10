@@ -27,7 +27,7 @@ class Board:
                 return piece
 
     def GetKingPosition(self, color):
-        return [piece.Position for piece in self.Pieces if piece.Color == color and piece.Kind == Kind.King]
+        return [piece.Position for piece in self.Pieces if piece.Color == color and piece.Kind == Kind.King][0]
 
     def _addPieces(self):
         for file in File.All:
