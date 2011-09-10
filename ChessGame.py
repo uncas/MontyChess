@@ -56,7 +56,6 @@ class ChessGame:
         if self._isCastling(piece, destination):
             rook = self._getRookToCastleWith(destination)
             move = Move.Castle(piece, destination, rook)
-            self._rookCastlingMove(destination)
         else:
             move = Move.Normal(piece, destination)
         move.Apply()
@@ -93,15 +92,6 @@ class ChessGame:
             if self._isValidCapture(piece, capture):
                 moves.append(capture)
         return [move.Destination for move in moves]
-
-    def _rookCastlingMove(self, kingDestination):
-        rook = self._getRookToCastleWith(kingDestination)
-        if kingDestination.File == File.G:
-            rookDestinationFile = File.F
-        else:
-            rookDestinationFile = File.D
-        rook.Position.File = rookDestinationFile
-        rook.HasMoved = True
 
     def _getRookToCastleWith(self, kingDestination):
         if kingDestination.File == File.G:
