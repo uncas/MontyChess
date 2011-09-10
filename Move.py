@@ -15,6 +15,17 @@ class Move:
     def __eq__(self, other):
         return self.Origin == other.Origin and self.Destination == other.Destination
 
+    @staticmethod
+    def Castle(piece, destination, rook):
+        castlingMove = Move.Normal(piece, destination)
+        castlingMove.IsCastling = True
+        castlingMove._rook = rook
+        return castlingMove
+
+    @staticmethod
+    def Normal(piece, destination):
+        return Move(piece, destination)
+
     def Apply(self):
         self.Piece.Position = self.Destination
         self.Piece.HasMoved = True
@@ -26,17 +37,6 @@ class Move:
         self.Piece.HasMoved = self._oldHasMoved
         if self.IsCastling:
             self._revertRookCastlingMove()
-
-    @staticmethod
-    def Castle(piece, destination, rook):
-        castlingMove = Move.Normal(piece, destination)
-        castlingMove.IsCastling = True
-        castlingMove._rook = rook
-        return castlingMove
-
-    @staticmethod
-    def Normal(piece, destination):
-        return Move(piece, destination)
 
     def _applyRookCastlingMove(self):
         if self.Destination.File == File.G:
