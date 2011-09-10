@@ -39,7 +39,12 @@ class ChessGame:
             result.append(Move.Castling(piece.Position, Square(File.G, piece.Position.Rank)))
         if castlingPossibility.QueenSide:
             result.append(Move.Castling(piece.Position, Square(File.C, piece.Position.Rank)))
-        return result
+        return [move for move in result if not self._isColorCheckedAfterMove(piece.Color, move)]
+
+    def _isColorCheckedAfterMove(self, color, move):
+        return False
+        # TODO: Implement properly:
+        return self._isColorChecked(color)
 
     def Move(self, origin, destination):
         piece = self.GetPiece(origin.File, origin.Rank)
@@ -59,13 +64,18 @@ class ChessGame:
         self._lastMove = move
 
     def CheckStatus(self):
-        whiteIsChecked = self._isSquareThreatenedByColor(self._board.GetKingPosition(Color.White), Color.Black)
-        blackIsChecked = self._isSquareThreatenedByColor(self._board.GetKingPosition(Color.Black), Color.White)
+        whiteIsChecked = self._isColorChecked(Color.White)
+        blackIsChecked = self._isColorChecked(Color.Black)
         return CheckStatus(whiteIsChecked, blackIsChecked)
+
+    def _isColorChecked(self, color):
+        otherColor = 3 - color
+        return self._isSquareThreatenedByColor(self._board.GetKingPosition(color), otherColor)
 
     def _isSquareThreatenedByColor(self, position, color):
         moves = []
         for piece in self._board.GetPieces(color):
+            # TODO: Create another method to check for threatened moves, in order to avoid coupling and looping:
             moves.extend(self.GetPieceMoves(piece, False))
         for move in moves:
             if move.Destination == position:
