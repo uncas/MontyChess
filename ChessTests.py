@@ -19,6 +19,7 @@ class MoveTests(unittest.TestCase):
         self.assertEqual(File.A, pawnA2.Position.File)
         self.assertEqual(3, pawnA2.Position.Rank)
         self.assertEqual(2, move.Origin.Rank)
+        self.assertTrue(pawnA2.HasMoved)
 
     def test_Revert(self):
         # Arrange:

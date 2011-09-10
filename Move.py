@@ -14,6 +14,7 @@ class Move:
 
     def Apply(self):
         self.Piece.Position = self.Destination
+        self.Piece.HasMoved = True
 
     def Revert(self):
         self.Piece.Position = self.Origin
