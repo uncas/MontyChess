@@ -121,6 +121,11 @@ class Color:
     White = 1
     Black = 2
 
+    @staticmethod
+    def OtherColor(color):
+        return 3 - color
+        
+
 class Kind:
     Pawn = 1
     Rook = 2

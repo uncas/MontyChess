@@ -55,7 +55,7 @@ class ChessGame:
             move = Move(origin, destination)
         piece.Position = destination
         piece.HasMoved = True
-        self.SideToPlay = 3 - self.SideToPlay
+        self.SideToPlay = Color.OtherColor(self.SideToPlay)
         self._lastMove = move
 
     def CheckStatus(self):
@@ -74,7 +74,7 @@ class ChessGame:
         return self._isColorChecked(color)
 
     def _isColorChecked(self, color):
-        otherColor = 3 - color
+        otherColor = Color.OtherColor(color)
         return self._isSquareThreatenedByColor(self._board.GetKingPosition(color), otherColor)
 
     def _isSquareThreatenedByColor(self, position, color):
