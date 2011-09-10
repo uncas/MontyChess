@@ -53,7 +53,7 @@ class ChessGame:
             self._rookCastlingMove(destination)
         else:
             move = Move.Normal(piece, destination)
-        piece.Position = destination
+        move.Apply()
         piece.HasMoved = True
         self.SideToPlay = Color.OtherColor(self.SideToPlay)
         self._lastMove = move
