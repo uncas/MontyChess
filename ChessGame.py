@@ -54,7 +54,6 @@ class ChessGame:
         else:
             move = Move.Normal(piece, destination)
         move.Apply()
-        piece.HasMoved = True
         self.SideToPlay = Color.OtherColor(self.SideToPlay)
         self._lastMove = move
 
