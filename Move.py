@@ -16,3 +16,7 @@ class Move:
         castlingMove = Move(origin, destination)
         castlingMove.IsCastling = True
         return castlingMove
+
+    @staticmethod
+    def Normal(piece, destination):
+        return Move(piece.Position, destination)

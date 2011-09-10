@@ -98,7 +98,7 @@ class Piece:
                         result.append(self._getMove(destinationFile, destinationRank))
 
     def _getMove(self, destinationFile, destinationRank):
-        return Move(self.Position, Square(destinationFile, destinationRank))
+        return Move.Normal(self, Square(destinationFile, destinationRank))
 
     def _isStartRank(self):
         return (self.Color == Color.White and self.Position.Rank == 2) or (self.Color == Color.Black and self.Position.Rank == 7)
