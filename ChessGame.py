@@ -14,6 +14,7 @@ class ChessGame:
         self._board = Board()
         self.SideToPlay = Color.White
         self.Pieces = self._board.Pieces
+        self._moves = []
 
     def PossibleMoves(self):
         result = []
@@ -55,6 +56,7 @@ class ChessGame:
             move = Move.Normal(piece, destination)
         move.Apply()
         self.SideToPlay = Color.OtherColor(self.SideToPlay)
+        self._moves.append(move)
         self._lastMove = move
 
     def CheckStatus(self):
