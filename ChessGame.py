@@ -90,15 +90,21 @@ class ChessGame:
         return [move.Destination for move in moves]
 
     def _rookCastlingMove(self, kingDestination):
+        rook = self._getRookToCastleWith(kingDestination)
         if kingDestination.File == File.G:
-            rookOriginFile = File.H
             rookDestinationFile = File.F
         else:
-            rookOriginFile = File.A
             rookDestinationFile = File.D
-        rook = self.GetPiece(rookOriginFile, kingDestination.Rank)
         rook.Position.File = rookDestinationFile
         rook.HasMoved = True
+
+    def _getRookToCastleWith(self, kingDestination):
+        if kingDestination.File == File.G:
+            rookOriginFile = File.H
+        else:
+            rookOriginFile = File.A
+        return self.GetPiece(rookOriginFile, kingDestination.Rank)
+        
 
     def _isCastling(self, piece, destination):
         return piece.IsKing and abs(piece.Position.File - destination.File) == 2
