@@ -71,6 +71,8 @@ class ChessGame:
         return self._isSquareThreatenedByColor(self._board.GetKingPosition(color), otherColor)
 
     def _isSquareThreatenedByColor(self, position, color):
+        # TODO: Implement properly.
+        return False
         threatenedSquares = []
         for piece in self._board.GetPieces(color):
             threatenedSquares.extend(self._getSquaresThreatenedByPiece(piece))
