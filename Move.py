@@ -5,6 +5,7 @@ class Move:
         self.Destination = destination
         self.Origin = piece.Position
         self.IsCastling = False
+        self._oldHasMoved = piece.HasMoved
 
     def __repr__(self):
         return "Move " + str(self.Piece) + " from " + str(self.Origin) + " to " + str(self.Destination) + "."
@@ -18,6 +19,7 @@ class Move:
 
     def Revert(self):
         self.Piece.Position = self.Origin
+        self.Piece.HasMoved = self._oldHasMoved
 
     @staticmethod
     def Castle(piece, destination):

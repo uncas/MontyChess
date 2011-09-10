@@ -34,6 +34,7 @@ class MoveTests(unittest.TestCase):
         self.assertEqual(2, pawnA2.Position.Rank)
         self.assertEqual(2, move.Origin.Rank)
         self.assertEqual(3, move.Destination.Rank)
+        self.assertFalse(pawnA2.HasMoved)
 
 
 class BoardTests(unittest.TestCase):
