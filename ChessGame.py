@@ -63,13 +63,6 @@ class ChessGame:
         blackIsChecked = self._isColorChecked(Color.Black)
         return CheckStatus(whiteIsChecked, blackIsChecked)
 
-    def _getSquaresThreatenedByPiece(self, piece):
-        moves = []
-        for capture in piece.GetCaptureMoves():
-            if self._isValidCapture(piece, capture):
-                moves.append(capture)
-        return [move.Destination for move in moves]
-
     def _isColorCheckedAfterMove(self, color, move):
         return self._isColorChecked(color)
 
@@ -85,6 +78,13 @@ class ChessGame:
             if square == position:
                 return True
         return False
+
+    def _getSquaresThreatenedByPiece(self, piece):
+        moves = []
+        for capture in piece.GetCaptureMoves():
+            if self._isValidCapture(piece, capture):
+                moves.append(capture)
+        return [move.Destination for move in moves]
 
     def _rookCastlingMove(self, kingDestination):
         if kingDestination.File == File.G:
