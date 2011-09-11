@@ -207,11 +207,14 @@ class ThreatCalculator:
         self._board = board
 
     def IsSquareThreatenedByColor(self, square, color):
-        # By Pawns:
+        return self._isSquareThreatenedByPawn(square, color)
+
+    def _isSquareThreatenedByPawn(self, square, color):
         if color == Color.White:
             direction = 1
         else:
             direction = -1
         threateningPawn1 = self._board.GetPiece(square.AddFilesAndRanks(1, -direction))
         threateningPawn2 = self._board.GetPiece(square.AddFilesAndRanks(-1, -direction))
-        return threateningPawn1 is not None or threateningPawn2 is not None
+        return (threateningPawn1 is not None and threateningPawn1.Kind == Kind.Pawn and threateningPawn1.Color == color) \
+            or (threateningPawn2 is not None and threateningPawn2.Kind == Kind.Pawn and threateningPawn2.Color == color)

@@ -20,6 +20,12 @@ class ThreatCalculatorTests(unittest.TestCase):
         isThreatened = calculator.IsSquareThreatenedByColor(Square(File.A, 3), Color.White)
         self.assertTrue(isThreatened)
 
+    def test_IsSquareThreatenedByColor_InitialBoardA3ByBlack_No(self):
+        board = Board()
+        calculator = ThreatCalculator(board)
+        isThreatened = calculator.IsSquareThreatenedByColor(Square(File.A, 3), Color.Black)
+        self.assertFalse(isThreatened)
+
 
 class MoveTests(unittest.TestCase):
 
