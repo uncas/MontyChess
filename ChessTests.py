@@ -489,6 +489,13 @@ class ChessTests(unittest.TestCase):
         gameState = self.game.GameState()
         self.assertEqual(GameState.Undecided, gameState)
 
+    def test_GameState_E4F5QH5_BlackChecked(self):
+        self._move(Square(File.E, 2), Square(File.E, 4))
+        self._move(Square(File.F, 7), Square(File.F, 5))
+        self._move(Square(File.D, 1), Square(File.H, 5))
+        gameState = self.game.GameState()
+        self.assertEqual(GameState.BlackChecked, gameState)
+
     def _checkStatus(self):
         return self.game.CheckStatus()
 
