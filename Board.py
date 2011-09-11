@@ -36,6 +36,9 @@ class Board:
                       if piece.Color == color and piece.Kind == Kind.King]
         return positions[0]
 
+    def AddPiece(self, piece):
+        self.Pieces.append(piece)
+
     def RemovePiece(self, piece):
         self.Pieces.remove(piece)
 

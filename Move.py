@@ -48,6 +48,8 @@ class Move:
         self.Piece.HasMoved = self._oldHasMoved
         if self.IsCastling:
             self._revertRookCastlingMove()
+        if self._isCapture:
+            self._addCapturedPiece()
 
     def _applyRookCastlingMove(self):
         if self.Destination.File == File.G:
@@ -67,3 +69,6 @@ class Move:
 
     def _removeCapturedPiece(self):
         self._board.RemovePiece(self._capturedPiece)
+
+    def _addCapturedPiece(self):
+        self._board.AddPiece(self._capturedPiece)

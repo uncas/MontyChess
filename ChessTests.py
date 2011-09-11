@@ -54,7 +54,7 @@ class MoveTests(unittest.TestCase):
         self.assertTrue(pawnA2.HasMoved)
         self.assertEqual(31, len(board.Pieces))
 
-    def xtest_CaptureRevert(self):
+    def test_CaptureRevert(self):
         # Arrange:
         board = Board()
         pawnA2 = board.GetPiece(Square(File.A, 2))
@@ -67,8 +67,6 @@ class MoveTests(unittest.TestCase):
         move.Apply()
         self.assertEqual(File.B, pawnA2.Position.File)
         # Act:
-        print(move.Destination)
-        print(move.Origin)
         move.Revert()
         # Assert:
         self.assertEqual(File.A, pawnA2.Position.File)
