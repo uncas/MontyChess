@@ -489,7 +489,7 @@ class ChessTests(unittest.TestCase):
         result = self.game.Result()
         self.assertEqual(GameResult.Undecided, result)
 
-    def xtest_Result_FoolsMate_BlackWins(self):
+    def test_Result_FoolsMate_BlackWins(self):
         self._move(Square(File.F, 2), Square(File.F, 3))
         self._move(Square(File.E, 7), Square(File.E, 5))
         self._move(Square(File.G, 2), Square(File.G, 4))

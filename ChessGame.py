@@ -70,6 +70,14 @@ class ChessGame:
         return CheckStatus(whiteIsChecked, blackIsChecked)
 
     def Result(self):
+        sideToPlayIsChecked = self._isColorChecked(self.SideToPlay)
+        if sideToPlayIsChecked:
+            #moves = self.PossibleMoves
+            #if len(moves) == 0:
+            if self.SideToPlay == Color.White:
+                return GameResult.BlackWins
+            else:
+                return GameResult.WhiteWins
         return GameResult.Undecided
 
     def _isColorCheckedAfterMove(self, color, move):
