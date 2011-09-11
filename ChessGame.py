@@ -234,7 +234,7 @@ class ThreatCalculator:
 
     def _isSquareThreatenedByBishopOrQueenOnDiagonal(self, square, color):
         for step in Step(1,1), Step(1,-1), Step(-1,1), Step(-1,-1):
-            for times in range(8):
+            for times in range(1, 8):
                 otherSquare = square.AddStep(step.Times(times))
                 if not otherSquare.IsWithinBoard():
                     break
