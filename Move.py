@@ -6,7 +6,6 @@ class Move:
         self.Piece = piece
         self.Origin = piece.Position
         self.Destination = destination
-        self._isCastling = False
         self._oldHasMoved = piece.HasMoved
 
     def __repr__(self):
@@ -30,14 +29,25 @@ class Move:
     def Apply(self):
         self.Piece.Position = self.Destination
         self.Piece.HasMoved = True
-        if self._isCastling:
-            self._applyRookCastlingMove()
 
     def Revert(self):
         self.Piece.Position = self.Origin
         self.Piece.HasMoved = self._oldHasMoved
-        if self._isCastling:
-            self._revertRookCastlingMove()
+
+
+class CastlingMove(Move):
+
+    def __init__(self, piece, destination, rook):
+        Move.__init__(self, piece, destination)
+        self._rook = rook
+
+    def Apply(self):
+        Move.Apply(self)
+        self._applyRookCastlingMove()
+
+    def Revert(self):
+        Move.Revert(self)
+        self._revertRookCastlingMove()
 
     def _applyRookCastlingMove(self):
         if self.Destination.File == File.G:
@@ -54,14 +64,6 @@ class Move:
             rookOriginFile = File.A
         self._rook.Position.File = rookOriginFile
         self._rook.HasMoved = False
-
-
-class CastlingMove(Move):
-
-    def __init__(self, piece, destination, rook):
-        Move.__init__(self, piece, destination)
-        self._rook = rook
-        self._isCastling = True
 
 
 class CaptureMove(Move):
