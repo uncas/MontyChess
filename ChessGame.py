@@ -15,6 +15,7 @@ class ChessGame:
         self.SideToPlay = Color.White
         self.Pieces = self._board.Pieces
         self._moves = []
+        self._threatCalculator = ThreatCalculator(self._board)
 
     def PossibleMoves(self):
         result = []
@@ -73,25 +74,7 @@ class ChessGame:
 
     def _isColorChecked(self, color):
         otherColor = Color.OtherColor(color)
-        return self._isSquareThreatenedByColor(self._board.GetKingPosition(color), otherColor)
-
-    def _isSquareThreatenedByColor(self, position, color):
-        # TODO: Implement properly.
-        return False
-        threatenedSquares = []
-        for piece in self._board.GetPieces(color):
-            threatenedSquares.extend(self._getSquaresThreatenedByPiece(piece))
-        for square in threatenedSquares:
-            if square == position:
-                return True
-        return False
-
-    def _getSquaresThreatenedByPiece(self, piece):
-        moves = []
-        for capture in piece.GetCaptureMoves():
-            if self._isValidCapture(piece, capture):
-                moves.append(capture)
-        return [move.Destination for move in moves]
+        return self._threatCalculator.IsSquareThreatenedByColor(self._board.GetKingPosition(color), otherColor)
 
     def _getRookToCastleWith(self, kingDestination):
         if kingDestination.File == File.G:
