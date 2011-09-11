@@ -21,10 +21,7 @@ class Move:
 
     @staticmethod
     def Castle(piece, destination, rook):
-        move = Move(piece, destination)
-        move._isCastling = True
-        move._rook = rook
-        return move
+        return CastlingMove(piece, destination, rook)
 
     @staticmethod
     def Capture(board, piece, destination, capturedPiece):
@@ -57,6 +54,14 @@ class Move:
             rookOriginFile = File.A
         self._rook.Position.File = rookOriginFile
         self._rook.HasMoved = False
+
+
+class CastlingMove(Move):
+
+    def __init__(self, piece, destination, rook):
+        Move.__init__(self, piece, destination)
+        self._rook = rook
+        self._isCastling = True
 
 
 class CaptureMove(Move):
