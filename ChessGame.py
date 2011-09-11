@@ -199,3 +199,12 @@ class CheckStatus:
     def __init__(self, whiteIsChecked, blackIsChecked):
         self.WhiteIsChecked = whiteIsChecked
         self.BlackIsChecked = blackIsChecked
+
+
+class ThreatCalculator:
+
+    def __init__(self, board):
+        self._board = board
+
+    def IsSquareThreatenedByColor(self, square, color):
+        return False

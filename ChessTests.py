@@ -6,6 +6,15 @@ from Move import *
 from Piece import *
 
 
+class ThreatCalculatorTests(unittest.TestCase):
+
+    def test_IsSquareThreatenedByColor_InitialBoardA4ByWhite_No(self):
+        board = Board()
+        calculator = ThreatCalculator(board)
+        isThreatened = calculator.IsSquareThreatenedByColor(Square(File.A, 4), Color.White)
+        self.assertFalse(isThreatened)
+
+
 class MoveTests(unittest.TestCase):
 
     def test_Apply(self):
