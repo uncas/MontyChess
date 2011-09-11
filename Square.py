@@ -13,6 +13,15 @@ class Square:
     def _getFileLetter(self):
         return chr(ord('A') + self.File - 1)
 
+    def AddFiles(self, files):
+        return Square(self.File + files, self.Rank)
+
+    def AddRanks(self, ranks):
+        return Square(self.File, self.Rank + ranks)
+
+    def AddFilesAndRanks(self, files, ranks):
+        return Square(self.File + files, self.Rank + ranks)
+
 
 class File:
     A = 1
