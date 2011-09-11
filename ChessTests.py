@@ -476,12 +476,14 @@ class ChessTests(unittest.TestCase):
         self.assertEqual(False, checkStatus.WhiteIsChecked)
         self.assertEqual(True, checkStatus.BlackIsChecked)
 
-    def xtest_PossibleMoves_E4F5QH5Check_1(self):
+    def test_PossibleMoves_E4F5QH5Check_1(self):
         self._move(Square(File.E, 2), Square(File.E, 4))
         self._move(Square(File.F, 7), Square(File.F, 5))
         self._move(Square(File.D, 1), Square(File.H, 5))
         moves = self._possibleMoves()
         self.assertEqual(1, len(moves))
+        move = moves[0]
+        self.assertTrue(move.Origin == Square(File.G, 7) and move.Destination == Square(File.G, 6))
 
     def _checkStatus(self):
         return self.game.CheckStatus()

@@ -70,7 +70,10 @@ class ChessGame:
         return CheckStatus(whiteIsChecked, blackIsChecked)
 
     def _isColorCheckedAfterMove(self, color, move):
-        return self._isColorChecked(color)
+        move.Apply()
+        isColorCheckedAfterMove = self._isColorChecked(color)
+        move.Revert()
+        return isColorCheckedAfterMove
 
     def _isColorChecked(self, color):
         otherColor = Color.OtherColor(color)
