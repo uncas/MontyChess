@@ -63,8 +63,8 @@ class CaptureMove(Move):
 
     def __init__(self, board, piece, destination, capturedPiece):
         Move.__init__(self, piece, destination)
-        self._capturedPiece = capturedPiece
         self._board = board
+        self._capturedPiece = capturedPiece
 
     def Apply(self):
         Move.Apply(self)
