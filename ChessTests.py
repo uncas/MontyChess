@@ -504,6 +504,43 @@ class ChessTests(unittest.TestCase):
         result = self.game.Result()
         self.assertEqual(GameResult.Undecided, result)
 
+    def test_Result_StaleMate_Draw(self):
+        # http://www.chess.com/forum/view/fun-with-chess/fastest-stalemate
+        # Johan Upmark vs. Robin Johansson (1995)
+        #  1. c4 h5
+        #  2. h4 a5
+        #  3. Qa4 Ra6
+        #  4. Qxa5 Rah6
+        #  5. Qxc7 f6
+        #  6  Qxd7 Kf7
+        #  7. Qxb7 Qd3
+        #  8. Qxb8 Qh7
+        #  9. Qxc8 Kg6
+        # 10. Qe6
+        self._move(Square(File.C, 2), Square(File.C, 4))
+        self._move(Square(File.H, 7), Square(File.H, 5))
+        self._move(Square(File.H, 2), Square(File.H, 4))
+        self._move(Square(File.A, 7), Square(File.A, 5))
+        self._move(Square(File.D, 1), Square(File.A, 4))
+        self._move(Square(File.A, 8), Square(File.A, 6))
+        self._move(Square(File.A, 4), Square(File.A, 5))
+        self._move(Square(File.A, 6), Square(File.H, 6))
+        self._move(Square(File.A, 5), Square(File.C, 7))
+        self._move(Square(File.F, 7), Square(File.F, 6))
+        self._move(Square(File.C, 7), Square(File.D, 7))
+        self._move(Square(File.E, 8), Square(File.F, 7))
+        self._move(Square(File.D, 7), Square(File.B, 7))
+        self._move(Square(File.D, 8), Square(File.D, 3))
+        self._move(Square(File.B, 7), Square(File.B, 8))
+        self._move(Square(File.D, 3), Square(File.H, 7))
+        self._move(Square(File.B, 8), Square(File.C, 8))
+        self._move(Square(File.F, 7), Square(File.G, 6))
+        result = self.game.Result()
+        self.assertEqual(GameResult.Undecided, result)
+        self._move(Square(File.C, 8), Square(File.E, 6))
+        result = self.game.Result()
+        self.assertEqual(GameResult.Draw, result)
+
     def _checkStatus(self):
         return self.game.CheckStatus()
 

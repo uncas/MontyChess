@@ -1,4 +1,4 @@
-Success criteria:
+Success criteria - chess rules:
 X simple piece moves and captures
 X en passant
 X castling king-side
@@ -7,15 +7,22 @@ X castling queen-side
 X not allowed to castle when already moved
 X check
 X disallowing moves when checked
-- mate
-- stale mate
+X mate
+X stale mate
+- pawn promotion
+- draw by repetition
 - castling when checked
 - castling when rook is threatened
 - castling through threatened square
-- pawn promotion
-- draw by repetition
 - 50 move rule
+
+Success criteria - chess engine:
+...
+
+Success criteria - other:
+- parse simple move notation (e4,e5, Nf3,Nc6, Bb5 etc)
 
 Technical tasks:
 X refactor moves, such that they can be rolled on and off (command with rollback)
 - split tests into success criteria tests and unit tests of underlying bits and pieces
+- refactor tests such that they reuse functionality
