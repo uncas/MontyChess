@@ -36,8 +36,6 @@ class Move:
         self.Piece.HasMoved = True
         if self.IsCastling:
             self._applyRookCastlingMove()
-        if self._isCapture:
-            self._removeCapturedPiece()
 
     def Revert(self):
         self.Piece.Position = self.Origin
@@ -63,9 +61,6 @@ class Move:
         self._rook.Position.File = rookOriginFile
         self._rook.HasMoved = False
 
-    def _removeCapturedPiece(self):
-        self._board.RemovePiece(self._capturedPiece)
-
     def _addCapturedPiece(self):
         self._board.AddPiece(self._capturedPiece)
 
@@ -77,3 +72,7 @@ class CaptureMove(Move):
         self._isCapture = True
         self._capturedPiece = capturedPiece
         self._board = board
+
+    def Apply(self):
+        Move.Apply(self)
+        self._board.RemovePiece(self._capturedPiece)
