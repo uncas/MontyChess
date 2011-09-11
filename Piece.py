@@ -58,8 +58,10 @@ class Piece:
             self._appendKingMoves(result, originFile, originRank)
         return result
 
+    KnightSteps = (-2,-1), (-2,1), (-1,-2), (-1,2), (1,-2), (1,2), (2,-1), (2,1)
+
     def _appendKnightMoves(self, result, originFile, originRank):
-        for knightStep in (-2,-1), (-2,1), (-1,-2), (-1,2), (1,-2), (1,2), (2,-1), (2,1):
+        for knightStep in Piece.KnightSteps:
             destinationFile = originFile + knightStep[0]
             destinationRank = originRank + knightStep[1]
             if self._isWithinBoard(destinationFile, destinationRank):
