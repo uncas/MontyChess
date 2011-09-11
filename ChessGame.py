@@ -225,6 +225,8 @@ class ThreatCalculator:
     def _isSquareThreatenedByKnight(self, square, color):
         for step in Piece.KnightSteps:
             otherSquare = square.AddStep(step)
+            if not otherSquare.IsWithinBoard():
+                continue
             piece = self._board.GetPiece(otherSquare)
             if piece is not None and piece.Kind == Kind.Knight and piece.Color == color:
                 return True
@@ -234,6 +236,8 @@ class ThreatCalculator:
         for step in Step(1,1), Step(1,-1), Step(-1,1), Step(-1,-1):
             for times in range(8):
                 otherSquare = square.AddStep(step.Times(times))
+                if not otherSquare.IsWithinBoard():
+                    break
                 piece = self._board.GetPiece(otherSquare)
                 if piece is not None:
                     if (piece.Kind == Kind.Bishop or piece.Kind == Kind.Queen) and piece.Color == color:
@@ -245,6 +249,8 @@ class ThreatCalculator:
         for step in Step(1,0), Step(-1,0), Step(0,1), Step(0,-1):
             for times in range(1, 8):
                 otherSquare = square.AddStep(step.Times(times))
+                if not otherSquare.IsWithinBoard():
+                    break
                 piece = self._board.GetPiece(otherSquare)
                 if piece is not None:
                     if (piece.Kind == Kind.Rook or piece.Kind == Kind.Queen) and piece.Color == color:

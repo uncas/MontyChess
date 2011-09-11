@@ -25,6 +25,9 @@ class Square:
     def AddStep(self, step):
         return Square(self.File + step.FileDelta, self. Rank + step.RankDelta)
 
+    def IsWithinBoard(self):
+        return File.A <= self.File and self.File <= File.H and 1 <= self.Rank and self.Rank <= 8
+
 
 class File:
     A = 1
