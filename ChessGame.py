@@ -208,7 +208,8 @@ class ThreatCalculator:
 
     def IsSquareThreatenedByColor(self, square, color):
         return self._isSquareThreatenedByPawn(square, color) \
-            or self._isSquareThreatenedByKnight(square, color)
+            or self._isSquareThreatenedByKnight(square, color) \
+            or self._isSquareThreatenedByBishop(square, color)
 
     def _isSquareThreatenedByPawn(self, square, color):
         if color == Color.White:
@@ -226,4 +227,15 @@ class ThreatCalculator:
             piece = self._board.GetPiece(otherSquare)
             if piece is not None and piece.Kind == Kind.Knight and piece.Color == color:
                 return True
+        return False
+
+    def _isSquareThreatenedByBishop(self, square, color):
+        for step in Step(1,1), Step(1,-1), Step(-1,1), Step(-1,-1):
+            for times in range(8):
+                otherSquare = square.AddStep(step.Times(times))
+                piece = self._board.GetPiece(otherSquare)
+                if piece is not None:
+                    if piece.Kind == Kind.Bishop and piece.Color == color:
+                        return True
+                    break
         return False

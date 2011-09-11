@@ -6,6 +6,9 @@ class Step:
         self.FileDelta = fileDelta
         self.RankDelta = rankDelta
 
+    def Times(self, times):
+        return Step(self.FileDelta*times, self.RankDelta*times)
+
 class Piece:
     
     def __init__(self, color, kind, position):
