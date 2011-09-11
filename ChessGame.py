@@ -69,8 +69,8 @@ class ChessGame:
         blackIsChecked = self._isColorChecked(Color.Black)
         return CheckStatus(whiteIsChecked, blackIsChecked)
 
-    def GameState(self):
-        return GameState.Undecided
+    def Result(self):
+        return GameResult.Undecided
 
     def _isColorCheckedAfterMove(self, color, move):
         move.Apply()
@@ -259,5 +259,8 @@ class ThreatCalculator:
         return False
 
 
-class GameState:
+class GameResult:
     Undecided = 0
+    Draw = 1
+    WhiteWins = 2
+    BlackWins = 3

@@ -485,16 +485,17 @@ class ChessTests(unittest.TestCase):
         move = moves[0]
         self.assertTrue(move.Origin == Square(File.G, 7) and move.Destination == Square(File.G, 6))
 
-    def test_GameState_InitialGame_Undecided(self):
-        gameState = self.game.GameState()
-        self.assertEqual(GameState.Undecided, gameState)
+    def test_Result_InitialGame_Undecided(self):
+        result = self.game.Result()
+        self.assertEqual(GameResult.Undecided, result)
 
-    def test_GameState_E4F5QH5_BlackChecked(self):
-        self._move(Square(File.E, 2), Square(File.E, 4))
-        self._move(Square(File.F, 7), Square(File.F, 5))
-        self._move(Square(File.D, 1), Square(File.H, 5))
-        gameState = self.game.GameState()
-        self.assertEqual(GameState.BlackChecked, gameState)
+    def xtest_Result_FoolsMate_BlackWins(self):
+        self._move(Square(File.F, 2), Square(File.F, 3))
+        self._move(Square(File.E, 7), Square(File.E, 5))
+        self._move(Square(File.G, 2), Square(File.G, 4))
+        self._move(Square(File.D, 8), Square(File.H, 4))
+        result = self.game.Result()
+        self.assertEqual(GameResult.BlackWins, result)
 
     def _checkStatus(self):
         return self.game.CheckStatus()
