@@ -99,7 +99,6 @@ class ChessGame:
         else:
             rookOriginFile = File.A
         return self.GetPiece(rookOriginFile, kingDestination.Rank)
-        
 
     def _isCastling(self, piece, destination):
         return piece.IsKing and abs(piece.Position.File - destination.File) == 2

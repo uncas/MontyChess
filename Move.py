@@ -7,6 +7,7 @@ class Move:
         self.Destination = destination
         self.Origin = piece.Position
         self.IsCastling = False
+        self._isCapture = False
         self._oldHasMoved = piece.HasMoved
 
     def __repr__(self):
@@ -16,6 +17,10 @@ class Move:
         return self.Origin == other.Origin and self.Destination == other.Destination
 
     @staticmethod
+    def Normal(piece, destination):
+        return Move(piece, destination)
+
+    @staticmethod
     def Castle(piece, destination, rook):
         castlingMove = Move.Normal(piece, destination)
         castlingMove.IsCastling = True
@@ -23,14 +28,19 @@ class Move:
         return castlingMove
 
     @staticmethod
-    def Normal(piece, destination):
-        return Move(piece, destination)
+    def Capture(piece, destination, capturedPiece):
+        move = Move(piece, destination)
+        move._isCapture = True
+        move._capturedPiece = capturedPiece
+        return move
 
     def Apply(self):
         self.Piece.Position = self.Destination
         self.Piece.HasMoved = True
         if self.IsCastling:
             self._applyRookCastlingMove()
+        if self._isCapture:
+            self._removeCapturedPiece()
 
     def Revert(self):
         self.Piece.Position = self.Origin
@@ -53,3 +63,6 @@ class Move:
             rookOriginFile = File.A
         self._rook.Position.File = rookOriginFile
         self._rook.HasMoved = False
+
+    def _removeCapturedPiece(self):
+        self._capturedPiece = None

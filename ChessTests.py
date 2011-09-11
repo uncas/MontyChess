@@ -36,6 +36,24 @@ class MoveTests(unittest.TestCase):
         self.assertEqual(3, move.Destination.Rank)
         self.assertFalse(pawnA2.HasMoved)
 
+    def xtest_Capture(self):
+        # Arrange:
+        board = Board()
+        pawnA2 = board.GetPiece(Square(File.A, 2))
+        move = Move.Normal(pawnA2, Square(File.A, 4))
+        move.Apply()
+        pawnB7 = board.GetPiece(Square(File.B, 7))
+        move = Move.Normal(pawnA2, Square(File.B, 5))
+        move.Apply()
+        move = Move.Capture(pawnA2, Square(File.B, 5), pawnB7)
+        # Act:
+        move.Apply()
+        # Assert:
+        self.assertEqual(File.B, pawnA2.Position.File)
+        self.assertEqual(5, pawnA2.Position.Rank)
+        self.assertTrue(pawnA2.HasMoved)
+        self.assertEqual(31, len(board.Pieces))
+
 
 class BoardTests(unittest.TestCase):
 
