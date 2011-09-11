@@ -26,6 +26,14 @@ class ThreatCalculatorTests(unittest.TestCase):
         isThreatened = calculator.IsSquareThreatenedByColor(Square(File.A, 3), Color.Black)
         self.assertFalse(isThreatened)
 
+    def test_IsSquareThreatenedByColor_AfterE4ByWhiteD5_Yes(self):
+        board = Board()
+        calculator = ThreatCalculator(board)
+        move = Move.Normal(board.GetPiece(Square(File.E, 2)), Square(File.E, 4))
+        move.Apply()
+        isThreatened = calculator.IsSquareThreatenedByColor(Square(File.D, 5), Color.White)
+        self.assertTrue(isThreatened)
+
 
 class MoveTests(unittest.TestCase):
 
