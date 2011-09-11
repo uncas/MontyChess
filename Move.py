@@ -6,7 +6,7 @@ class Move:
         self.Piece = piece
         self.Origin = piece.Position
         self.Destination = destination
-        self.IsCastling = False
+        self._isCastling = False
         self._oldHasMoved = piece.HasMoved
 
     def __repr__(self):
@@ -22,7 +22,7 @@ class Move:
     @staticmethod
     def Castle(piece, destination, rook):
         move = Move(piece, destination)
-        move.IsCastling = True
+        move._isCastling = True
         move._rook = rook
         return move
 
@@ -33,13 +33,13 @@ class Move:
     def Apply(self):
         self.Piece.Position = self.Destination
         self.Piece.HasMoved = True
-        if self.IsCastling:
+        if self._isCastling:
             self._applyRookCastlingMove()
 
     def Revert(self):
         self.Piece.Position = self.Origin
         self.Piece.HasMoved = self._oldHasMoved
-        if self.IsCastling:
+        if self._isCastling:
             self._revertRookCastlingMove()
 
     def _applyRookCastlingMove(self):
