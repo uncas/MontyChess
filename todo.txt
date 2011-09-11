@@ -5,8 +5,8 @@ X castling king-side
 X castling: moving king and rook correcly
 X castling queen-side
 X not allowed to castle when already moved
-- check
-- disallowing moves when checked
+X check
+X disallowing moves when checked
 - castling when checked
 - mate
 - stale mate
@@ -15,5 +15,5 @@ X not allowed to castle when already moved
 - 50 move rule
 
 Technical tasks:
-- refactor moves, such that they can be rolled on and off (command with rollback)
+X refactor moves, such that they can be rolled on and off (command with rollback)
 - split tests into success criteria tests and unit tests of underlying bits and pieces
