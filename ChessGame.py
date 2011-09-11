@@ -69,6 +69,9 @@ class ChessGame:
         blackIsChecked = self._isColorChecked(Color.Black)
         return CheckStatus(whiteIsChecked, blackIsChecked)
 
+    def GameState(self):
+        return GameState.Undecided
+
     def _isColorCheckedAfterMove(self, color, move):
         move.Apply()
         isColorCheckedAfterMove = self._isColorChecked(color)
@@ -254,3 +257,7 @@ class ThreatCalculator:
             if piece is not None and piece.Kind == Kind.King and piece.Color == color:
                 return True
         return False
+
+
+class GameState:
+    Undecided = 0

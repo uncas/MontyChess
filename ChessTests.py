@@ -485,6 +485,10 @@ class ChessTests(unittest.TestCase):
         move = moves[0]
         self.assertTrue(move.Origin == Square(File.G, 7) and move.Destination == Square(File.G, 6))
 
+    def test_GameState_InitialGame_Undecided(self):
+        gameState = self.game.GameState()
+        self.assertEqual(GameState.Undecided, gameState)
+
     def _checkStatus(self):
         return self.game.CheckStatus()
 

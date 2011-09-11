@@ -7,9 +7,11 @@ X castling queen-side
 X not allowed to castle when already moved
 X check
 X disallowing moves when checked
-- castling when checked
 - mate
 - stale mate
+- castling when checked
+- castling when rook is threatened
+- castling through threatened square
 - pawn promotion
 - draw by repetition
 - 50 move rule
