@@ -29,11 +29,7 @@ class Move:
 
     @staticmethod
     def Capture(board, piece, destination, capturedPiece):
-        move = Move(piece, destination)
-        move._isCapture = True
-        move._capturedPiece = capturedPiece
-        move._board = board
-        return move
+        return CaptureMove(board, piece, destination, capturedPiece)
 
     def Apply(self):
         self.Piece.Position = self.Destination
@@ -72,3 +68,12 @@ class Move:
 
     def _addCapturedPiece(self):
         self._board.AddPiece(self._capturedPiece)
+
+
+class CaptureMove(Move):
+
+    def __init__(self, board, piece, destination, capturedPiece):
+        Move.__init__(self, piece, destination)
+        self._isCapture = True
+        self._capturedPiece = capturedPiece
+        self._board = board
