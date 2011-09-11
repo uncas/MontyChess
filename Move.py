@@ -22,16 +22,17 @@ class Move:
 
     @staticmethod
     def Castle(piece, destination, rook):
-        castlingMove = Move.Normal(piece, destination)
-        castlingMove.IsCastling = True
-        castlingMove._rook = rook
-        return castlingMove
+        move = Move(piece, destination)
+        move.IsCastling = True
+        move._rook = rook
+        return move
 
     @staticmethod
-    def Capture(piece, destination, capturedPiece):
+    def Capture(board, piece, destination, capturedPiece):
         move = Move(piece, destination)
         move._isCapture = True
         move._capturedPiece = capturedPiece
+        move._board = board
         return move
 
     def Apply(self):
@@ -65,4 +66,4 @@ class Move:
         self._rook.HasMoved = False
 
     def _removeCapturedPiece(self):
-        self._capturedPiece = None
+        self._board.RemovePiece(self._capturedPiece)

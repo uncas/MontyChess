@@ -36,6 +36,9 @@ class Board:
                       if piece.Color == color and piece.Kind == Kind.King]
         return positions[0]
 
+    def RemovePiece(self, piece):
+        self.Pieces.remove(piece)
+
     def _addPieces(self):
         for file in File.All:
             self._addPiece(Color.White, Kind.Pawn, file, Board.WhitePawnRank)
