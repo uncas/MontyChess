@@ -221,5 +221,9 @@ class ThreatCalculator:
             or (threateningPawn2 is not None and threateningPawn2.Kind == Kind.Pawn and threateningPawn2.Color == color)
 
     def _isSquareThreatenedByKnight(self, square, color):
+        for step in Piece.KnightSteps:
+            otherSquare = square.AddStep(step)
+            piece = self._board.GetPiece(otherSquare)
+            if piece is not None and piece.Kind == Kind.Knight and piece.Color == color:
+                return True
         return False
-        

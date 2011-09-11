@@ -1,6 +1,11 @@
 from Move import *
 from Square import *
 
+class Step:
+    def __init__(self, fileDelta, rankDelta):
+        self.FileDelta = fileDelta
+        self.RankDelta = rankDelta
+
 class Piece:
     
     def __init__(self, color, kind, position):
@@ -58,12 +63,12 @@ class Piece:
             self._appendKingMoves(result, originFile, originRank)
         return result
 
-    KnightSteps = (-2,-1), (-2,1), (-1,-2), (-1,2), (1,-2), (1,2), (2,-1), (2,1)
+    KnightSteps = Step(-2,-1), Step(-2,1), Step(-1,-2), Step(-1,2), Step(1,-2), Step(1,2), Step(2,-1), Step(2,1)
 
     def _appendKnightMoves(self, result, originFile, originRank):
         for knightStep in Piece.KnightSteps:
-            destinationFile = originFile + knightStep[0]
-            destinationRank = originRank + knightStep[1]
+            destinationFile = originFile + knightStep.FileDelta
+            destinationRank = originRank + knightStep.RankDelta
             if self._isWithinBoard(destinationFile, destinationRank):
                 result.append(self._getMove(destinationFile, destinationRank))
 

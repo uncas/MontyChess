@@ -22,6 +22,9 @@ class Square:
     def AddFilesAndRanks(self, files, ranks):
         return Square(self.File + files, self.Rank + ranks)
 
+    def AddStep(self, step):
+        return Square(self.File + step.FileDelta, self. Rank + step.RankDelta)
+
 
 class File:
     A = 1
