@@ -27,10 +27,12 @@ class Piece:
 
     def GetCaptureMoves(self):
         if not self.IsPawn:
+            # TODO: Return proper CaptureMove here:
             return self.GetMoves()
         result = []
         originFile = self.Position.File
         originRank = self.Position.Rank
+        # TODO: Return proper CaptureMove or EnPassantMove here:
         if originFile > File.A:
             result.append(self._getMove(originFile - 1, originRank + self._direction))
         if originFile < File.H:

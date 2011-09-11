@@ -8,7 +8,7 @@ class ChessGame:
 
     # The 'ChessGame' class represents the overall chess game.
     # The 'ChessGame' class will delegate groups of logic to specialized classes.
-    # TODO: Refactor: Extract move logic to new class, for example 'MoveEngine'.
+    # TODO: Refactor: Extract move generation logic to new class, for example 'MoveGenerator'.
 
     def __init__(self):
         self._board = Board()
