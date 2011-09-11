@@ -4,8 +4,8 @@ class Move:
     
     def __init__(self, piece, destination):
         self.Piece = piece
-        self.Destination = destination
         self.Origin = piece.Position
+        self.Destination = destination
         self.IsCastling = False
         self._isCapture = False
         self._oldHasMoved = piece.HasMoved
