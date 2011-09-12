@@ -69,10 +69,12 @@ class ThreatCalculatorTests(unittest.TestCase):
 
 class MoveTests(unittest.TestCase):
 
+    def setUp(self):
+        self._board = Board()
+
     def test_Apply(self):
         # Arrange:
-        board = Board()
-        pawnA2 = board.GetPiece(Square(File.A, 2))
+        pawnA2 = self._board.GetPiece(Square(File.A, 2))
         move = Move.Normal(pawnA2, Square(File.A, 3))
         # Act:
         move.Apply()
@@ -84,8 +86,7 @@ class MoveTests(unittest.TestCase):
 
     def test_Revert(self):
         # Arrange:
-        board = Board()
-        pawnA2 = board.GetPiece(Square(File.A, 2))
+        pawnA2 = self._board.GetPiece(Square(File.A, 2))
         move = Move.Normal(pawnA2, Square(File.A, 3))
         move.Apply()
         # Act:
@@ -99,32 +100,30 @@ class MoveTests(unittest.TestCase):
 
     def test_Capture(self):
         # Arrange:
-        board = Board()
-        pawnA2 = board.GetPiece(Square(File.A, 2))
+        pawnA2 = self._board.GetPiece(Square(File.A, 2))
         move = Move.Normal(pawnA2, Square(File.A, 4))
         move.Apply()
-        pawnB7 = board.GetPiece(Square(File.B, 7))
+        pawnB7 = self._board.GetPiece(Square(File.B, 7))
         move = Move.Normal(pawnB7, Square(File.B, 5))
         move.Apply()
-        move = Move.Capture(board, pawnA2, Square(File.B, 5), pawnB7)
+        move = Move.Capture(self._board, pawnA2, Square(File.B, 5), pawnB7)
         # Act:
         move.Apply()
         # Assert:
         self.assertEqual(File.B, pawnA2.Position.File)
         self.assertEqual(5, pawnA2.Position.Rank)
         self.assertTrue(pawnA2.HasMoved)
-        self.assertEqual(31, len(board.Pieces))
+        self.assertEqual(31, len(self._board.Pieces))
 
     def test_CaptureRevert(self):
         # Arrange:
-        board = Board()
-        pawnA2 = board.GetPiece(Square(File.A, 2))
+        pawnA2 = self._board.GetPiece(Square(File.A, 2))
         move = Move.Normal(pawnA2, Square(File.A, 4))
         move.Apply()
-        pawnB7 = board.GetPiece(Square(File.B, 7))
+        pawnB7 = self._board.GetPiece(Square(File.B, 7))
         move = Move.Normal(pawnB7, Square(File.B, 5))
         move.Apply()
-        move = Move.Capture(board, pawnA2, Square(File.B, 5), pawnB7)
+        move = Move.Capture(self._board, pawnA2, Square(File.B, 5), pawnB7)
         move.Apply()
         self.assertEqual(File.B, pawnA2.Position.File)
         # Act:
@@ -132,7 +131,32 @@ class MoveTests(unittest.TestCase):
         # Assert:
         self.assertEqual(File.A, pawnA2.Position.File)
         self.assertEqual(4, pawnA2.Position.Rank)
-        self.assertEqual(32, len(board.Pieces))
+        self.assertEqual(32, len(self._board.Pieces))
+
+    def test_PawnPromotion(self):
+        self._move(Square(File.A,2), Square(File.A,4))
+        self._move(Square(File.B,7), Square(File.B,5))
+        self._move(Square(File.A,4), Square(File.B,5))
+        self._move(Square(File.C,8), Square(File.A,6))
+        self._move(Square(File.B,5), Square(File.B,6))
+        self._move(Square(File.B,8), Square(File.C,6))
+        self._move(Square(File.B,6), Square(File.A,7))
+        self._move(Square(File.A,8), Square(File.C,8))
+        self.assertEqual(30, len(self._board.Pieces))
+        pawn = self._board.GetPiece(Square(File.A,7))
+        promotion = Move.Promotion(self._board, pawn, Square(File.A,8), Kind.Queen)
+        promotion.Apply()
+        #self.assertEqual(31, len(self._board.Pieces))
+
+    def _move(self, origin, destination):
+        piece = self._board.GetPiece(origin)
+        otherPiece = self._board.GetPiece(destination)
+        if otherPiece is None:
+            move = Move.Normal(piece, destination)
+        else:
+            move = Move.Capture(self._board, piece, destination, otherPiece)
+        move.Apply()
+        
 
 
 class BoardTests(unittest.TestCase):
