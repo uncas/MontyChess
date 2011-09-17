@@ -10,7 +10,7 @@ class Piece:
         self.Color = color
         self.Kind = kind
         self.Position = position
-        self._direction = 3 - 2 * self.Color
+        self.Direction = 3 - 2 * self.Color
         self.IsPawn = kind == Kind.Pawn
         self.IsKnight = kind == Kind.Knight
         self.IsBishop = kind == Kind.Bishop
@@ -41,9 +41,9 @@ class Piece:
         originRank = self.Position.Rank
         # TODO: Return proper CaptureMove or EnPassantMove here:
         if originFile > File.A:
-            result.append(self._pieceMoveGenerator._getMove(self, originFile - 1, originRank + self._direction))
+            result.append(self._pieceMoveGenerator._getMove(self, originFile - 1, originRank + self.Direction))
         if originFile < File.H:
-            result.append(self._pieceMoveGenerator._getMove(self, originFile + 1, originRank + self._direction))
+            result.append(self._pieceMoveGenerator._getMove(self, originFile + 1, originRank + self.Direction))
         return result
 
     def GetMoves(self):
@@ -65,7 +65,7 @@ class Piece:
             self._pieceMoveGenerator._appendKingMoves(self, result, originFile, originRank)
         return result
 
-    def _isStartRank(self):
+    def IsAtStartRank(self):
         return (self.Color == Color.White and self.Position.Rank == 2) or (self.Color == Color.Black and self.Position.Rank == 7)
 
     def _colorString(self):
@@ -89,9 +89,9 @@ class PieceMoveGenerator:
                 result.append(self._getMove(piece, destinationFile, destinationRank))
 
     def _appendPawnMoves(self, piece, result, originFile, originRank):
-        result.append(self._getMove(piece, originFile, originRank + piece._direction))
-        if piece._isStartRank():
-            result.append(self._getMove(piece, originFile, originRank + 2 * piece._direction))
+        result.append(self._getMove(piece, originFile, originRank + piece.Direction))
+        if piece.IsAtStartRank():
+            result.append(self._getMove(piece, originFile, originRank + 2 * piece.Direction))
 
     def _appendKingMoves(self, piece, result, originFile, originRank):
         for fileDelta in -1,0,1:
