@@ -41,9 +41,9 @@ class Piece:
         originRank = self.Position.Rank
         # TODO: Return proper CaptureMove or EnPassantMove here:
         if originFile > File.A:
-            result.append(self._getMove(originFile - 1, originRank + self._direction))
+            result.append(self._pieceMoveGenerator._getMove(self, originFile - 1, originRank + self._direction))
         if originFile < File.H:
-            result.append(self._getMove(originFile + 1, originRank + self._direction))
+            result.append(self._pieceMoveGenerator._getMove(self, originFile + 1, originRank + self._direction))
         return result
 
     def GetMoves(self):
@@ -83,12 +83,12 @@ class Piece:
             destinationFile = originFile + knightStep.FileDelta
             destinationRank = originRank + knightStep.RankDelta
             if Square.WithinBoard(destinationFile, destinationRank):
-                result.append(self._getMove(destinationFile, destinationRank))
+                result.append(self._pieceMoveGenerator._getMove(self, destinationFile, destinationRank))
 
     def _appendPawnMoves(self, result, originFile, originRank):
-        result.append(self._getMove(originFile, originRank + self._direction))
+        result.append(self._pieceMoveGenerator._getMove(self, originFile, originRank + self._direction))
         if self._isStartRank():
-            result.append(self._getMove(originFile, originRank + 2 * self._direction))
+            result.append(self._pieceMoveGenerator._getMove(self, originFile, originRank + 2 * self._direction))
 
     def _appendKingMoves(self, result, originFile, originRank):
         for fileDelta in -1,0,1:
@@ -98,17 +98,17 @@ class Piece:
                 destinationFile = originFile + fileDelta
                 destinationRank = originRank + rankDelta
                 if Square.WithinBoard(destinationFile, destinationRank):
-                    result.append(self._getMove(destinationFile, destinationRank))
+                    result.append(self._pieceMoveGenerator._getMove(self, destinationFile, destinationRank))
 
     def _appendRookMoves(self, result, originFile, originRank):
         # Moving across the rank:
         for file in File.All:
             if file != originFile:
-                result.append(self._getMove(file, originRank))
+                result.append(self._pieceMoveGenerator._getMove(self, file, originRank))
         # Moving down the file:
         for rank in Rank.All:
             if rank != originRank:
-                result.append(self._getMove(originFile, rank))
+                result.append(self._pieceMoveGenerator._getMove(self, originFile, rank))
 
     def _appendBishopMoves(self, result, originFile, originRank):
         for step in range(1, 7):
@@ -117,10 +117,7 @@ class Piece:
                     destinationFile = originFile + step * fileDelta
                     destinationRank = originRank + step * rankDelta
                     if Square.WithinBoard(destinationFile, destinationRank):
-                        result.append(self._getMove(destinationFile, destinationRank))
-
-    def _getMove(self, destinationFile, destinationRank):
-        return self._pieceMoveGenerator._getMove(self, destinationFile, destinationRank)
+                        result.append(self._pieceMoveGenerator._getMove(self, destinationFile, destinationRank))
 
 
 class PieceMoveGenerator:
