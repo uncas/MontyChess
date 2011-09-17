@@ -50,10 +50,12 @@ class PieceMoveGenerator:
                 result.append(self._getMove(piece, destinationFile, destinationRank))
 
     def _appendPawnMoves(self, piece, result, originFile, originRank):
-#        if (piece.Color == Color.White and originRank == 7) \
- #               or (piece.Color == Color.Black and originRank == 2):
-  #          result.append(Move.Promotion(
-   #         return
+        if (piece.Color == Color.White and originRank == 7) \
+                or (piece.Color == Color.Black and originRank == 2):
+            destination = Square(originFile, originRank + piece.Direction)
+            for kind in Kind.Rook, Kind.Queen, Kind.Bishop, Kind.Knight:
+                result.append(Move.Promotion(self._board, piece, destination, kind))
+            return
         result.append(self._getMove(piece, originFile, originRank + piece.Direction))
         if piece.IsAtStartRank():
             result.append(self._getMove(piece, originFile, originRank + 2 * piece.Direction))

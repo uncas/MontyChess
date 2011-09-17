@@ -207,12 +207,12 @@ class PieceMoveGeneratorTests(unittest.TestCase):
     def test_GetMoves_BlackPawnE2_1(self):
         piece = Piece(Color.Black, Kind.Pawn, Square(File.E, 2))
         moves = self._getMoves(piece)
-        self.assertEqual(1, len(moves))
+        self.assertEqual(4, len(moves))
 
     def test_GetMoves_WhitePawnE7_1(self):
         piece = Piece(Color.White, Kind.Pawn, Square(File.E, 7))
         moves = self._getMoves(piece)
-        self.assertEqual(1, len(moves))
+        self.assertEqual(4, len(moves))
 
     def test_GetMoves_WhiteRookA1_14(self):
         piece = Piece(Color.White, Kind.Rook, Square(File.A, 1))
@@ -239,7 +239,7 @@ class PieceMoveGeneratorTests(unittest.TestCase):
         moves = self._getMoves(piece)
         self.assertEqual(5, len(moves))
 
-    def xtest_GetMoves_WhitePawnB7_QuadrupledPromotionMoves(self):
+    def test_GetMoves_WhitePawnB7_QuadrupledPromotionMoves(self):
         piece = Piece(Color.White, Kind.Pawn, Square(File.B, 7))
         moves = self._getMoves(piece)
         self.assertEqual(4, len(moves))
