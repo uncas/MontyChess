@@ -20,8 +20,8 @@ Board:
 PieceMoveGenerator/PawnMoveGenerator/...:
 
 Move/CaptureMove/PromotionMove/CastlingMove:
-- creates piece (promotion move)
 - uses Square
+- creates Piece (promotion move)
 
 Piece:
 - placed on Square
