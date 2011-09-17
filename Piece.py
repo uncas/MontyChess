@@ -57,10 +57,10 @@ class Piece:
         if self.IsRook:
             self._appendRookMoves(result, originFile, originRank)
         if self.IsBishop:
-            self._appendBishopMoves(result, originFile, originRank)
+            self._pieceMoveGenerator._appendBishopMoves(self, result, originFile, originRank)
         if self.IsQueen:
             self._appendRookMoves(result, originFile, originRank)
-            self._appendBishopMoves(result, originFile, originRank)
+            self._pieceMoveGenerator._appendBishopMoves(self, result, originFile, originRank)
         if self.IsKing:
             self._appendKingMoves(result, originFile, originRank)
         return result
@@ -109,9 +109,6 @@ class Piece:
         for rank in Rank.All:
             if rank != originRank:
                 result.append(self._pieceMoveGenerator._getMove(self, originFile, rank))
-
-    def _appendBishopMoves(self, result, originFile, originRank):
-        return self._pieceMoveGenerator._appendBishopMoves(self, result, originFile, originRank)
 
 
 class PieceMoveGenerator:
