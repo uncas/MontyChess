@@ -111,17 +111,20 @@ class Piece:
                 result.append(self._pieceMoveGenerator._getMove(self, originFile, rank))
 
     def _appendBishopMoves(self, result, originFile, originRank):
+        return self._pieceMoveGenerator._appendBishopMoves(self, result, originFile, originRank)
+
+
+class PieceMoveGenerator:
+    
+    def _appendBishopMoves(self, piece, result, originFile, originRank):
         for step in range(1, 7):
             for fileDelta in -1,1:
                 for rankDelta in -1,1:
                     destinationFile = originFile + step * fileDelta
                     destinationRank = originRank + step * rankDelta
                     if Square.WithinBoard(destinationFile, destinationRank):
-                        result.append(self._pieceMoveGenerator._getMove(self, destinationFile, destinationRank))
+                        result.append(self._getMove(piece, destinationFile, destinationRank))
 
-
-class PieceMoveGenerator:
-    
     def _getMove(self, piece, destinationFile, destinationRank):
         return Move.Normal(piece, Square(destinationFile, destinationRank))
 
