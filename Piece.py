@@ -4,8 +4,6 @@ from Square import *
 
 class Piece:
     
-    KnightSteps = Step(-2,-1), Step(-2,1), Step(-1,-2), Step(-1,2), Step(1,-2), Step(1,2), Step(2,-1), Step(2,1)
-
     def __init__(self, color, kind, position):
         self.Color = color
         self.Kind = kind
@@ -45,6 +43,8 @@ class Piece:
 
 class PieceMoveGenerator:
     
+    KnightSteps = Step(-2,-1), Step(-2,1), Step(-1,-2), Step(-1,2), Step(1,-2), Step(1,2), Step(2,-1), Step(2,1)
+
     def GetCaptureMoves(self, piece):
         #        return Piece.GetPieceCaptureMoves()
         #   @staticmethod
@@ -82,7 +82,7 @@ class PieceMoveGenerator:
         return result
 
     def _appendKnightMoves(self, piece,result, originFile, originRank):
-        for knightStep in Piece.KnightSteps:
+        for knightStep in PieceMoveGenerator.KnightSteps:
             destinationFile = originFile + knightStep.FileDelta
             destinationRank = originRank + knightStep.RankDelta
             if Square.WithinBoard(destinationFile, destinationRank):
