@@ -1,3 +1,4 @@
+from Piece import *
 from Square import *
 
 
@@ -112,9 +113,9 @@ class PromotionMove(Move):
 
     def Apply(self):
         Move.Apply(self)
-        #self._promotionPiece = Piece(self.Piece.Color, self._promotionKind, self.Destination)
-        #self._board.AddPiece(self._promotionPiece)
+        self._promotionPiece = Piece(self.Piece.Color, self._promotionKind, self.Destination)
+        self._board.AddPiece(self._promotionPiece)
 
     def Revert(self):
         Move.Revert(self)
-        #self._board.RemovePiece(self._promotionPiece)
+        self._board.RemovePiece(self._promotionPiece)

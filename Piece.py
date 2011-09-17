@@ -1,4 +1,3 @@
-from Move import *
 from Square import *
 
 

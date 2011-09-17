@@ -134,7 +134,7 @@ class MoveTests(unittest.TestCase):
         self.assertEqual(4, pawnA2.Position.Rank)
         self.assertEqual(32, len(self._board.Pieces))
 
-    def xtest_PawnPromotion(self):
+    def test_PawnPromotion(self):
         self._move(Square(File.A,2), Square(File.A,4))
         self._move(Square(File.B,7), Square(File.B,5))
         self._move(Square(File.A,4), Square(File.B,5))
