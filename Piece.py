@@ -55,11 +55,11 @@ class Piece:
         if self.IsKnight:
             self._appendKnightMoves(result, originFile, originRank)
         if self.IsRook:
-            self._appendRookMoves(result, originFile, originRank)
+            self._pieceMoveGenerator._appendRookMoves(self, result, originFile, originRank)
         if self.IsBishop:
             self._pieceMoveGenerator._appendBishopMoves(self, result, originFile, originRank)
         if self.IsQueen:
-            self._appendRookMoves(result, originFile, originRank)
+            self._pieceMoveGenerator._appendRookMoves(self, result, originFile, originRank)
             self._pieceMoveGenerator._appendBishopMoves(self, result, originFile, originRank)
         if self.IsKing:
             self._appendKingMoves(result, originFile, originRank)
@@ -100,19 +100,19 @@ class Piece:
                 if Square.WithinBoard(destinationFile, destinationRank):
                     result.append(self._pieceMoveGenerator._getMove(self, destinationFile, destinationRank))
 
-    def _appendRookMoves(self, result, originFile, originRank):
-        # Moving across the rank:
-        for file in File.All:
-            if file != originFile:
-                result.append(self._pieceMoveGenerator._getMove(self, file, originRank))
-        # Moving down the file:
-        for rank in Rank.All:
-            if rank != originRank:
-                result.append(self._pieceMoveGenerator._getMove(self, originFile, rank))
-
 
 class PieceMoveGenerator:
     
+    def _appendRookMoves(self, piece, result, originFile, originRank):
+        # Moving across the rank:
+        for file in File.All:
+            if file != originFile:
+                result.append(self._getMove(piece, file, originRank))
+        # Moving down the file:
+        for rank in Rank.All:
+            if rank != originRank:
+                result.append(self._getMove(piece, originFile, rank))
+
     def _appendBishopMoves(self, piece, result, originFile, originRank):
         for step in range(1, 7):
             for fileDelta in -1,1:
