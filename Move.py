@@ -7,7 +7,7 @@ class Step:
         self.RankDelta = rankDelta
 
     def Times(self, times):
-        return Step(self.FileDelta*times, self.RankDelta*times)
+        return Step(self.FileDelta * times, self.RankDelta * times)
 
 
 class Move:
