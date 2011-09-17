@@ -167,6 +167,22 @@ class BoardTests(unittest.TestCase):
         self.assertEqual(1, square.Rank)
 
 
+class PieceMoveGeneratorTests(unittest.TestCase):
+
+    def setUp(self):
+        self._pieceMoveGenerator = PieceMoveGenerator()
+
+    def test_GetCaptureMoves_WhitePawnE2_2(self):
+        piece = Piece(Color.White, Kind.Pawn, Square(File.E, 2))
+        moves = self._pieceMoveGenerator.GetCaptureMoves(piece)
+        self.assertEqual(2, len(moves))
+
+    def test_GetCaptureMoves_WhitePawnA2_1(self):
+        piece = Piece(Color.White, Kind.Pawn, Square(File.A, 2))
+        moves = self._pieceMoveGenerator.GetCaptureMoves(piece)
+        self.assertEqual(1, len(moves))
+
+
 class PieceTests(unittest.TestCase):
 
     def test_Piece_WhiteRookA1(self):
@@ -175,16 +191,6 @@ class PieceTests(unittest.TestCase):
         self.assertEqual(Kind.Rook, piece.Kind)
         self.assertEqual(File.A, piece.Position.File)
         self.assertEqual(1, piece.Position.Rank)
-
-    def test_GetCaptureMoves_WhitePawnE2_2(self):
-        piece = Piece(Color.White, Kind.Pawn, Square(File.E, 2))
-        moves = piece.GetCaptureMoves()
-        self.assertEqual(2, len(moves))
-
-    def test_GetCaptureMoves_WhitePawnA2_1(self):
-        piece = Piece(Color.White, Kind.Pawn, Square(File.A, 2))
-        moves = piece.GetCaptureMoves()
-        self.assertEqual(1, len(moves))
 
     def test_GetMoves_WhitePawnE2_2(self):
         piece = Piece(Color.White, Kind.Pawn, Square(File.E, 2))

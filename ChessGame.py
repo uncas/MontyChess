@@ -16,6 +16,7 @@ class ChessGame:
         self.Pieces = self._board.Pieces
         self._moves = []
         self._threatCalculator = ThreatCalculator(self._board)
+        self._pieceMoveGenerator = PieceMoveGenerator()
 
     def PossibleMoves(self):
         result = []
@@ -30,10 +31,10 @@ class ChessGame:
         result = []
         if onlyIfSideToPlay and piece.Color != self.SideToPlay:
             return result
-        for move in piece.GetMoves():
+        for move in self._pieceMoveGenerator.GetMoves(piece):
             if self._isValidMove(piece, move):
                 result.append(move)
-        for capture in piece.GetCaptureMoves():
+        for capture in self._pieceMoveGenerator.GetCaptureMoves(piece):
             if self._isValidCapture(piece, capture):
                 result.append(capture)
         castlingPossibility = self._getCastlingPossibility(piece)

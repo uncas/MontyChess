@@ -29,9 +29,6 @@ class Piece:
             return False
         return self.Kind == other.Kind and self.Color == other.Color and self.Position == other.Position
 
-    def GetCaptureMoves(self):
-        return self._pieceMoveGenerator.GetCaptureMoves(self)
-
     def GetMoves(self):
         return self._pieceMoveGenerator.GetMoves(self)
 
