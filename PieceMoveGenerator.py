@@ -18,9 +18,17 @@ class PieceMoveGenerator:
         originRank = piece.Position.Rank
         # TODO: Return proper CaptureMove or EnPassantMove here:
         if originFile > File.A:
-            result.append(self._getMove(piece, originFile - 1, originRank + piece.Direction))
+            if self._canMakePromotionMove(piece):
+                for kind in Kind.Rook, Kind.Queen, Kind.Bishop, Kind.Knight:
+                    result.append(Move.Promotion(self._board, piece, Square(originFile - 1, originRank + piece.Direction), kind))
+            else:
+                result.append(self._getMove(piece, originFile - 1, originRank + piece.Direction))
         if originFile < File.H:
-            result.append(self._getMove(piece, originFile + 1, originRank + piece.Direction))
+            if self._canMakePromotionMove(piece):
+                for kind in Kind.Rook, Kind.Queen, Kind.Bishop, Kind.Knight:
+                    result.append(Move.Promotion(self._board, piece, Square(originFile + 1, originRank + piece.Direction), kind))
+            else:
+                result.append(self._getMove(piece, originFile + 1, originRank + piece.Direction))
         return result
 
     def GetMoves(self, piece):
@@ -50,8 +58,7 @@ class PieceMoveGenerator:
                 result.append(self._getMove(piece, destinationFile, destinationRank))
 
     def _appendPawnMoves(self, piece, result, originFile, originRank):
-        if (piece.Color == Color.White and originRank == 7) \
-                or (piece.Color == Color.Black and originRank == 2):
+        if self._canMakePromotionMove(piece):
             destination = Square(originFile, originRank + piece.Direction)
             for kind in Kind.Rook, Kind.Queen, Kind.Bishop, Kind.Knight:
                 result.append(Move.Promotion(self._board, piece, destination, kind))
@@ -59,7 +66,10 @@ class PieceMoveGenerator:
         result.append(self._getMove(piece, originFile, originRank + piece.Direction))
         if piece.IsAtStartRank():
             result.append(self._getMove(piece, originFile, originRank + 2 * piece.Direction))
-            
+
+    def _canMakePromotionMove(self, piece):
+        return (piece.Color == Color.White and piece.Position.Rank == 7) \
+                or (piece.Color == Color.Black and piece.Position.Rank == 2)
 
     def _appendKingMoves(self, piece, result, originFile, originRank):
         for fileDelta in -1,0,1:

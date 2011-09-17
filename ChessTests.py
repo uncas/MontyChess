@@ -243,8 +243,8 @@ class PieceMoveGeneratorTests(unittest.TestCase):
         piece = Piece(Color.White, Kind.Pawn, Square(File.B, 7))
         moves = self._getMoves(piece)
         self.assertEqual(4, len(moves))
-#        captures = self._getCaptureMoves(piece)
-#        self.assertEqual(8, len(captures))
+        captures = self._getCaptureMoves(piece)
+        self.assertEqual(8, len(captures))
 
     def _getCaptureMoves(self, piece):
         return self._pieceMoveGenerator.GetCaptureMoves(piece)

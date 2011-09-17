@@ -55,3 +55,4 @@ class Kind:
     Bishop = 4
     Queen = 5
     King = 6
+#    Promotion = Kind.Rook, Kind.Knight, Kind.Bishop, Kind.Queen
