@@ -133,7 +133,7 @@ class MoveTests(unittest.TestCase):
         self.assertEqual(4, pawnA2.Position.Rank)
         self.assertEqual(32, len(self._board.Pieces))
 
-    def test_PawnPromotion(self):
+    def xtest_PawnPromotion(self):
         self._move(Square(File.A,2), Square(File.A,4))
         self._move(Square(File.B,7), Square(File.B,5))
         self._move(Square(File.A,4), Square(File.B,5))
@@ -146,7 +146,7 @@ class MoveTests(unittest.TestCase):
         pawn = self._board.GetPiece(Square(File.A,7))
         promotion = Move.Promotion(self._board, pawn, Square(File.A,8), Kind.Queen)
         promotion.Apply()
-        #self.assertEqual(31, len(self._board.Pieces))
+        self.assertEqual(31, len(self._board.Pieces))
 
     def _move(self, origin, destination):
         piece = self._board.GetPiece(origin)

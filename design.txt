@@ -1,0 +1,34 @@
+ChessGame:
+- contains Board
+- uses MoveGenerator
+- uses CastlingPossibility
+- uses CheckStatus
+- uses ThreatCalculator
+- uses GameResult
+
+MoveGenerator:
+- Uses Board
+- Uses PieceMoveGenerators
+- Uses Moves
+- Uses Piece
+- Uses Square
+
+Board:
+- contains Piece
+- contains Square
+
+PieceMoveGenerator/PawnMoveGenerator/...:
+
+Move/CaptureMove/PromotionMove/CastlingMove:
+- creates piece (promotion move)
+- uses Square
+
+Piece:
+- placed on Square
+- uses Step
+- uses Color
+- uses Kind
+
+Square:
+- uses File
+- uses Rank
