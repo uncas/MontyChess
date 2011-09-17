@@ -23,7 +23,7 @@ class Square:
         return Square(self.File + files, self.Rank + ranks)
 
     def AddStep(self, step):
-        return Square(self.File + step.FileDelta, self. Rank + step.RankDelta)
+        return Square(self.File + step.FileDelta, self.Rank + step.RankDelta)
 
     def IsWithinBoard(self):
         return Square.WithinBoard(self.File, self.Rank)
