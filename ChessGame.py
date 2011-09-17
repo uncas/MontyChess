@@ -1,6 +1,7 @@
 from Board import *
 from Move import *
 from Piece import *
+from PieceMoveGenerator import *
 from Square import *
 
 

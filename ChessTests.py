@@ -4,6 +4,7 @@ from Board import *
 from ChessGame import *
 from Move import *
 from Piece import *
+from PieceMoveGenerator import *
 
 
 class ThreatCalculatorTests(unittest.TestCase):
