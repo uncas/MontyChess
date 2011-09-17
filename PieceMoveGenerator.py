@@ -6,10 +6,10 @@ class PieceMoveGenerator:
     
     KnightSteps = Step(-2,-1), Step(-2,1), Step(-1,-2), Step(-1,2), Step(1,-2), Step(1,2), Step(2,-1), Step(2,1)
 
+    def __init__(self, board):
+        self._board = board
+
     def GetCaptureMoves(self, piece):
-        #        return Piece.GetPieceCaptureMoves()
-        #   @staticmethod
-        #  def GetPieceCaptureMoves():
         if not piece.IsPawn:
             # TODO: Return proper CaptureMove here:
             return self.GetMoves(piece)
@@ -50,9 +50,14 @@ class PieceMoveGenerator:
                 result.append(self._getMove(piece, destinationFile, destinationRank))
 
     def _appendPawnMoves(self, piece, result, originFile, originRank):
+#        if (piece.Color == Color.White and originRank == 7) \
+ #               or (piece.Color == Color.Black and originRank == 2):
+  #          result.append(Move.Promotion(
+   #         return
         result.append(self._getMove(piece, originFile, originRank + piece.Direction))
         if piece.IsAtStartRank():
             result.append(self._getMove(piece, originFile, originRank + 2 * piece.Direction))
+            
 
     def _appendKingMoves(self, piece, result, originFile, originRank):
         for fileDelta in -1,0,1:

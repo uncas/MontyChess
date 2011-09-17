@@ -171,20 +171,18 @@ class BoardTests(unittest.TestCase):
 class PieceMoveGeneratorTests(unittest.TestCase):
 
     def setUp(self):
-        self._pieceMoveGenerator = PieceMoveGenerator()
+        self._board = Board()
+        self._pieceMoveGenerator = PieceMoveGenerator(self._board)
 
     def test_GetCaptureMoves_WhitePawnE2_2(self):
         piece = Piece(Color.White, Kind.Pawn, Square(File.E, 2))
-        moves = self._pieceMoveGenerator.GetCaptureMoves(piece)
+        moves = self._getCaptureMoves(piece)
         self.assertEqual(2, len(moves))
 
     def test_GetCaptureMoves_WhitePawnA2_1(self):
         piece = Piece(Color.White, Kind.Pawn, Square(File.A, 2))
-        moves = self._pieceMoveGenerator.GetCaptureMoves(piece)
+        moves = self._getCaptureMoves(piece)
         self.assertEqual(1, len(moves))
-
-    def _getMoves(self, piece):
-        return self._pieceMoveGenerator.GetMoves(piece)
 
     def test_GetMoves_WhitePawnE2_2(self):
         piece = Piece(Color.White, Kind.Pawn, Square(File.E, 2))
@@ -240,6 +238,19 @@ class PieceMoveGeneratorTests(unittest.TestCase):
         piece = Piece(Color.White, Kind.King, Square(File.E, 1))
         moves = self._getMoves(piece)
         self.assertEqual(5, len(moves))
+
+    def xtest_GetMoves_WhitePawnB7_QuadrupledPromotionMoves(self):
+        piece = Piece(Color.White, Kind.Pawn, Square(File.B, 7))
+        moves = self._getMoves(piece)
+        self.assertEqual(4, len(moves))
+#        captures = self._getCaptureMoves(piece)
+#        self.assertEqual(8, len(captures))
+
+    def _getCaptureMoves(self, piece):
+        return self._pieceMoveGenerator.GetCaptureMoves(piece)
+
+    def _getMoves(self, piece):
+        return self._pieceMoveGenerator.GetMoves(piece)
 
 
 class PieceTests(unittest.TestCase):

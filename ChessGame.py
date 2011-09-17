@@ -17,7 +17,7 @@ class ChessGame:
         self.Pieces = self._board.Pieces
         self._moves = []
         self._threatCalculator = ThreatCalculator(self._board)
-        self._pieceMoveGenerator = PieceMoveGenerator()
+        self._pieceMoveGenerator = PieceMoveGenerator(self._board)
 
     def PossibleMoves(self):
         result = []
