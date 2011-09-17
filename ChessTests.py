@@ -182,6 +182,64 @@ class PieceMoveGeneratorTests(unittest.TestCase):
         moves = self._pieceMoveGenerator.GetCaptureMoves(piece)
         self.assertEqual(1, len(moves))
 
+    def _getMoves(self, piece):
+        return self._pieceMoveGenerator.GetMoves(piece)
+
+    def test_GetMoves_WhitePawnE2_2(self):
+        piece = Piece(Color.White, Kind.Pawn, Square(File.E, 2))
+        moves = self._getMoves(piece)
+        self.assertEqual(2, len(moves))
+
+    def test_GetMoves_WhitePawnE3_1(self):
+        piece = Piece(Color.White, Kind.Pawn, Square(File.E, 3))
+        moves = self._getMoves(piece)
+        self.assertEqual(1, len(moves))
+
+    def test_GetMoves_BlackPawnE7_2(self):
+        piece = Piece(Color.Black, Kind.Pawn, Square(File.E, 7))
+        moves = self._getMoves(piece)
+        self.assertEqual(2, len(moves))
+
+    def test_GetMoves_BlackPawnE6_1(self):
+        piece = Piece(Color.Black, Kind.Pawn, Square(File.E, 6))
+        moves = self._getMoves(piece)
+        self.assertEqual(1, len(moves))
+
+    def test_GetMoves_BlackPawnE2_1(self):
+        piece = Piece(Color.Black, Kind.Pawn, Square(File.E, 2))
+        moves = self._getMoves(piece)
+        self.assertEqual(1, len(moves))
+
+    def test_GetMoves_WhitePawnE7_1(self):
+        piece = Piece(Color.White, Kind.Pawn, Square(File.E, 7))
+        moves = self._getMoves(piece)
+        self.assertEqual(1, len(moves))
+
+    def test_GetMoves_WhiteRookA1_14(self):
+        piece = Piece(Color.White, Kind.Rook, Square(File.A, 1))
+        moves = self._getMoves(piece)
+        self.assertEqual(14, len(moves))
+
+    def test_GetMoves_WhiteKnightB1_3(self):
+        piece = Piece(Color.White, Kind.Knight, Square(File.B, 1))
+        moves = self._getMoves(piece)
+        self.assertEqual(3, len(moves))
+
+    def test_GetMoves_WhiteBishopC1_7(self):
+        piece = Piece(Color.White, Kind.Bishop, Square(File.C, 1))
+        moves = self._getMoves(piece)
+        self.assertEqual(7, len(moves))
+
+    def test_GetMoves_WhiteQueenD1_21(self):
+        piece = Piece(Color.White, Kind.Queen, Square(File.D, 1))
+        moves = self._getMoves(piece)
+        self.assertEqual(21, len(moves))
+
+    def test_GetMoves_WhiteKingE1_5(self):
+        piece = Piece(Color.White, Kind.King, Square(File.E, 1))
+        moves = self._getMoves(piece)
+        self.assertEqual(5, len(moves))
+
 
 class PieceTests(unittest.TestCase):
 
@@ -191,61 +249,6 @@ class PieceTests(unittest.TestCase):
         self.assertEqual(Kind.Rook, piece.Kind)
         self.assertEqual(File.A, piece.Position.File)
         self.assertEqual(1, piece.Position.Rank)
-
-    def test_GetMoves_WhitePawnE2_2(self):
-        piece = Piece(Color.White, Kind.Pawn, Square(File.E, 2))
-        moves = piece.GetMoves()
-        self.assertEqual(2, len(moves))
-
-    def test_GetMoves_WhitePawnE3_1(self):
-        piece = Piece(Color.White, Kind.Pawn, Square(File.E, 3))
-        moves = piece.GetMoves()
-        self.assertEqual(1, len(moves))
-
-    def test_GetMoves_BlackPawnE7_2(self):
-        piece = Piece(Color.Black, Kind.Pawn, Square(File.E, 7))
-        moves = piece.GetMoves()
-        self.assertEqual(2, len(moves))
-
-    def test_GetMoves_BlackPawnE6_1(self):
-        piece = Piece(Color.Black, Kind.Pawn, Square(File.E, 6))
-        moves = piece.GetMoves()
-        self.assertEqual(1, len(moves))
-
-    def test_GetMoves_BlackPawnE2_1(self):
-        piece = Piece(Color.Black, Kind.Pawn, Square(File.E, 2))
-        moves = piece.GetMoves()
-        self.assertEqual(1, len(moves))
-
-    def test_GetMoves_WhitePawnE7_1(self):
-        piece = Piece(Color.White, Kind.Pawn, Square(File.E, 7))
-        moves = piece.GetMoves()
-        self.assertEqual(1, len(moves))
-
-    def test_GetMoves_WhiteRookA1_14(self):
-        piece = Piece(Color.White, Kind.Rook, Square(File.A, 1))
-        moves = piece.GetMoves()
-        self.assertEqual(14, len(moves))
-
-    def test_GetMoves_WhiteKnightB1_3(self):
-        piece = Piece(Color.White, Kind.Knight, Square(File.B, 1))
-        moves = piece.GetMoves()
-        self.assertEqual(3, len(moves))
-
-    def test_GetMoves_WhiteBishopC1_7(self):
-        piece = Piece(Color.White, Kind.Bishop, Square(File.C, 1))
-        moves = piece.GetMoves()
-        self.assertEqual(7, len(moves))
-
-    def test_GetMoves_WhiteQueenD1_21(self):
-        piece = Piece(Color.White, Kind.Queen, Square(File.D, 1))
-        moves = piece.GetMoves()
-        self.assertEqual(21, len(moves))
-
-    def test_GetMoves_WhiteKingE1_5(self):
-        piece = Piece(Color.White, Kind.King, Square(File.E, 1))
-        moves = piece.GetMoves()
-        self.assertEqual(5, len(moves))
 
 
 class ChessTests(unittest.TestCase):

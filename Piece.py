@@ -29,9 +29,6 @@ class Piece:
             return False
         return self.Kind == other.Kind and self.Color == other.Color and self.Position == other.Position
 
-    def GetMoves(self):
-        return self._pieceMoveGenerator.GetMoves(self)
-
     def IsAtStartRank(self):
         return (self.Color == Color.White and self.Position.Rank == 2) or (self.Color == Color.Black and self.Position.Rank == 7)
 
