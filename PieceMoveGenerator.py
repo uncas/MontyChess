@@ -19,13 +19,13 @@ class PieceMoveGenerator:
         # TODO: Return proper CaptureMove or EnPassantMove here:
         if originFile > File.A:
             if self._canMakePromotionMove(piece):
-                for kind in Kind.Rook, Kind.Queen, Kind.Bishop, Kind.Knight:
+                for kind in Kind.Promotion:
                     result.append(Move.Promotion(self._board, piece, Square(originFile - 1, originRank + piece.Direction), kind))
             else:
                 result.append(self._getMove(piece, originFile - 1, originRank + piece.Direction))
         if originFile < File.H:
             if self._canMakePromotionMove(piece):
-                for kind in Kind.Rook, Kind.Queen, Kind.Bishop, Kind.Knight:
+                for kind in Kind.Promotion:
                     result.append(Move.Promotion(self._board, piece, Square(originFile + 1, originRank + piece.Direction), kind))
             else:
                 result.append(self._getMove(piece, originFile + 1, originRank + piece.Direction))
@@ -60,7 +60,7 @@ class PieceMoveGenerator:
     def _appendPawnMoves(self, piece, result, originFile, originRank):
         if self._canMakePromotionMove(piece):
             destination = Square(originFile, originRank + piece.Direction)
-            for kind in Kind.Rook, Kind.Queen, Kind.Bishop, Kind.Knight:
+            for kind in Kind.Promotion:
                 result.append(Move.Promotion(self._board, piece, destination, kind))
             return
         result.append(self._getMove(piece, originFile, originRank + piece.Direction))
