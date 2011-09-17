@@ -30,21 +30,7 @@ class Piece:
         return self.Kind == other.Kind and self.Color == other.Color and self.Position == other.Position
 
     def GetCaptureMoves(self):
-        #        return Piece.GetPieceCaptureMoves()
-        #   @staticmethod
-        #  def GetPieceCaptureMoves():
-        if not self.IsPawn:
-            # TODO: Return proper CaptureMove here:
-            return self.GetMoves()
-        result = []
-        originFile = self.Position.File
-        originRank = self.Position.Rank
-        # TODO: Return proper CaptureMove or EnPassantMove here:
-        if originFile > File.A:
-            result.append(self._pieceMoveGenerator._getMove(self, originFile - 1, originRank + self.Direction))
-        if originFile < File.H:
-            result.append(self._pieceMoveGenerator._getMove(self, originFile + 1, originRank + self.Direction))
-        return result
+        return self._pieceMoveGenerator.GetCaptureMoves(self)
 
     def GetMoves(self):
         return self._pieceMoveGenerator.GetMoves(self)
@@ -65,6 +51,23 @@ class Piece:
 
 class PieceMoveGenerator:
     
+    def GetCaptureMoves(self, piece):
+        #        return Piece.GetPieceCaptureMoves()
+        #   @staticmethod
+        #  def GetPieceCaptureMoves():
+        if not piece.IsPawn:
+            # TODO: Return proper CaptureMove here:
+            return self.GetMoves(piece)
+        result = []
+        originFile = piece.Position.File
+        originRank = piece.Position.Rank
+        # TODO: Return proper CaptureMove or EnPassantMove here:
+        if originFile > File.A:
+            result.append(self._getMove(piece, originFile - 1, originRank + piece.Direction))
+        if originFile < File.H:
+            result.append(self._getMove(piece, originFile + 1, originRank + piece.Direction))
+        return result
+
     def GetMoves(self, piece):
         result = []
         originFile = piece.Position.File
