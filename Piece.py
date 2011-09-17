@@ -4,6 +4,8 @@ from Square import *
 
 class Piece:
     
+    KnightSteps = Step(-2,-1), Step(-2,1), Step(-1,-2), Step(-1,2), Step(1,-2), Step(1,2), Step(2,-1), Step(2,1)
+
     def __init__(self, color, kind, position):
         self.Color = color
         self.Kind = kind
@@ -27,6 +29,9 @@ class Piece:
         return self.Kind == other.Kind and self.Color == other.Color and self.Position == other.Position
 
     def GetCaptureMoves(self):
+        #        return Piece.GetPieceCaptureMoves()
+        #   @staticmethod
+        #  def GetPieceCaptureMoves():
         if not self.IsPawn:
             # TODO: Return proper CaptureMove here:
             return self.GetMoves()
@@ -59,13 +64,24 @@ class Piece:
             self._appendKingMoves(result, originFile, originRank)
         return result
 
-    KnightSteps = Step(-2,-1), Step(-2,1), Step(-1,-2), Step(-1,2), Step(1,-2), Step(1,2), Step(2,-1), Step(2,1)
+    def _isStartRank(self):
+        return (self.Color == Color.White and self.Position.Rank == 2) or (self.Color == Color.Black and self.Position.Rank == 7)
+
+    def _colorString(self):
+        if self.Color == 1:
+            return "White"
+        else:
+            return "Black"
+
+    def _kindString(self):
+        kindStrings = "Pawn", "Rook", "Knight", "Bishop", "Queen", "King"
+        return kindStrings[self.Kind-1]
 
     def _appendKnightMoves(self, result, originFile, originRank):
         for knightStep in Piece.KnightSteps:
             destinationFile = originFile + knightStep.FileDelta
             destinationRank = originRank + knightStep.RankDelta
-            if self._isWithinBoard(destinationFile, destinationRank):
+            if Square.WithinBoard(destinationFile, destinationRank):
                 result.append(self._getMove(destinationFile, destinationRank))
 
     def _appendPawnMoves(self, result, originFile, originRank):
@@ -80,7 +96,7 @@ class Piece:
                     continue
                 destinationFile = originFile + fileDelta
                 destinationRank = originRank + rankDelta
-                if self._isWithinBoard(destinationFile, destinationRank):
+                if Square.WithinBoard(destinationFile, destinationRank):
                     result.append(self._getMove(destinationFile, destinationRank))
 
     def _appendRookMoves(self, result, originFile, originRank):
@@ -99,28 +115,12 @@ class Piece:
                 for rankDelta in -1,1:
                     destinationFile = originFile + step * fileDelta
                     destinationRank = originRank + step * rankDelta
-                    if self._isWithinBoard(destinationFile, destinationRank):
+                    if Square.WithinBoard(destinationFile, destinationRank):
                         result.append(self._getMove(destinationFile, destinationRank))
 
     def _getMove(self, destinationFile, destinationRank):
         return Move.Normal(self, Square(destinationFile, destinationRank))
 
-    def _isStartRank(self):
-        return (self.Color == Color.White and self.Position.Rank == 2) or (self.Color == Color.Black and self.Position.Rank == 7)
-
-    def _isWithinBoard(self, file, rank):
-        return File.A <= file and file <= File.H and 1 <= rank and rank <= 8
-
-    def _colorString(self):
-        if self.Color == 1:
-            return "White"
-        else:
-            return "Black"
-
-    def _kindString(self):
-        kindStrings = "Pawn", "Rook", "Knight", "Bishop", "Queen", "King"
-        return kindStrings[self.Kind-1]
-    
 
 class Color:
     White = 1

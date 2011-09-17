@@ -26,8 +26,11 @@ class Square:
         return Square(self.File + step.FileDelta, self. Rank + step.RankDelta)
 
     def IsWithinBoard(self):
-        return File.A <= self.File and self.File <= File.H and 1 <= self.Rank and self.Rank <= 8
+        return Square.WithinBoard(self.File, self.Rank)
 
+    @staticmethod
+    def WithinBoard(file, rank):
+        return File.A <= file and file <= File.H and 1 <= rank and rank <= 8
 
 class File:
     A = 1
