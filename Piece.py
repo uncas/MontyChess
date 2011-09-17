@@ -19,6 +19,7 @@ class Piece:
         self.IsKing = kind == Kind.King
         self.CanJump = self.IsKnight
         self.HasMoved = False
+        self._pieceMoveGenerator = PieceMoveGenerator()
 
     def __repr__(self):
         return self._colorString() + " " + self._kindString()
@@ -119,7 +120,13 @@ class Piece:
                         result.append(self._getMove(destinationFile, destinationRank))
 
     def _getMove(self, destinationFile, destinationRank):
-        return Move.Normal(self, Square(destinationFile, destinationRank))
+        return self._pieceMoveGenerator._getMove(self, destinationFile, destinationRank)
+
+
+class PieceMoveGenerator:
+    
+    def _getMove(self, piece, destinationFile, destinationRank):
+        return Move.Normal(piece, Square(destinationFile, destinationRank))
 
 
 class Color:
