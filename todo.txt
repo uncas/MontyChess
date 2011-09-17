@@ -9,7 +9,8 @@ X check
 X disallowing moves when checked
 X mate
 X stale mate
-- pawn promotion
+X pawn promotion
+- pawn promotion + capture
 - draw by repetition
 - castling when checked
 - castling when rook is threatened
@@ -24,10 +25,7 @@ Success criteria - other:
 
 Technical tasks:
 X refactor moves, such that they can be rolled on and off (command with rollback)
-- create PieceMoveGenerators
+X create PieceMoveGenerators
+- create GameMoveGenerator
 - split tests into success criteria tests and unit tests of underlying bits and pieces
 - refactor tests such that they reuse functionality
-
-Notes:
-- hmm, cyclical references when Piece creates Move, and PromotionMove creates Piece.
-  TODO: Design it such that cyclical references become obsolete (see design.txt).
