@@ -586,6 +586,23 @@ class ChessTests(unittest.TestCase):
         result = self.game.Result()
         self.assertEqual(GameResult.Draw, result)
 
+    def test_Result_Repetition_Undecided(self):
+        self._knightRepeat()
+        result = self.game.Result()
+        self.assertEqual(GameResult.Undecided, result)
+
+    def xtest_Result_SecondRepetition_Draw(self):
+        self._knightRepeat()
+        self._knightRepeat()
+        result = self.game.Result()
+        self.assertEqual(GameResult.Draw, result)
+
+    def _knightRepeat(self):
+        self._move(Square(File.G, 1), Square(File.F, 3))
+        self._move(Square(File.G, 8), Square(File.F, 6))
+        self._move(Square(File.F, 3), Square(File.G, 1))
+        self._move(Square(File.F, 6), Square(File.G, 8))
+
     def _checkStatus(self):
         return self.game.CheckStatus()
 

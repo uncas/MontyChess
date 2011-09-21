@@ -10,12 +10,12 @@ X disallowing moves when checked
 X mate
 X stale mate
 X pawn promotion
-- pawn promotion + capture
 - draw by repetition
 - castling when checked
 - castling when rook is threatened
 - castling through threatened square
 - 50 move rule
+- pawn promotion + capture
 
 Success criteria - chess engine:
 ...
