@@ -8,6 +8,7 @@ class ChessEngine:
         self._evaluationService = EvaluationService()
 
     def BestMoves(self, count):
+        reverse = self._game.SideToPlay == Color.White
         result = []
         moves = self._game.PossibleMoves()
         for move in moves:
@@ -15,7 +16,7 @@ class ChessEngine:
             evaluation = self._evaluationService.Evaluate(self._game)
             move.Revert()
             result.append(MoveEvaluation(move, evaluation))
-        sortedResult = sorted(result, key=lambda move: move.Evaluation, reverse=True)
+        sortedResult = sorted(result, key=lambda move: move.Evaluation, reverse=reverse)
         return sortedResult[:count]
 
 
