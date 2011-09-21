@@ -5,10 +5,25 @@ class ChessEngine:
 
     def __init__(self, game):
         self._game = game
+        self._evaluationService = EvaluationService()
 
     def BestMoves(self, count):
-        possibleMoves = self._game.PossibleMoves()
-        return possibleMoves[:count]
+        result = []
+        moves = self._game.PossibleMoves()
+        for move in moves:
+            move.Apply()
+            evaluation = self._evaluationService.Evaluate(self._game)
+            move.Revert()
+            result.append(MoveEvaluation(move, evaluation))
+        sortedResult = sorted(result, key=lambda move: move.Evaluation, reverse=True)
+        return sortedResult[:count]
+
+
+class MoveEvaluation:
+
+    def __init__(self, move, evaluation):
+        self.Move = move
+        self.Evaluation = evaluation
 
 
 class EvaluationService:

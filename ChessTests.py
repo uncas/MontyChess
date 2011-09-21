@@ -649,11 +649,24 @@ class ChessTests(unittest.TestCase):
 
 class ChessEngineTests(unittest.TestCase):
 
+    def setUp(self):
+        self._game = ChessGame()
+        self._engine = ChessEngine(self._game)
+
     def test_3BestMoves_Returns3Moves(self):
-        game = ChessGame()
-        engine = ChessEngine(game)
-        bestMoves = engine.BestMoves(3)
+        bestMoves = self._engine.BestMoves(3)
         self.assertEqual(3, len(bestMoves))
+
+    def test_WhiteCanCapturePawn_CaptureIsBestMove(self):
+        self._game.Move(Square(File.D, 2), Square(File.D, 4))
+        self._game.Move(Square(File.E, 7), Square(File.E, 5))
+
+        bestMoves = self._engine.BestMoves(1)
+
+        piece = self._game.GetPiece(File.D, 4)
+        expected = Move(piece, Square(File.E, 5))
+        self.assertEqual(1, len(bestMoves))
+        self.assertEqual(expected, bestMoves[0].Move)
 
 
 class EvaluationServiceTests(unittest.TestCase):

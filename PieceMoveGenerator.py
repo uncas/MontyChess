@@ -101,4 +101,8 @@ class PieceMoveGenerator:
                         result.append(self._getMove(piece, destinationFile, destinationRank))
 
     def _getMove(self, piece, destinationFile, destinationRank):
+        destination = Square(destinationFile, destinationRank)
+        pieceAtDestination = self._board.GetPiece(destination)
+        if pieceAtDestination != None:
+            return Move.Capture(self._board, piece, destination, pieceAtDestination)
         return Move.Normal(piece, Square(destinationFile, destinationRank))
