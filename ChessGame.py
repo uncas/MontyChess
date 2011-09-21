@@ -70,6 +70,15 @@ class ChessGame:
         self._moves.append(move)
         self._lastMove = move
 
+    def RevertMove(self, move):
+        move.Revert()
+        self.SideToPlay = Color.OtherColor(self.SideToPlay)
+        self._moves.remove(move)
+        if len(self._moves) > 0:
+            self._lastMove = self._moves[len(self._moves) - 1]
+        else:
+            self._lastMove = None
+
     def CheckStatus(self):
         whiteIsChecked = self._isColorChecked(Color.White)
         blackIsChecked = self._isColorChecked(Color.Black)

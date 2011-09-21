@@ -17,10 +17,19 @@ class ChessEngine:
         return sortedResult[:count]
 
     def _evaluateMove(self, move):
-        move.Apply()
-        evaluation = self._evaluationService.Evaluate(self._game)
-        move.Revert()
-        return evaluation
+        self._game.ApplyMove(move)
+        moves = self._game.PossibleMoves()
+        nextEvaluations = []
+        for nextMove in moves:
+            self._game.ApplyMove(nextMove)
+            nextEvaluation = self._evaluationService.Evaluate(self._game)
+            self._game.RevertMove(nextMove)
+            nextEvaluations.append(nextEvaluation)
+        self._game.RevertMove(move)
+        if self._game.SideToPlay == Color.White:
+            return max(nextEvaluations)
+        else:
+            return min(nextEvaluations)
 
 
 class MoveEvaluation:
