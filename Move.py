@@ -21,7 +21,8 @@ class Move:
         self._isApplied = False
 
     def __repr__(self):
-        return "Move " + str(self.Piece) + " from " + str(self.Origin) + " to " + str(self.Destination) + "."
+        return str(self.Origin) + "-" + str(self.Destination) + \
+            ": Move " + str(self.Piece) + " from " + str(self.Origin) + " to " + str(self.Destination) + "."
 
     def __eq__(self, other):
         return self.Origin == other.Origin and self.Destination == other.Destination

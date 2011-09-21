@@ -62,6 +62,9 @@ class ChessGame:
             move = Move.Castle(piece, destination, rook)
         else:
             move = Move.Normal(piece, destination)
+        self.ApplyMove(move)
+
+    def ApplyMove(self, move):
         move.Apply()
         self.SideToPlay = Color.OtherColor(self.SideToPlay)
         self._moves.append(move)

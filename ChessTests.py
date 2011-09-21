@@ -657,6 +657,14 @@ class ChessEngineTests(unittest.TestCase):
         bestMoves = self._engine.BestMoves(3)
         self.assertEqual(3, len(bestMoves))
 
+    def test_3BestMoves_Returns3Moves(self):
+        for moveIndex in range(10):
+            bestMoves = self._engine.BestMoves(1)
+            move = bestMoves[0].Move
+            self._game.ApplyMove(move)
+            print(move)
+            print(bestMoves[0].Evaluation)
+
     def test_WhiteCanCapturePawn_CaptureIsBestMove(self):
         self._game.Move(Square(File.D, 2), Square(File.D, 4))
         self._game.Move(Square(File.E, 7), Square(File.E, 5))
