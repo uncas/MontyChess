@@ -1,6 +1,7 @@
 import unittest
 
 from Board import *
+from ChessEngine import *
 from ChessGame import *
 from Move import *
 from Piece import *
@@ -644,6 +645,34 @@ class ChessTests(unittest.TestCase):
 
     def _possibleMoves(self):
         return self.game.PossibleMoves()
+
+
+class ChessEngineTests(unittest.TestCase):
+
+    def test_3BestMoves_Returns3Moves(self):
+        game = ChessGame()
+        engine = ChessEngine(game)
+        bestMoves = engine.BestMoves(3)
+        self.assertEqual(3, len(bestMoves))
+
+
+class EvaluationServiceTests(unittest.TestCase):
+
+    def setUp(self):
+        self._evaluationService = EvaluationService()
+
+    def test_Evaluation_InitialBoard_0(self):
+        game = ChessGame()
+        evaluation = self._evaluationService.Evaluate(game)
+        self.assertEqual(0, evaluation)
+
+    def test_Evaluation_WhiteCapturedPawn_Positive(self):
+        game = ChessGame()
+        game.Move(Square(File.D, 2), Square(File.D, 4))
+        game.Move(Square(File.E, 7), Square(File.E, 5))
+        game.Move(Square(File.D, 4), Square(File.E, 5))
+        evaluation = self._evaluationService.Evaluate(game)
+        self.assertGreater(evaluation, 0)
 
 
 if __name__ == "__main__":

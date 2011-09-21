@@ -1,3 +1,14 @@
+ChessEngine:
+- uses SearchService
+- uses EvaluationService
+
+EvaluationService:
+- evaluates Board
+
+SearchService:
+- uses Board
+- uses MoveGenerator
+
 ChessGame:
 - contains Board
 - uses MoveGenerator
