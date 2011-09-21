@@ -12,12 +12,15 @@ class ChessEngine:
         result = []
         moves = self._game.PossibleMoves()
         for move in moves:
-            move.Apply()
-            evaluation = self._evaluationService.Evaluate(self._game)
-            move.Revert()
-            result.append(MoveEvaluation(move, evaluation))
+            result.append(MoveEvaluation(move, self._evaluateMove(move)))
         sortedResult = sorted(result, key=lambda move: move.Evaluation, reverse=reverse)
         return sortedResult[:count]
+
+    def _evaluateMove(self, move):
+        move.Apply()
+        evaluation = self._evaluationService.Evaluate(self._game)
+        move.Revert()
+        return evaluation
 
 
 class MoveEvaluation:

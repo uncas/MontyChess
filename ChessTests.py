@@ -662,8 +662,9 @@ class ChessEngineTests(unittest.TestCase):
             bestMoves = self._engine.BestMoves(1)
             move = bestMoves[0].Move
             self._game.ApplyMove(move)
-            print(move)
-            print(bestMoves[0].Evaluation)
+            #print(move)
+            #print(bestMoves[0].Evaluation)
+            #print(len(self._game.Pieces))
 
     def test_WhiteCanCapturePawn_CaptureIsBestMove(self):
         self._game.Move(Square(File.D, 2), Square(File.D, 4))
@@ -675,6 +676,20 @@ class ChessEngineTests(unittest.TestCase):
         expected = Move(piece, Square(File.E, 5))
         self.assertEqual(1, len(bestMoves))
         self.assertEqual(expected, bestMoves[0].Move)
+
+    def test_WhiteCanGiveAwayPawn_OtherMovesAreBetter(self):
+        self._game.Move(Square(File.A, 2), Square(File.A, 4))
+        self._game.Move(Square(File.A, 7), Square(File.A, 5))
+        self._game.Move(Square(File.B, 2), Square(File.B, 3))
+        self._game.Move(Square(File.B, 7), Square(File.B, 6))
+
+        bestMoves = self._engine.BestMoves(1)
+
+        piece = self._game.GetPiece(File.B, 3)
+        #        print(bestMoves[0].Move)
+        notExpected = Move(piece, Square(File.B, 4))
+        self.assertEqual(1, len(bestMoves))
+        self.assertNotEqual(notExpected, bestMoves[0].Move)
 
 
 class EvaluationServiceTests(unittest.TestCase):

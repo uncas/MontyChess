@@ -27,6 +27,9 @@ class Move:
     def __eq__(self, other):
         return self.Origin == other.Origin and self.Destination == other.Destination
 
+    def __ne__(self, other):
+        return not self.__eq__(other)
+
     @staticmethod
     def Normal(piece, destination):
         return Move(piece, destination)
