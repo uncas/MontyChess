@@ -55,8 +55,8 @@ class ChessGame:
             raise Exception("No piece to move at that position.")
         pieceAtDestination = self.GetPiece(destination.File, destination.Rank)
         if pieceAtDestination != None:
-            self.Pieces.remove(pieceAtDestination)
-        if self._isCastling(piece, destination):
+            move = Move.Capture(self._board, piece, destination, pieceAtDestination)
+        elif self._isCastling(piece, destination):
             rook = self._getRookToCastleWith(destination)
             move = Move.Castle(piece, destination, rook)
         else:

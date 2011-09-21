@@ -22,6 +22,8 @@ Success criteria - chess engine:
 
 Success criteria - other:
 - parse simple move notation (e4,e5, Nf3,Nc6, Bb5 etc)
+- output possible moves for an input game: for verification
+- game setup at specific location, instead of always starting at initial position
 
 Technical tasks:
 X refactor moves, such that they can be rolled on and off (command with rollback)
