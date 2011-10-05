@@ -31,3 +31,7 @@ X create PieceMoveGenerators
 - create GameMoveGenerator
 - split tests into success criteria tests and unit tests of underlying bits and pieces
 - refactor tests such that they reuse functionality
+
+Evaluation links:
+- http://alumni.imsa.edu/~stendahl/comp/txt/gnuchess.txt
+- http://web.archive.org/web/20041103012847/http://myweb.cableone.net/christienolan/coach/evaluating.htm
