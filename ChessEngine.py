@@ -50,18 +50,14 @@ class EvaluationService:
 
     def _getPieceEvaluation(self, piece):
         sign = 3 - 2 * piece.Color
-        return sign * self._getKindEvaluation(piece.Kind)
+        return sign * MaterialEvaluation.Pieces[piece.Kind]
 
-    def _getKindEvaluation(self, kind):
-        if kind == Kind.Pawn:
-            return 1.0
-        elif kind == Kind.Knight:
-            return 3.0
-        elif kind == Kind.Bishop:
-            return 3.0
-        elif kind == Kind.Rook:
-            return 4.5
-        elif kind == Kind.Queen:
-            return 9.0
-        elif kind == Kind.King:
-            return 100.0
+
+class MaterialEvaluation:
+    Pawn = 1.0
+    Knight = 3.0
+    Bishop = 3.0
+    Rook = 4.5
+    Queen = 9.0
+    King = 100.0
+    Pieces = {Kind.Pawn: Pawn, Kind.Knight: Knight, Kind.Bishop: Bishop, Kind.Rook: Rook, Kind.Queen: Queen, Kind.King: King}
