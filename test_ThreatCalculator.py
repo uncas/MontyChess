@@ -61,3 +61,7 @@ class test_ThreatCalculator(unittest.TestCase):
         move.Apply()
         isThreatened = calculator.IsSquareThreatenedByColor(Square(File.A, 4), Color.White)
         self.assertTrue(isThreatened)
+
+
+if __name__ == "__main__":
+    unittest.main()

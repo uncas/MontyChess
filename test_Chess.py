@@ -592,20 +592,17 @@ class ChessEngineTests(unittest.TestCase):
         self._game = ChessGame()
         self._engine = ChessEngine(self._game)
 
-    def test_3BestMoves_Returns3Moves(self):
+    def xtest_3BestMoves_Returns3Moves(self):
         bestMoves = self._engine.BestMoves(3)
         self.assertEqual(3, len(bestMoves))
 
-    def test_3BestMoves_Returns3Moves(self):
+    def xtest_10PlySequence_WithoutErrors(self):
         for moveIndex in range(10):
             bestMoves = self._engine.BestMoves(1)
             move = bestMoves[0].Move
             self._game.ApplyMove(move)
-            #print(move)
-            #print(bestMoves[0].Evaluation)
-            #print(len(self._game.Pieces))
 
-    def test_WhiteCanCapturePawn_CaptureIsBestMove(self):
+    def xtest_WhiteCanCapturePawn_CaptureIsBestMove(self):
         self._game.Move(Square(File.D, 2), Square(File.D, 4))
         self._game.Move(Square(File.E, 7), Square(File.E, 5))
 
@@ -616,7 +613,7 @@ class ChessEngineTests(unittest.TestCase):
         self.assertEqual(1, len(bestMoves))
         self.assertEqual(expected, bestMoves[0].Move)
 
-    def test_WhiteCanGiveAwayPawn_OtherMovesAreBetter(self):
+    def xtest_WhiteCanGiveAwayPawn_OtherMovesAreBetter(self):
         self._game.Move(Square(File.A, 2), Square(File.A, 4))
         self._game.Move(Square(File.A, 7), Square(File.A, 5))
         self._game.Move(Square(File.B, 2), Square(File.B, 3))
