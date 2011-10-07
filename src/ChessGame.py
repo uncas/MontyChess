@@ -142,7 +142,7 @@ class ChessGame:
     def _isValidMove(self, piece, move):
         return not self._squareIsOccupiedByOwnPiece(piece, move.Destination) \
             and not self._moveGenerator._moveIsObstructedByPiece(piece, move.Destination) \
-            and not self._squareIsOccupiedByOpponent(piece, move.Destination)
+            and not self._moveGenerator._squareIsOccupiedByOpponent(piece, move.Destination)
 
     def _isValidCapture(self, piece, capture):
         return not self._squareIsOccupiedByOwnPiece(piece, capture.Destination) \
@@ -153,18 +153,18 @@ class ChessGame:
         pieceAtSquare = self.GetPiece(square.File, square.Rank)
         return pieceAtSquare != None and pieceAtSquare.Color == piece.Color
 
-    def _squareIsOccupiedByOpponent(self, piece, square):
-        pieceAtSquare = self.GetPiece(square.File, square.Rank)
-        return pieceAtSquare != None and pieceAtSquare.Color != piece.Color
-
 
 class MoveGenerator:
 
     def __init__(self, game):
         self._game = game
 
+    def _squareIsOccupiedByOpponent(self, piece, square):
+        pieceAtSquare = self._game.GetPiece(square.File, square.Rank)
+        return pieceAtSquare != None and pieceAtSquare.Color != piece.Color
+
     def _opponentIsCapturedAtSquare(self, piece, square):
-        return self._game._squareIsOccupiedByOpponent(piece, square) \
+        return self._squareIsOccupiedByOpponent(piece, square) \
             or self._enPassantIsPossibleAtSquare(piece, square)
 
     def _enPassantIsPossibleAtSquare(self, piece, square):
