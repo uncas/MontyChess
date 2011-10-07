@@ -31,25 +31,7 @@ class ChessGame:
         return self._board.GetPiece(Square(file, rank))
 
     def GetPieceMoves(self, piece, onlyIfSideToPlay):
-        result = []
-        if onlyIfSideToPlay and piece.Color != self.SideToPlay:
-            return result
-        for move in self._pieceMoveGenerator.GetMoves(piece):
-            if self._moveGenerator._isValidMove(piece, move):
-                result.append(move)
-        for capture in self._pieceMoveGenerator.GetCaptureMoves(piece):
-            if self._moveGenerator._isValidCapture(piece, capture):
-                result.append(capture)
-        castlingPossibility = self._moveGenerator._getCastlingPossibility(piece)
-        if castlingPossibility.KingSide:
-            kingDestination = Square(File.G, piece.Position.Rank)
-            rook = self._moveGenerator._getRookToCastleWith(kingDestination)
-            result.append(Move.Castle(piece, kingDestination, rook))
-        if castlingPossibility.QueenSide:
-            kingDestination = Square(File.C, piece.Position.Rank)
-            rook = self._moveGenerator._getRookToCastleWith(kingDestination)
-            result.append(Move.Castle(piece, kingDestination, rook))
-        return [move for move in result if not self._moveGenerator._isColorCheckedAfterMove(piece.Color, move)]
+        return self._moveGenerator.GetPieceMoves(piece, onlyIfSideToPlay)
 
     def Move(self, origin, destination):
         piece = self.GetPiece(origin.File, origin.Rank)
@@ -106,6 +88,28 @@ class MoveGenerator:
     def __init__(self, game, threatCalculator):
         self._game = game
         self._threatCalculator = threatCalculator
+        self._pieceMoveGenerator = PieceMoveGenerator(self._game._board)
+
+    def GetPieceMoves(self, piece, onlyIfSideToPlay):
+        result = []
+        if onlyIfSideToPlay and piece.Color != self._game.SideToPlay:
+            return result
+        for move in self._pieceMoveGenerator.GetMoves(piece):
+            if self._isValidMove(piece, move):
+                result.append(move)
+        for capture in self._pieceMoveGenerator.GetCaptureMoves(piece):
+            if self._isValidCapture(piece, capture):
+                result.append(capture)
+        castlingPossibility = self._getCastlingPossibility(piece)
+        if castlingPossibility.KingSide:
+            kingDestination = Square(File.G, piece.Position.Rank)
+            rook = self._getRookToCastleWith(kingDestination)
+            result.append(Move.Castle(piece, kingDestination, rook))
+        if castlingPossibility.QueenSide:
+            kingDestination = Square(File.C, piece.Position.Rank)
+            rook = self._getRookToCastleWith(kingDestination)
+            result.append(Move.Castle(piece, kingDestination, rook))
+        return [move for move in result if not self._isColorCheckedAfterMove(piece.Color, move)]
 
     def _isColorCheckedAfterMove(self, color, move):
         move.Apply()
