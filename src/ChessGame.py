@@ -141,12 +141,12 @@ class ChessGame:
 
     def _isValidMove(self, piece, move):
         return not self._squareIsOccupiedByOwnPiece(piece, move.Destination) \
-            and not self._moveIsObstructedByPiece(piece, move.Destination) \
+            and not self._moveGenerator._moveIsObstructedByPiece(piece, move.Destination) \
             and not self._squareIsOccupiedByOpponent(piece, move.Destination)
 
     def _isValidCapture(self, piece, capture):
         return not self._squareIsOccupiedByOwnPiece(piece, capture.Destination) \
-            and not self._moveIsObstructedByPiece(piece, capture.Destination) \
+            and not self._moveGenerator._moveIsObstructedByPiece(piece, capture.Destination) \
             and self._opponentIsCapturedAtSquare(piece, capture.Destination)
 
     def _squareIsOccupiedByOwnPiece(self, piece, square):
@@ -179,9 +179,6 @@ class ChessGame:
             originRank = 2
         return self._lastMove.Destination == Square(square.File, piece.Position.Rank) \
             and self._lastMove.Origin.Rank == originRank
-
-    def _moveIsObstructedByPiece(self, piece, destination):
-        return self._moveGenerator._moveIsObstructedByPiece(piece, destination)
 
 
 class MoveGenerator:
