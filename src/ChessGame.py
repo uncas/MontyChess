@@ -49,7 +49,7 @@ class ChessGame:
             kingDestination = Square(File.C, piece.Position.Rank)
             rook = self._moveGenerator._getRookToCastleWith(kingDestination)
             result.append(Move.Castle(piece, kingDestination, rook))
-        return [move for move in result if not self._isColorCheckedAfterMove(piece.Color, move)]
+        return [move for move in result if not self._moveGenerator._isColorCheckedAfterMove(piece.Color, move)]
 
     def Move(self, origin, destination):
         piece = self.GetPiece(origin.File, origin.Rank)
@@ -100,18 +100,18 @@ class ChessGame:
                 return GameResult.WhiteWins
         return GameResult.Undecided
 
-    def _isColorCheckedAfterMove(self, color, move):
-        move.Apply()
-        isColorCheckedAfterMove = self._moveGenerator._isColorChecked(color)
-        move.Revert()
-        return isColorCheckedAfterMove
-
 
 class MoveGenerator:
 
     def __init__(self, game, threatCalculator):
         self._game = game
         self._threatCalculator = threatCalculator
+
+    def _isColorCheckedAfterMove(self, color, move):
+        move.Apply()
+        isColorCheckedAfterMove = self._isColorChecked(color)
+        move.Revert()
+        return isColorCheckedAfterMove
 
     def _isColorChecked(self, color):
         otherColor = Color.OtherColor(color)
