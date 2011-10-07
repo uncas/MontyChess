@@ -9,17 +9,15 @@ class ChessGame:
 
     # The 'ChessGame' class represents the overall chess game.
     # The 'ChessGame' class will delegate groups of logic to specialized classes.
-    # TODO: Refactor: Extract move generation logic to new class, for example 'MoveGenerator'.
 
     def __init__(self):
         self._board = Board()
         self.SideToPlay = Color.White
         self.Pieces = self._board.Pieces
         self._moves = []
-        self._threatCalculator = ThreatCalculator(self._board)
         self._pieceMoveGenerator = PieceMoveGenerator(self._board)
         self._lastMove = None
-        self._moveGenerator = MoveGenerator(self, self._threatCalculator)
+        self._moveGenerator = MoveGenerator(self, ThreatCalculator(self._board))
 
     def PossibleMoves(self):
         return self._moveGenerator.PossibleMoves()
