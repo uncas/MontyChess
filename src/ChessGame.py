@@ -35,7 +35,7 @@ class ChessGame:
         if onlyIfSideToPlay and piece.Color != self.SideToPlay:
             return result
         for move in self._pieceMoveGenerator.GetMoves(piece):
-            if self._isValidMove(piece, move):
+            if self._moveGenerator._isValidMove(piece, move):
                 result.append(move)
         for capture in self._pieceMoveGenerator.GetCaptureMoves(piece):
             if self._moveGenerator._isValidCapture(piece, capture):
@@ -139,16 +139,16 @@ class ChessGame:
                 return False
         return True
 
-    def _isValidMove(self, piece, move):
-        return not self._moveGenerator._squareIsOccupiedByOwnPiece(piece, move.Destination) \
-            and not self._moveGenerator._moveIsObstructedByPiece(piece, move.Destination) \
-            and not self._moveGenerator._squareIsOccupiedByOpponent(piece, move.Destination)
-
 
 class MoveGenerator:
 
     def __init__(self, game):
         self._game = game
+
+    def _isValidMove(self, piece, move):
+        return not self._squareIsOccupiedByOwnPiece(piece, move.Destination) \
+            and not self._moveIsObstructedByPiece(piece, move.Destination) \
+            and not self._squareIsOccupiedByOpponent(piece, move.Destination)
 
     def _isValidCapture(self, piece, capture):
         return not self._squareIsOccupiedByOwnPiece(piece, capture.Destination) \
