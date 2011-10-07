@@ -38,7 +38,7 @@ class ChessGame:
             if self._isValidMove(piece, move):
                 result.append(move)
         for capture in self._pieceMoveGenerator.GetCaptureMoves(piece):
-            if self._isValidCapture(piece, capture):
+            if self._moveGenerator._isValidCapture(piece, capture):
                 result.append(capture)
         castlingPossibility = self._getCastlingPossibility(piece)
         if castlingPossibility.KingSide:
@@ -144,16 +144,16 @@ class ChessGame:
             and not self._moveGenerator._moveIsObstructedByPiece(piece, move.Destination) \
             and not self._moveGenerator._squareIsOccupiedByOpponent(piece, move.Destination)
 
-    def _isValidCapture(self, piece, capture):
-        return not self._moveGenerator._squareIsOccupiedByOwnPiece(piece, capture.Destination) \
-            and not self._moveGenerator._moveIsObstructedByPiece(piece, capture.Destination) \
-            and self._moveGenerator._opponentIsCapturedAtSquare(piece, capture.Destination)
-
 
 class MoveGenerator:
 
     def __init__(self, game):
         self._game = game
+
+    def _isValidCapture(self, piece, capture):
+        return not self._squareIsOccupiedByOwnPiece(piece, capture.Destination) \
+            and not self._moveIsObstructedByPiece(piece, capture.Destination) \
+            and self._opponentIsCapturedAtSquare(piece, capture.Destination)
 
     def _squareIsOccupiedByOwnPiece(self, piece, square):
         pieceAtSquare = self._game.GetPiece(square.File, square.Rank)
