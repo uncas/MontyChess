@@ -22,10 +22,7 @@ class ChessGame:
         self._moveGenerator = MoveGenerator(self, self._threatCalculator)
 
     def PossibleMoves(self):
-        result = []
-        for piece in self._board.GetPieces(self.SideToPlay):
-            result.extend(self.GetPieceMoves(piece, True))
-        return result
+        return self._moveGenerator.PossibleMoves()
 
     def GetPiece(self, file, rank):
         return self._board.GetPiece(Square(file, rank))
@@ -89,6 +86,12 @@ class MoveGenerator:
         self._game = game
         self._threatCalculator = threatCalculator
         self._pieceMoveGenerator = PieceMoveGenerator(self._game._board)
+
+    def PossibleMoves(self):
+        result = []
+        for piece in self._game._board.GetPieces(self._game.SideToPlay):
+            result.extend(self.GetPieceMoves(piece, True))
+        return result
 
     def GetPieceMoves(self, piece, onlyIfSideToPlay):
         result = []
