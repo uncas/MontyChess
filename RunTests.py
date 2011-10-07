@@ -1,5 +1,8 @@
+import sys
 import time
 import unittest
+
+sys.path.append("src")
 
 def Test(pattern):
     time1 = time.time()
