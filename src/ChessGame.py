@@ -19,6 +19,7 @@ class ChessGame:
         self._threatCalculator = ThreatCalculator(self._board)
         self._pieceMoveGenerator = PieceMoveGenerator(self._board)
         self._lastMove = None
+        self._moveGenerator = MoveGenerator(self)
 
     def PossibleMoves(self):
         result = []
@@ -180,6 +181,15 @@ class ChessGame:
             and self._lastMove.Origin.Rank == originRank
 
     def _moveIsObstructedByPiece(self, piece, destination):
+        return self._moveGenerator._moveIsObstructedByPiece(piece, destination)
+
+
+class MoveGenerator:
+
+    def __init__(self, game):
+        self._game = game
+
+    def _moveIsObstructedByPiece(self, piece, destination):
         if piece.CanJump:
             return False
         fileDelta = destination.File - piece.Position.File
@@ -194,7 +204,7 @@ class ChessGame:
         if steps < 1 or steps > 7:
             raise Exception("Invalid step when moving " + str(piece) + " from " + str(piece.Position) + " to " + str(destination))
         for step in range(1, steps):
-            pieceAtSquare = self.GetPiece(piece.Position.File + step * fileDirection, piece.Position.Rank + step * rankDirection)
+            pieceAtSquare = self._game.GetPiece(piece.Position.File + step * fileDirection, piece.Position.Rank + step * rankDirection)
             if pieceAtSquare != None:
                 return True
         return False
