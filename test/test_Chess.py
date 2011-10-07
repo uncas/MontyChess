@@ -584,7 +584,7 @@ class ChessTests(unittest.TestCase):
         self._move(Square(File.E, 5), Square(File.D, 4))
 
     def _possibleMoves(self):
-        return self.game.PossibleMoves()
+        return self.game._moveGenerator.PossibleMoves()
 
 
 if __name__ == "__main__":

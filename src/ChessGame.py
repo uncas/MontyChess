@@ -18,8 +18,8 @@ class ChessGame:
         self._lastMove = None
         self._moveGenerator = MoveGenerator(self, ThreatCalculator(self._board))
 
-    def PossibleMoves(self):
-        return self._moveGenerator.PossibleMoves()
+#    def PossibleMoves(self):
+ #       return self._moveGenerator.PossibleMoves()
 
     def GetPiece(self, file, rank):
         return self._board.GetPiece(Square(file, rank))
@@ -62,7 +62,7 @@ class ChessGame:
         return CheckStatus(whiteIsChecked, blackIsChecked)
 
     def Result(self):
-        moves = self.PossibleMoves()
+        moves = self._moveGenerator.PossibleMoves()
         if len(moves) == 0:
             sideToPlayIsChecked = self._moveGenerator._isColorChecked(self.SideToPlay)
             if not sideToPlayIsChecked:
