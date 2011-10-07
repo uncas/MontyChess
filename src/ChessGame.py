@@ -19,7 +19,7 @@ class ChessGame:
         self._threatCalculator = ThreatCalculator(self._board)
         self._pieceMoveGenerator = PieceMoveGenerator(self._board)
         self._lastMove = None
-        self._moveGenerator = MoveGenerator(self)
+        self._moveGenerator = MoveGenerator(self, self._threatCalculator)
 
     def PossibleMoves(self):
         result = []
@@ -113,8 +113,9 @@ class ChessGame:
 
 class MoveGenerator:
 
-    def __init__(self, game):
+    def __init__(self, game, threatCalculator):
         self._game = game
+        self._threatCalculator = threatCalculator
 
     def _getRookToCastleWith(self, kingDestination):
         if kingDestination.File == File.G:
