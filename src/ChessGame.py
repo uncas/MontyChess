@@ -24,9 +24,6 @@ class ChessGame:
     def GetPiece(self, file, rank):
         return self._board.GetPiece(Square(file, rank))
 
-    def GetPieceMoves(self, piece, onlyIfSideToPlay):
-        return self._moveGenerator.GetPieceMoves(piece, onlyIfSideToPlay)
-
     def Move(self, origin, destination):
         piece = self.GetPiece(origin.File, origin.Rank)
         if piece is None:

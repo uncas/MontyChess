@@ -562,7 +562,7 @@ class ChessTests(unittest.TestCase):
 
     def _getPieceMoves(self, file, rank):
         piece = self._getPiece(file, rank)
-        return self.game.GetPieceMoves(piece, True)
+        return self.game._moveGenerator.GetPieceMoves(piece, True)
 
     def _getMove(self, origin, destination):
         piece = self.game.GetPiece(origin.File, origin.Rank)
