@@ -159,7 +159,13 @@ class ChessGame:
 
     def _opponentIsCapturedAtSquare(self, piece, square):
         return self._squareIsOccupiedByOpponent(piece, square) \
-            or self._enPassantIsPossibleAtSquare(piece, square)
+            or self._moveGenerator._enPassantIsPossibleAtSquare(piece, square)
+
+
+class MoveGenerator:
+
+    def __init__(self, game):
+        self._game = game
 
     def _enPassantIsPossibleAtSquare(self, piece, square):
         if not piece.IsPawn:
@@ -168,7 +174,7 @@ class ChessGame:
             return False
         if piece.Color == Color.Black and piece.Position.Rank != 4:
             return False
-        pieceNextToPawn = self.GetPiece(square.File, piece.Position.Rank)
+        pieceNextToPawn = self._game.GetPiece(square.File, piece.Position.Rank)
         if pieceNextToPawn is None \
             or pieceNextToPawn.Color == piece.Color \
             or not pieceNextToPawn.IsPawn:
@@ -177,14 +183,8 @@ class ChessGame:
             originRank = 7
         else:
             originRank = 2
-        return self._lastMove.Destination == Square(square.File, piece.Position.Rank) \
-            and self._lastMove.Origin.Rank == originRank
-
-
-class MoveGenerator:
-
-    def __init__(self, game):
-        self._game = game
+        return self._game._lastMove.Destination == Square(square.File, piece.Position.Rank) \
+            and self._game._lastMove.Origin.Rank == originRank
 
     def _moveIsObstructedByPiece(self, piece, destination):
         if piece.CanJump:
