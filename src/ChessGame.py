@@ -84,14 +84,14 @@ class ChessGame:
             self._lastMove = None
 
     def CheckStatus(self):
-        whiteIsChecked = self._isColorChecked(Color.White)
-        blackIsChecked = self._isColorChecked(Color.Black)
+        whiteIsChecked = self._moveGenerator._isColorChecked(Color.White)
+        blackIsChecked = self._moveGenerator._isColorChecked(Color.Black)
         return CheckStatus(whiteIsChecked, blackIsChecked)
 
     def Result(self):
         moves = self.PossibleMoves()
         if len(moves) == 0:
-            sideToPlayIsChecked = self._isColorChecked(self.SideToPlay)
+            sideToPlayIsChecked = self._moveGenerator._isColorChecked(self.SideToPlay)
             if not sideToPlayIsChecked:
                 return GameResult.Draw
             elif self.SideToPlay == Color.White:
@@ -102,13 +102,9 @@ class ChessGame:
 
     def _isColorCheckedAfterMove(self, color, move):
         move.Apply()
-        isColorCheckedAfterMove = self._isColorChecked(color)
+        isColorCheckedAfterMove = self._moveGenerator._isColorChecked(color)
         move.Revert()
         return isColorCheckedAfterMove
-
-    def _isColorChecked(self, color):
-        otherColor = Color.OtherColor(color)
-        return self._threatCalculator.IsSquareThreatenedByColor(self._board.GetKingPosition(color), otherColor)
 
 
 class MoveGenerator:
@@ -116,6 +112,10 @@ class MoveGenerator:
     def __init__(self, game, threatCalculator):
         self._game = game
         self._threatCalculator = threatCalculator
+
+    def _isColorChecked(self, color):
+        otherColor = Color.OtherColor(color)
+        return self._threatCalculator.IsSquareThreatenedByColor(self._game._board.GetKingPosition(color), otherColor)
 
     def _getRookToCastleWith(self, kingDestination):
         if kingDestination.File == File.G:
