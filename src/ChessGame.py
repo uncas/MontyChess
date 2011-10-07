@@ -40,7 +40,7 @@ class ChessGame:
         for capture in self._pieceMoveGenerator.GetCaptureMoves(piece):
             if self._moveGenerator._isValidCapture(piece, capture):
                 result.append(capture)
-        castlingPossibility = self._getCastlingPossibility(piece)
+        castlingPossibility = self._moveGenerator._getCastlingPossibility(piece)
         if castlingPossibility.KingSide:
             kingDestination = Square(File.G, piece.Position.Rank)
             rook = self._getRookToCastleWith(kingDestination)
@@ -117,6 +117,12 @@ class ChessGame:
     def _isCastling(self, piece, destination):
         return piece.IsKing and abs(piece.Position.File - destination.File) == 2
 
+
+class MoveGenerator:
+
+    def __init__(self, game):
+        self._game = game
+
     def _getCastlingPossibility(self, piece):
         if not piece.IsKing or piece.HasMoved:
             return CastlingPossibility(False, False)
@@ -124,7 +130,7 @@ class ChessGame:
         return CastlingPossibility(self._isCastlingSidePossible(File.A, rank), self._isCastlingSidePossible(File.H, rank))
 
     def _isCastlingSidePossible(self, rookFile, rank):
-        rook = self.GetPiece(rookFile, rank)
+        rook = self._game.GetPiece(rookFile, rank)
         if rook is None or rook.HasMoved:
             return False
         if rookFile == File.H:
@@ -134,16 +140,10 @@ class ChessGame:
             file1 = File.B
             file2 = File.E
         for file in range(file1, file2):
-            piece = self.GetPiece(file, rank)
+            piece = self._game.GetPiece(file, rank)
             if piece != None:
                 return False
         return True
-
-
-class MoveGenerator:
-
-    def __init__(self, game):
-        self._game = game
 
     def _isValidMove(self, piece, move):
         return not self._squareIsOccupiedByOwnPiece(piece, move.Destination) \
