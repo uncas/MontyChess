@@ -18,9 +18,6 @@ class ChessGame:
         self._lastMove = None
         self._moveGenerator = MoveGenerator(self, ThreatCalculator(self._board))
 
-#    def PossibleMoves(self):
- #       return self._moveGenerator.PossibleMoves()
-
     def GetPiece(self, file, rank):
         return self._board.GetPiece(Square(file, rank))
 
