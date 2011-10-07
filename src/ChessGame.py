@@ -140,24 +140,24 @@ class ChessGame:
         return True
 
     def _isValidMove(self, piece, move):
-        return not self._squareIsOccupiedByOwnPiece(piece, move.Destination) \
+        return not self._moveGenerator._squareIsOccupiedByOwnPiece(piece, move.Destination) \
             and not self._moveGenerator._moveIsObstructedByPiece(piece, move.Destination) \
             and not self._moveGenerator._squareIsOccupiedByOpponent(piece, move.Destination)
 
     def _isValidCapture(self, piece, capture):
-        return not self._squareIsOccupiedByOwnPiece(piece, capture.Destination) \
+        return not self._moveGenerator._squareIsOccupiedByOwnPiece(piece, capture.Destination) \
             and not self._moveGenerator._moveIsObstructedByPiece(piece, capture.Destination) \
             and self._moveGenerator._opponentIsCapturedAtSquare(piece, capture.Destination)
-
-    def _squareIsOccupiedByOwnPiece(self, piece, square):
-        pieceAtSquare = self.GetPiece(square.File, square.Rank)
-        return pieceAtSquare != None and pieceAtSquare.Color == piece.Color
 
 
 class MoveGenerator:
 
     def __init__(self, game):
         self._game = game
+
+    def _squareIsOccupiedByOwnPiece(self, piece, square):
+        pieceAtSquare = self._game.GetPiece(square.File, square.Rank)
+        return pieceAtSquare != None and pieceAtSquare.Color == piece.Color
 
     def _squareIsOccupiedByOpponent(self, piece, square):
         pieceAtSquare = self._game.GetPiece(square.File, square.Rank)
