@@ -43,11 +43,11 @@ class ChessGame:
         castlingPossibility = self._moveGenerator._getCastlingPossibility(piece)
         if castlingPossibility.KingSide:
             kingDestination = Square(File.G, piece.Position.Rank)
-            rook = self._getRookToCastleWith(kingDestination)
+            rook = self._moveGenerator._getRookToCastleWith(kingDestination)
             result.append(Move.Castle(piece, kingDestination, rook))
         if castlingPossibility.QueenSide:
             kingDestination = Square(File.C, piece.Position.Rank)
-            rook = self._getRookToCastleWith(kingDestination)
+            rook = self._moveGenerator._getRookToCastleWith(kingDestination)
             result.append(Move.Castle(piece, kingDestination, rook))
         return [move for move in result if not self._isColorCheckedAfterMove(piece.Color, move)]
 
@@ -59,7 +59,7 @@ class ChessGame:
         if pieceAtDestination != None:
             move = Move.Capture(self._board, piece, destination, pieceAtDestination)
         elif self._isCastling(piece, destination):
-            rook = self._getRookToCastleWith(destination)
+            rook = self._moveGenerator._getRookToCastleWith(destination)
             move = Move.Castle(piece, destination, rook)
         else:
             move = Move.Normal(piece, destination)
@@ -110,18 +110,18 @@ class ChessGame:
         otherColor = Color.OtherColor(color)
         return self._threatCalculator.IsSquareThreatenedByColor(self._board.GetKingPosition(color), otherColor)
 
-    def _getRookToCastleWith(self, kingDestination):
-        if kingDestination.File == File.G:
-            rookOriginFile = File.H
-        else:
-            rookOriginFile = File.A
-        return self.GetPiece(rookOriginFile, kingDestination.Rank)
-
 
 class MoveGenerator:
 
     def __init__(self, game):
         self._game = game
+
+    def _getRookToCastleWith(self, kingDestination):
+        if kingDestination.File == File.G:
+            rookOriginFile = File.H
+        else:
+            rookOriginFile = File.A
+        return self._game.GetPiece(rookOriginFile, kingDestination.Rank)
 
     def _getCastlingPossibility(self, piece):
         if not piece.IsKing or piece.HasMoved:
