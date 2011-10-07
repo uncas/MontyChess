@@ -15,7 +15,6 @@ class ChessGame:
         self.SideToPlay = Color.White
         self.Pieces = self._board.Pieces
         self._moves = []
-        self._pieceMoveGenerator = PieceMoveGenerator(self._board)
         self._lastMove = None
         self._moveGenerator = MoveGenerator(self, ThreatCalculator(self._board))
 
