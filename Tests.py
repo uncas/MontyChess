@@ -3,7 +3,7 @@ import unittest
 
 def Test(pattern):
     time1 = time.time()
-    suite = unittest.TestLoader().discover(".", pattern)
+    suite = unittest.TestLoader().discover("test", pattern)
     result = unittest.TestResult()
     suite.run(result)
     print(result)
